@@ -43,8 +43,10 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 
 - **禁止** `git add .` 或 `git add -A`，必须指定具体文件：`git add xxx.py`
 - 原子化提交：一个 commit 只做一件事，commit 信息必须与实际修改对应
-- 例如添加了测试 → `git add tests/` + `git commit -m "test: add xxx tests"`
-- 例如修改了配置 → `git add pyproject.toml` + `git commit -m "chore: update config"`
+- 使用 conventional commits 格式，scope 标注模块：`feat(core): add config loader`、`feat(plugins): add toc plugin`
+- 常用 scope：`core`、`cli`、`plugins`、`themes`、`docs`、`tests`
+- 例如添加了测试 → `git add tests/` + `git commit -m "test(core): add config tests"`
+- 例如修改了配置 → `git add pyproject.toml` + `git commit -m "chore: update pyproject.toml"`
 
 ## Code Quality
 
