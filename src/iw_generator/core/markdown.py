@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import tomllib
+from html import escape
 from pathlib import Path
 
 from markdown_it import MarkdownIt
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import TextLexer, get_lexer_by_name
 
 
 def _parse_frontmatter(content: str) -> tuple[dict, str]:
@@ -64,31 +62,20 @@ def _parse_toml_fm(raw: str) -> dict:
     return tomllib.loads(raw)
 
 
-def _highlight_code(code: str, lang: str) -> str:
-    """Highlight code with Pygments."""
-    try:
-        lexer = get_lexer_by_name(lang)
-    except Exception:
-        lexer = TextLexer()
-    formatter = HtmlFormatter(cssclass="highlight", wrapcode=True)
-    return highlight(code, lexer, formatter)
-
-
 def create_markdown_parser() -> MarkdownIt:
-    """Create a markdown-it-py parser with common extensions."""
+    """Create a markdown-it-py parser with GFM extensions."""
     md = MarkdownIt().enable("table").enable("strikethrough")
 
-    # Custom fence renderer for code highlighting
-    def fence_highlight(tokens, idx, options, env):
+    # Render fenced code blocks with language class for highlight.js
+    def fence_render(tokens, idx, options, env):
         token = tokens[idx]
         info = token.info.strip() if token.info else ""
         lang = info.split(None, 1)[0] if info else ""
-        code = token.content
-        if lang:
-            return f'<pre class="language-{lang}">{_highlight_code(code, lang)}</pre>\n'
-        return f"<pre><code>{code}</code></pre>\n"
+        code = escape(token.content)
+        lang_attr = f' class="language-{lang}"' if lang else ""
+        return f"<pre><code{lang_attr}>{code}</code></pre>\n"
 
-    md.renderer.rules["fence"] = fence_highlight
+    md.renderer.rules["fence"] = fence_render
     return md
 
 
