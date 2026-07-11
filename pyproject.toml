@@ -22,6 +22,7 @@ dependencies = [
 dev = [
     "pre-commit>=3.0",
     "ruff>=0.4",
+    "pytest>=8.0",
 ]
 
 [project.scripts]
@@ -39,3 +40,6 @@ select = ["E", "F", "I", "W", "UP", "B", "SIM"]
 
 [tool.ruff.format]
 quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

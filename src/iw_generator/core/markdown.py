@@ -6,7 +6,6 @@ import tomllib
 from pathlib import Path
 
 from markdown_it import MarkdownIt
-from markdown_it.extensions.front_matter import front_matter_plugin
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import TextLexer, get_lexer_by_name
@@ -76,13 +75,8 @@ def _highlight_code(code: str, lang: str) -> str:
 
 
 def create_markdown_parser() -> MarkdownIt:
-    """Create a markdown-it-py parser with GFM extensions."""
-    md = (
-        MarkdownIt("gfm")
-        .enable("table")
-        .enable("strikethrough")
-        .use(front_matter_plugin)
-    )
+    """Create a markdown-it-py parser with common extensions."""
+    md = MarkdownIt().enable("table").enable("strikethrough")
 
     # Custom fence renderer for code highlighting
     def fence_highlight(tokens, idx, options, env, self):
