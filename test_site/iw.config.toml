@@ -1,0 +1,10 @@
+[site]
+name = "Docs Test"
+url = "https://example.com"
+
+[paths]
+content = "content"
+output = "site"
+
+[plugins]
+enable = ["toc", "search"]
