@@ -9,8 +9,8 @@ from rich.console import Console
 from rich.panel import Panel
 
 from . import __version__
-from .config import Config
-from .engine import build
+from .core.config import Config
+from .core.engine import build
 
 console = Console()
 
