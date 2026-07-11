@@ -2,7 +2,7 @@
 
 ## Project
 
-iw-generator: A Markdown static site generator library (PyPI package). Currently in early scaffold stage.
+iw-generator: A general-purpose Markdown static site generator library (PyPI package). Currently in early scaffold stage.
 
 ## Setup
 
@@ -10,7 +10,7 @@ iw-generator: A Markdown static site generator library (PyPI package). Currently
 uv sync
 ```
 
-Requires Python ≥ 3.11 (built-in `tomllib`). Use local Python (3.14) for development.
+Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 
 ## Key Files
 
@@ -31,7 +31,7 @@ Requires Python ≥ 3.11 (built-in `tomllib`). Use local Python (3.14) for devel
 ## Dependencies (planned)
 
 - markdown-it-py, jinja2, click, rich, pygments
-- TOML: stdlib `tomllib` (Python ≥ 3.11), no fallback needed
+- TOML: stdlib `tomllib` (Python >= 3.11), no fallback needed
 
 ## Conventions
 
