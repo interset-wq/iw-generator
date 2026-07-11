@@ -146,3 +146,33 @@ def new(title: str):
         encoding="utf-8",
     )
     console.print(f"[green]Created[/] {new_file}")
+
+
+@main.command()
+@click.option("--user", prompt="GitHub username", help="GitHub username")
+@click.option("--repo", prompt="Repository name", help="Repository name")
+@click.option(
+    "--type",
+    "site_type",
+    type=click.Choice(["user", "repo"]),
+    default="user",
+    help="Site type: user (username.github.io) or repo (username.github.io/repo)",
+)
+def deploy(user: str, repo: str, site_type: str):
+    """Setup GitHub Pages deployment workflow."""
+    from shutil import copy2
+
+    deploy_dir = Path(".github/workflows")
+    deploy_dir.mkdir(parents=True, exist_ok=True)
+
+    # Copy workflow template
+    template = Path(__file__).parent / "themes" / "iw" / "deploy" / "github-pages.yml"
+    dest = deploy_dir / "github-pages.yml"
+    copy2(template, dest)
+
+    console.print(f"[green]Created[/] {dest}")
+    console.print()
+    console.print("Next steps:")
+    console.print(f"  1. Push to [cyan]https://github.com/{user}/{repo}[/]")
+    console.print("  2. Go to repo Settings -> Pages -> Source: GitHub Actions")
+    console.print("  3. Push to main branch to trigger deployment")
