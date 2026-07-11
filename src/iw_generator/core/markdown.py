@@ -92,7 +92,6 @@ def create_markdown_instance() -> markdown.Markdown:
             "pymdownx.saneheaders",
             "toc",
             "tables",
-            "fenced_code",
             "attr_list",
             "md_in_html",
             "def_list",
@@ -103,10 +102,9 @@ def create_markdown_instance() -> markdown.Markdown:
             "pymdownx.highlight": {
                 "linenums": False,
                 "css_class": "highlight",
+                "pygments_style": "default",
             },
-            "pymdownx.superfences": {
-                "css_class": "highlight",
-            },
+            "pymdownx.superfences": {},
             "pymdownx.tabbed": {
                 "alternate_style": True,
             },
