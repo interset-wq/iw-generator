@@ -53,3 +53,4 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 - Use **ruff** for linting and formatting
 - Run before committing: `ruff check src/` and `ruff format src/`
 - Rules: E, F, I, W, UP, B, SIM
+- Pre-commit hooks configured: ruff check + ruff format run automatically
