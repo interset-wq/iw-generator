@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+    <link rel="stylesheet" href="/assets/css/iw.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="site-nav">
+        <a href="/" class="site-name">{{ site.name }}</a>
+    </nav>
+    <main class="container">
+        {% block content %}
+        {{ content }}
+        {% endblock %}
+    </main>
+    <footer class="site-footer">
+        <p>&copy; {{ site.name }}</p>
+    </footer>
+</body>
+</html>
