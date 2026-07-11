@@ -28,5 +28,12 @@ def ensure_dir(path: Path) -> None:
 def clean_dir(path: Path) -> None:
     """Remove and recreate a directory."""
     if path.exists():
-        shutil.rmtree(path)
+        for _ in range(3):
+            try:
+                shutil.rmtree(path)
+                break
+            except PermissionError:
+                import time
+
+                time.sleep(0.1)
     path.mkdir(parents=True, exist_ok=True)
