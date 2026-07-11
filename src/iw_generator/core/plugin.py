@@ -33,6 +33,23 @@ class PluginBase:
         """Called after the entire site is built."""
 
 
+def _get_builtin_plugins() -> dict[str, type[PluginBase]]:
+    """Lazy-load built-in plugins."""
+    from ..plugins.highlight import HighlightPlugin
+    from ..plugins.rss import RssPlugin
+    from ..plugins.search import SearchPlugin
+    from ..plugins.sitemap import SitemapPlugin
+    from ..plugins.toc import TocPlugin
+
+    return {
+        "toc": TocPlugin,
+        "highlight": HighlightPlugin,
+        "search": SearchPlugin,
+        "rss": RssPlugin,
+        "sitemap": SitemapPlugin,
+    }
+
+
 def discover_plugins(config: Config) -> list[PluginBase]:
     """Discover and instantiate plugins from entry_points and built-in."""
     plugins: list[PluginBase] = []
@@ -48,11 +65,9 @@ def discover_plugins(config: Config) -> list[PluginBase]:
             continue
 
     # Load enabled built-in plugins
-    from . import _builtin_plugins
-
+    builtin = _get_builtin_plugins()
     for name in config.plugins.enable:
-        if name in _builtin_plugins:
-            plugin_cls = _builtin_plugins[name]
-            plugins.append(plugin_cls(config))
+        if name in builtin:
+            plugins.append(builtin[name](config))
 
     return plugins
