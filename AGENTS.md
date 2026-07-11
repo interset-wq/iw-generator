@@ -10,7 +10,7 @@ iw-generator: A Markdown static site generator library (PyPI package). Currently
 uv sync
 ```
 
-Requires Python ≥ 3.11 (see `.python-version`). Built-in `tomllib` used, no fallback needed.
+Requires Python ≥ 3.11 (built-in `tomllib`). Use local Python (3.14) for development.
 
 ## Key Files
 
@@ -31,10 +31,23 @@ Requires Python ≥ 3.11 (see `.python-version`). Built-in `tomllib` used, no fa
 ## Dependencies (planned)
 
 - markdown-it-py, jinja2, click, rich, pygments
-- TOML: stdlib `tomllib` (Python ≥ 3.11), `tomli` fallback for older
+- TOML: stdlib `tomllib` (Python ≥ 3.11), no fallback needed
 
 ## Conventions
 
 - `src/` layout (standard for PyPI packages)
 - uv for package management
-- hatchling as build backend (to be added to pyproject.toml)
+- hatchling as build backend
+
+## Git Rules
+
+- **禁止** `git add .` 或 `git add -A`，必须指定具体文件：`git add xxx.py`
+- 原子化提交：一个 commit 只做一件事，commit 信息必须与实际修改对应
+- 例如添加了测试 → `git add tests/` + `git commit -m "test: add xxx tests"`
+- 例如修改了配置 → `git add pyproject.toml` + `git commit -m "chore: update config"`
+
+## Code Quality
+
+- 使用 **ruff** 进行代码检查和格式化
+- 提交前运行：`ruff check src/` 和 `ruff format src/`
+- 规则：E, F, I, W, UP, B, SIM
