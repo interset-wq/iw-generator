@@ -14,7 +14,7 @@
     </nav>
     <main class="container">
         {% block content %}
-        {{ content }}
+        {{ content | safe }}
         {% endblock %}
     </main>
     <footer class="site-footer">
