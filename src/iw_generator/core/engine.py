@@ -60,10 +60,17 @@ class Engine:
             self.site.pages.append(page)
 
     def _process_page(self, md_path: Path, content_dir: Path) -> Page:
-        # Determine output path
+        # Determine output path - generate directory-based URLs
         rel = md_path.relative_to(content_dir)
-        out_rel = rel.with_suffix(".html")
-        dest_path = self.config.output_dir / out_rel
+        stem = rel.stem
+        parent = rel.parent
+
+        if stem == "index":
+            # index.md -> dir/index.html
+            dest_path = self.config.output_dir / parent / "index.html"
+        else:
+            # page.md -> page/index.html
+            dest_path = self.config.output_dir / parent / stem / "index.html"
 
         page = Page(
             source_path=md_path,
