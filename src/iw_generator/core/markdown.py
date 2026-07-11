@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-import re
+import tomllib
 from pathlib import Path
 
-import tomllib
 from markdown_it import MarkdownIt
 from markdown_it.extensions.front_matter import front_matter_plugin
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_lexer_by_name, TextLexer
+from pygments.lexers import TextLexer, get_lexer_by_name
 
 
 def _parse_frontmatter(content: str) -> tuple[dict, str]:
@@ -53,11 +52,7 @@ def _parse_yaml_fm(raw: str) -> dict:
             # Parse lists: [a, b, c]
             if value.startswith("[") and value.endswith("]"):
                 inner = value[1:-1]
-                value = [
-                    v.strip().strip("\"'")
-                    for v in inner.split(",")
-                    if v.strip()
-                ]
+                value = [v.strip().strip("\"'") for v in inner.split(",") if v.strip()]
             # Parse booleans
             elif value.lower() in ("true", "false"):
                 value = value.lower() == "true"
@@ -82,13 +77,14 @@ def _highlight_code(code: str, lang: str) -> str:
 
 def create_markdown_parser() -> MarkdownIt:
     """Create a markdown-it-py parser with GFM extensions."""
-    md = MarkdownIt("gfm").enable("table").enable("strikethrough").use(
-        front_matter_plugin
+    md = (
+        MarkdownIt("gfm")
+        .enable("table")
+        .enable("strikethrough")
+        .use(front_matter_plugin)
     )
 
     # Custom fence renderer for code highlighting
-    default_fence = md.renderer.rules.get("fence")
-
     def fence_highlight(tokens, idx, options, env, self):
         token = tokens[idx]
         info = token.info.strip() if token.info else ""
