@@ -10,7 +10,7 @@ iw-generator: A Markdown static site generator library (PyPI package). Currently
 uv sync
 ```
 
-Requires Python 3.14 (see `.python-version`).
+Requires Python ≥ 3.11 (see `.python-version`). Built-in `tomllib` used, no fallback needed.
 
 ## Key Files
 
