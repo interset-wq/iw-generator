@@ -41,15 +41,15 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 
 ## Git Rules
 
-- **禁止** `git add .` 或 `git add -A`，必须指定具体文件：`git add xxx.py`
-- 原子化提交：一个 commit 只做一件事，commit 信息必须与实际修改对应
-- 使用 conventional commits 格式，scope 标注模块：`feat(core): add config loader`、`feat(plugins): add toc plugin`
-- 常用 scope：`core`、`cli`、`plugins`、`themes`、`docs`、`tests`
-- 例如添加了测试 → `git add tests/` + `git commit -m "test(core): add config tests"`
-- 例如修改了配置 → `git add pyproject.toml` + `git commit -m "chore: update pyproject.toml"`
+- Never use `git add .` or `git add -A`. Always specify files: `git add xxx.py`
+- Atomic commits: one commit = one logical change. Commit message must match actual change.
+- Use conventional commits with scope: `feat(core): add config loader`, `feat(plugins): add toc plugin`
+- Common scopes: `core`, `cli`, `plugins`, `themes`, `docs`, `tests`
+- Example: added tests -> `git add tests/` + `git commit -m "test(core): add config tests"`
+- Example: changed config -> `git add pyproject.toml` + `git commit -m "chore: update pyproject.toml"`
 
 ## Code Quality
 
-- 使用 **ruff** 进行代码检查和格式化
-- 提交前运行：`ruff check src/` 和 `ruff format src/`
-- 规则：E, F, I, W, UP, B, SIM
+- Use **ruff** for linting and formatting
+- Run before committing: `ruff check src/` and `ruff format src/`
+- Rules: E, F, I, W, UP, B, SIM
