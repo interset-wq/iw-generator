@@ -117,6 +117,7 @@ class Engine:
 
     def _write_pages(self) -> None:
         env = create_jinja_env(self.config)
+        nav = self._build_nav()
         console.print(f"Writing [cyan]{len(self.site.pages)}[/] pages")
 
         for page in self.site.pages:
@@ -128,11 +129,27 @@ class Engine:
                     "site": self.config.site,
                     "page": page,
                     "content": page.html_content,
+                    "nav": nav,
                     "config": self.config,
                 },
             )
             page.dest_path.write_text(html, encoding="utf-8")
             self._run_plugin_hook("on_page_write", page, html)
+
+    def _build_nav(self) -> list[dict]:
+        """Build navigation tree from pages sorted by path."""
+        nav: list[dict] = []
+        for page in sorted(self.site.pages, key=lambda p: p.source_path.parts):
+            depth = len(page.source_path.relative_to(self.config.content_dir).parts) - 1
+            nav.append(
+                {
+                    "title": page.title,
+                    "url": page.url,
+                    "depth": depth,
+                    "active": False,
+                }
+            )
+        return nav
 
 
 def build(config: Config) -> Site:
