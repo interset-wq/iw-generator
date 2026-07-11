@@ -79,7 +79,7 @@ def create_markdown_parser() -> MarkdownIt:
     md = MarkdownIt().enable("table").enable("strikethrough")
 
     # Custom fence renderer for code highlighting
-    def fence_highlight(tokens, idx, options, env, self):
+    def fence_highlight(tokens, idx, options, env):
         token = tokens[idx]
         info = token.info.strip() if token.info else ""
         lang = info.split(None, 1)[0] if info else ""
