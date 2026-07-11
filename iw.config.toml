@@ -1,0 +1,11 @@
+[site]
+name = "iw-generator docs"
+url = "https://example.com"
+description = "Documentation for iw-generator"
+
+[paths]
+content = "docs"
+output = "site"
+
+[plugins]
+enable = ["toc", "search"]
