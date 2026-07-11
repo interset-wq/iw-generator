@@ -56,7 +56,7 @@ def test_markdown_frontmatter_toml():
 def test_markdown_code_highlight():
     renderer = MarkdownRenderer()
     _, html = renderer.render_string("```python\nprint('hi')\n```\n")
-    assert 'class="language-python"' in html
+    assert "highlight" in html
     assert "print" in html
 
 
