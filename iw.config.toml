@@ -7,5 +7,8 @@ description = "Documentation for iw-generator"
 content = "docs"
 output = "site"
 
+[theme]
+mode = "docs"
+
 [plugins]
 enable = ["toc", "search"]

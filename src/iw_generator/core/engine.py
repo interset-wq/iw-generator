@@ -125,13 +125,14 @@ class Engine:
     def _write_pages(self) -> None:
         env = create_jinja_env(self.config)
         nav = self._build_nav()
-        console.print(f"Writing [cyan]{len(self.site.pages)}[/] pages")
+        mode = self.config.theme.mode
+        console.print(f"Writing [cyan]{len(self.site.pages)}[/] pages (mode: {mode})")
 
         for page in self.site.pages:
             page.dest_path.parent.mkdir(parents=True, exist_ok=True)
             html = render_template(
                 env,
-                "base.html",
+                f"{mode}/base.html",
                 {
                     "site": self.config.site,
                     "page": page,
@@ -144,18 +145,44 @@ class Engine:
             self._run_plugin_hook("on_page_write", page, html)
 
     def _build_nav(self) -> list[dict]:
-        """Build navigation tree from pages sorted by path."""
+        """Build hierarchical navigation tree from pages sorted by path."""
         nav: list[dict] = []
-        for page in sorted(self.site.pages, key=lambda p: p.source_path.parts):
-            depth = len(page.source_path.relative_to(self.config.content_dir).parts) - 1
-            nav.append(
+        sorted_pages = sorted(self.site.pages, key=lambda p: p.source_path.parts)
+
+        for page in sorted_pages:
+            rel = page.source_path.relative_to(self.config.content_dir)
+            parts = rel.parts[:-1]  # directory parts (excluding filename)
+
+            # Build nested structure
+            current_level = nav
+            for i, part in enumerate(parts):
+                # Find or create section
+                section = None
+                for item in current_level:
+                    if item.get("section") == part:
+                        section = item
+                        break
+
+                if section is None:
+                    section = {
+                        "title": part.replace("-", " ").replace("_", " ").title(),
+                        "section": part,
+                        "children": [],
+                        "level": i + 1,
+                    }
+                    current_level.append(section)
+
+                current_level = section["children"]
+
+            # Add page to current level
+            current_level.append(
                 {
                     "title": page.title,
                     "url": page.url,
-                    "depth": depth,
                     "active": False,
                 }
             )
+
         return nav
 
 

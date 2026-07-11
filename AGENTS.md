@@ -2,7 +2,7 @@
 
 ## Project
 
-iw-generator: A general-purpose Markdown static site generator library (PyPI package). Currently in early scaffold stage.
+iw-generator: A general-purpose Markdown static site generator library (PyPI package) with a default `iw` theme supporting docs mode (MkDocs Material-like) and blog mode (Gmeek-like).
 
 ## Setup
 
@@ -15,7 +15,7 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 ## Key Files
 
 - `PLAN.md` — Full architecture and implementation plan. Read this first for context on intended structure, plugin system, theme system, and build pipeline.
-- `temp/` — Reference Gmeek project (the predecessor being refactored from). Ignore for production code.
+- `temp/material/` — Cloned MkDocs Material repo for CSS/SCSS reference
 - `main.py` — Placeholder entry point only.
 
 ## Architecture (from PLAN.md)
@@ -28,9 +28,9 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 - CLI: Click-based, registered via `[project.scripts]`
 - Plugin discovery: Python entry_points (`iw_generator.plugins`)
 
-## Dependencies (planned)
+## Dependencies
 
-- markdown-it-py, jinja2, click, rich, pygments
+- markdown, pymdown-extensions, jinja2, click, rich, pygments, beautifulsoup4
 - TOML: stdlib `tomllib` (Python >= 3.11), no fallback needed
 
 ## Conventions
@@ -38,6 +38,7 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 - `src/` layout (standard for PyPI packages)
 - uv for package management
 - hatchling as build backend
+- English only for AGENTS.md and code comments
 
 ## Git Rules
 

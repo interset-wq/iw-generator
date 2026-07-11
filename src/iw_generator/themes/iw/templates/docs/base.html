@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% if site.description %}
+    <meta name="description" content="{{ site.description }}">
+    {% endif %}
+
+    <title>{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ base_url | default('.') }}/assets/css/iw.css">
+    <link rel="stylesheet" href="{{ base_url | default('.') }}/assets/css/pygments.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+    <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+
+    {% block head %}{% endblock %}
+  </head>
+
+  <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      <a href="#content" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+    </div>
+
+    <header class="md-header md-header--shadow" data-md-component="header">
+      <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href="{{ base_url | default('.') }}" title="{{ site.name }}" class="md-header__button md-logo" aria-label="{{ site.name }}" data-md-component="logo">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+          <div class="md-header__ellipsis">
+            <div class="md-header__topic">
+              <span class="md-ellipsis">
+                {{ site.name }}
+              </span>
+            </div>
+            <div class="md-header__topic" data-md-component="header-topic">
+              <span class="md-ellipsis">
+                {{ page.title }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {% if site.url %}
+        <div class="md-header__source">
+          <a href="{{ site.url }}" title="Source" class="md-ellipsis">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="1.25rem" height="1.25rem"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </div>
+        {% endif %}
+      </nav>
+    </header>
+
+    <div class="md-container" data-md-component="container">
+
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+
+          <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+
+                <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                  <label class="md-nav__title" for="__drawer">
+                    <a href="{{ base_url | default('.') }}" title="{{ site.name }}" class="md-nav__button md-logo" aria-label="{{ site.name }}" data-md-component="logo">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+                    </a>
+                    {{ site.name }}
+                  </label>
+
+                  <ul class="md-nav__list" data-md-scrollfix>
+                    {% macro render_nav_item(item, level, path) %}
+                      {% if item.children is defined %}
+                        {% set is_active = false %}
+                        {% for child in item.children %}
+                          {% if child.url is defined and page.url == child.url %}
+                            {% set is_active = true %}
+                          {% endif %}
+                          {% if child.children is defined %}
+                            {% for grandchild in child.children %}
+                              {% if grandchild.url is defined and page.url == grandchild.url %}
+                                {% set is_active = true %}
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                        <li class="md-nav__item md-nav__item--nested{% if is_active %} md-nav__item--active{% endif %}">
+                          <input class="md-nav__toggle md-toggle" type="checkbox" id="{{ path }}"{% if is_active %} checked{% endif %}>
+                          <label class="md-nav__link" for="{{ path }}" id="{{ path }}_label" tabindex="0">
+                            <span class="md-ellipsis">{{ item.title }}</span>
+                            <span class="md-nav__icon md-icon"></span>
+                          </label>
+                          <nav class="md-nav" data-md-level="{{ level }}" aria-labelledby="{{ path }}_label" aria-expanded="{{ is_active }}">
+                            <label class="md-nav__title" for="{{ path }}">
+                              <span class="md-nav__icon md-icon"></span>
+                              {{ item.title }}
+                            </label>
+                            <ul class="md-nav__list" data-md-scrollfix>
+                              {% for child in item.children %}
+                                {{ render_nav_item(child, level + 1, path ~ "_" ~ loop.index) }}
+                              {% endfor %}
+                            </ul>
+                          </nav>
+                        </li>
+                      {% else %}
+                        <li class="md-nav__item{% if page.url == item.url %} md-nav__item--active{% endif %}">
+                          <a href="{{ item.url }}" class="md-nav__link{% if page.url == item.url %} md-nav__link--active{% endif %}">
+                            <span class="md-ellipsis">{{ item.title }}</span>
+                          </a>
+                        </li>
+                      {% endif %}
+                    {% endmacro %}
+
+                    {% for item in nav %}
+                      {{ render_nav_item(item, 1, "__nav_" ~ loop.index) }}
+                    {% endfor %}
+                  </ul>
+                </nav>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                {% if toc is defined and toc %}
+                <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+                  <label class="md-nav__title" for="__toc">
+                    <span class="md-nav__icon md-icon"></span>
+                    Table of contents
+                  </label>
+                  <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+                    {% for item in toc %}
+                    <li class="md-nav__item">
+                      <a href="#{{ item.id }}" class="md-nav__link">
+                        <span class="md-ellipsis">
+                          {{ item.title }}
+                        </span>
+                      </a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </nav>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              {% block content %}
+              {{ content | safe }}
+              {% endblock %}
+            </article>
+          </div>
+
+        </div>
+      </main>
+
+      <footer class="md-footer">
+        <div class="md-footer-meta md-typeset">
+          <div class="md-footer-meta__inner md-grid">
+            <div class="md-copyright">
+              {% if site.url %}
+              <a href="{{ site.url }}" target="_blank" rel="noopener">{{ site.name }}</a>
+              {% else %}
+              {{ site.name }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+
+    {% block script %}{% endblock %}
+  </body>
+</html>

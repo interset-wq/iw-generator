@@ -47,9 +47,7 @@ def build_cmd(source: str, config_path: str | None, output_path: str | None):
 
     console.print(
         Panel(
-            f"[green]Done![/]\n"
-            f"Pages: {len(site.pages)}\n"
-            f"Output: {cfg.output_dir}",
+            f"[green]Done![/]\nPages: {len(site.pages)}\nOutput: {cfg.output_dir}",
             title="Build Complete",
         )
     )
