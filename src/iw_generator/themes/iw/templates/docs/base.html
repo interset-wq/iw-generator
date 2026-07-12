@@ -37,10 +37,10 @@
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="/" title="{{ site.name }}" class="md-header__button md-logo" aria-label="{{ site.name }}" data-md-component="logo">
-      {{ get_icon("material/school") | safe }}
+      {{ get_icon("iw/school") | safe }}
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      {{ get_icon("material/menu") | safe }}
+      {{ get_icon("iw/menu") | safe }}
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -60,18 +60,18 @@
     <form class="md-header__option" data-md-component="palette">
       <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-        {{ get_icon("material/brightness-7") | safe }}
+        {{ get_icon("iw/brightness-7") | safe }}
       </label>
       <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
-        {{ get_icon("material/brightness-4") | safe }}
+        {{ get_icon("iw/brightness-4") | safe }}
       </label>
     </form>
 
     <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
 
     <label class="md-header__button md-icon" for="__search">
-      {{ get_icon("material/magnify") | safe }}
+      {{ get_icon("iw/magnify") | safe }}
     </label>
     <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -79,12 +79,12 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        {{ get_icon("material/magnify") | safe }}
-        {{ get_icon("material/arrow-back") | safe }}
+        {{ get_icon("iw/magnify") | safe }}
+        {{ get_icon("iw/arrow-back") | safe }}
       </label>
       <nav class="md-search__options" aria-label="Search">
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          {{ get_icon("material/close") | safe }}
+          {{ get_icon("iw/close") | safe }}
         </button>
       </nav>
       <div class="md-search__suggest" data-md-component="search-suggest"></div>
@@ -117,7 +117,7 @@
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="/" title="{{ site.name }}" class="md-nav__button md-logo" aria-label="{{ site.name }}" data-md-component="logo">
-      {{ get_icon("material/school") | safe }}
+      {{ get_icon("iw/school") | safe }}
     </a>
     {{ site.name }}
   </label>
