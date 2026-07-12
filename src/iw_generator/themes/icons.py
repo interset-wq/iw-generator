@@ -1,43 +1,31 @@
-"""Shared SVG icons for all themes. Loads from icons.json."""
+"""Shared SVG icons for all themes. Loads from icons_cache.json (built from .icons/)."""
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-_ICONS_PATH = Path(__file__).parent / "icons.json"
-ICONS: dict[str, str] = {}
+_CACHE_PATH = Path(__file__).parent / "icons_cache.json"
+_ICONS: dict[str, str] = {}
 
 
 def _load_icons() -> dict[str, str]:
-    """Load icons from JSON file."""
-    if not ICONS:
-        with open(_ICONS_PATH, encoding="utf-8") as f:
-            ICONS.update(json.load(f))
-    return ICONS
+    """Load icons from pre-built JSON cache."""
+    global _ICONS
+    if _ICONS:
+        return _ICONS
+    if _CACHE_PATH.exists():
+        with open(_CACHE_PATH, encoding="utf-8") as f:
+            _ICONS = json.load(f)
+    return _ICONS
 
 
 def get_icon(name: str) -> str:
-    """Get SVG icon by name.
-
-    Args:
-        name: Icon name in format "iw/name" (e.g., "iw/menu")
-
-    Returns:
-        SVG string or empty string if not found
-    """
+    """Get SVG path data by name (e.g., 'material/home-outline')."""
     return _load_icons().get(name, "")
 
 
-def get_icon_or_default(name: str, default: str = "iw/school") -> str:
-    """Get SVG icon by name with fallback to default.
-
-    Args:
-        name: Icon name in format "iw/name"
-        default: Default icon name to use if requested icon not found
-
-    Returns:
-        SVG string
-    """
+def get_icon_or_default(name: str, default: str = "material/home-outline") -> str:
+    """Get SVG path data by name with fallback."""
     icons = _load_icons()
     return icons.get(name, icons.get(default, ""))
