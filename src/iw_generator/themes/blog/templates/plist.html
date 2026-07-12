@@ -41,20 +41,20 @@
 </div>
 <div class="title-right">
     <a href="/tag.html" class="btn btn-invisible circle" title="Tags">
-        <svg class="octicon" width="16" height="16" >
+        <svg class="octicon" width="16" height="16">
             <path id="pathSearch" fill-rule="evenodd"></path>
         </svg>
     </a>
     {% if site.url %}
     <a href="/rss.xml" target="_blank" class="btn btn-invisible circle" title="RSS">
-        <svg class="octicon" width="16" height="16" >
+        <svg class="octicon" width="16" height="16">
             <path id="pathRSS" fill-rule="evenodd"></path>
         </svg>
     </a>
     {% endif %}
     {%- if theme.mode == 'iw' -%}
     <a class="btn btn-invisible circle" onclick="modeSwitch()" title="Switch theme">
-        <svg class="octicon" width="16" height="16" >
+        <svg class="octicon" width="16" height="16">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
@@ -70,7 +70,7 @@
 {% for page in pages %}
 <a class="SideNav-item d-flex flex-items-center flex-justify-between" href="{{ page.url }}">
     <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path d=""></path></svg>
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop{{ page.top | default(0) }}" d=""></path></svg>
         <span class="listTitle">{{ page.title }}</span>
     </div>
     <div class="listLabels">
@@ -90,5 +90,14 @@
 <script>
 document.getElementById("pathSearch").setAttribute("d",IconList["search"]);
 document.getElementById("pathRSS").setAttribute("d",IconList["rss"]);
+iconTOP=document.getElementsByClassName("svgTop1");
+iconPost=document.getElementsByClassName("svgTop0");
+for(var i=0;i<iconTOP.length;i++){
+    iconTOP[i].setAttribute("d",IconList["upload"]);
+    iconTOP[i].parentNode.style.color="red";
+}
+for(var i=0;i<iconPost.length;i++){
+    iconPost[i].setAttribute("d",IconList["post"]);
+}
 </script>
 {% endblock %}
