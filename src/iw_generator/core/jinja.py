@@ -27,7 +27,6 @@ def get_theme_dir(config: Config) -> Path:
 def create_jinja_env(config: Config) -> Environment:
     """Create a Jinja2 environment with the theme's templates."""
     theme_dir = get_theme_dir(config)
-    theme_name = config.theme.name
     templates_dir = theme_dir / "templates"
 
     env = Environment(
@@ -39,14 +38,12 @@ def create_jinja_env(config: Config) -> Environment:
 
     # Add icon functions to environment
     try:
-        # Try to load icons from the current theme
-        theme_module = __import__(
-            f"iw_generator.themes.{theme_name}.icons",
-            fromlist=["get_icon", "get_icon_or_default"],
-        )
-        env.globals["get_icon"] = theme_module.get_icon
-        env.globals["get_icon_or_default"] = theme_module.get_icon_or_default
-    except (ImportError, ModuleNotFoundError):
+        # Load icons from shared themes/icons.py
+        from ..themes.icons import get_icon, get_icon_or_default
+
+        env.globals["get_icon"] = get_icon
+        env.globals["get_icon_or_default"] = get_icon_or_default
+    except ImportError:
         # Icons module not available (e.g., custom theme)
         env.globals["get_icon"] = lambda name: ""
         env.globals["get_icon_or_default"] = lambda name, default="": ""
