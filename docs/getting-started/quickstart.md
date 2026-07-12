@@ -1,5 +1,10 @@
 ---
 title: "Quick Start"
+date: 2024-01-16
+tags: [setup, tutorial]
+category: Tutorial
+pin: 2
+description: "Get started with iw-generator in 3 steps"
 ---
 
 # Quick Start
