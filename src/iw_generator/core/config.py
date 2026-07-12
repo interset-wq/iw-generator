@@ -36,6 +36,12 @@ class ThemeSettings(BaseModel):
     name: str = "iw"
     custom_dir: str = ""
     mode: str = "iw"  # "iw", "doc", or "blog"
+    lang: str = "en"  # "en", "zh-CN", etc.
+    favicon: str = ""
+    og_image: str = ""
+    avatar: str = ""
+    gmeek_vercount_url: str = ""  # URL for GmeekVercount.js
+    gmeek_toc_url: str = ""  # URL for GmeekTOC.js
     palette: ThemePaletteSettings = Field(default_factory=ThemePaletteSettings)
     font: ThemeFontSettings = Field(default_factory=ThemeFontSettings)
     github_repo: str = ""

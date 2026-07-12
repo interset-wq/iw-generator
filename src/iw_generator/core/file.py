@@ -16,18 +16,32 @@ class Page:
     title: str = ""
     date: str = ""
     tags: list[str] = field(default_factory=list)
+    category: str = ""
+    pin: int = 0  # Pin order (0 = not pinned, higher = more pinned)
+    description: str = ""
+    image: str = ""  # Cover image for og:image
     frontmatter: dict = field(default_factory=dict)
     raw_content: str = ""
     html_content: str = ""
+    comments_count: int = 0  # For blog theme (from GitHub Issues)
     _slug: str = field(default="", repr=False)
 
     def __post_init__(self):
         if not self._slug:
             # Generate slug from dest_path
-            # e.g., /path/to/site/page/index.html -> /page
+            # e.g., site/docs/guide.html -> docs/guide
+            # e.g., site/index.html -> ""
+            # e.g., site/post/foo.html -> post/foo
             try:
-                rel = self.dest_path.parent.relative_to(self.dest_path.parents[1])
-                self._slug = "/" + str(rel).replace("\\", "/")
+                parts = self.dest_path.with_suffix("").parts
+                # Remove the output dir (first part) and handle index
+                if len(parts) <= 1:
+                    self._slug = ""
+                elif parts[-1] == "index":
+                    # e.g., ("site", "docs", "index") -> "docs"
+                    self._slug = "/".join(parts[1:-1])
+                else:
+                    self._slug = "/".join(parts[1:])
             except (ValueError, IndexError):
                 self._slug = ""
 
@@ -37,7 +51,7 @@ class Page:
 
     @property
     def url(self) -> str:
-        return f"{self.slug}/" if self.slug else "/"
+        return f"/{self.slug}/" if self.slug else "/"
 
     @property
     def relative_path(self) -> str:

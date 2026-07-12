@@ -96,6 +96,10 @@ class Engine:
         page.frontmatter = frontmatter
         page.title = frontmatter.get("title", rel.stem)
         page.date = str(frontmatter.get("date", ""))
+        page.description = frontmatter.get("description", "")
+        page.image = frontmatter.get("image", "")
+        page.category = frontmatter.get("category", "")
+        page.pin = int(frontmatter.get("pin", 0))
         tags = frontmatter.get("tags", [])
         page.tags = tags if isinstance(tags, list) else []
 

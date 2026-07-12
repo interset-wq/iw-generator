@@ -1,15 +1,18 @@
 [site]
-name = "iw-generator docs"
+name = "My Blog"
 url = "https://example.com"
-description = "Documentation for iw-generator"
+description = "A personal blog powered by iw-generator"
 
 [paths]
 content = "docs"
 output = "site"
 
 [theme]
-name = "iw"
-mode = "iw"
+name = "blog"
+mode = "blog"
+lang = "zh-CN"
+favicon = "https://github.githubassets.com/favicons/favicon.svg"
+avatar = "https://github.githubassets.com/favicons/favicon.svg"
 
 [plugins]
 enable = ["toc", "search"]
