@@ -8,7 +8,7 @@ from rich.console import Console
 
 from .config import Config
 from .file import Page, Site
-from .jinja import create_jinja_env, render_template
+from .jinja import create_jinja_env, get_theme_dir, render_template
 from .markdown import MarkdownRenderer
 from .plugin import PluginBase, discover_plugins
 from .utils import clean_dir, copy_tree
@@ -114,28 +114,36 @@ class Engine:
             copy_tree(static_dir, dest)
 
         # Copy theme assets
-        from .jinja import get_theme_dir
-
         theme_dir = get_theme_dir(self.config)
         assets_dir = theme_dir / "assets"
         if assets_dir.is_dir():
             dest = self.config.output_dir / "assets"
             copy_tree(assets_dir, dest)
 
-        # For doc theme, also copy Material compiled assets
-        if self.config.theme.mode == "doc":
-            material_assets = theme_dir / "assets"
-            if material_assets.is_dir():
-                dest = self.config.output_dir / "assets"
-                copy_tree(material_assets, dest)
-
     def _write_pages(self) -> None:
         env = create_jinja_env(self.config)
+        theme_dir = get_theme_dir(self.config)
+
+        # Check for custom theme hooks
+        hooks_file = theme_dir / "hooks.py"
+        hooks = self._load_theme_hooks(hooks_file) if hooks_file.exists() else {}
+
+        # Let theme hooks handle page writing, or use default
+        if "write_pages" in hooks:
+            hooks["write_pages"](self, env, theme_dir)
+        else:
+            self._default_write_pages(env)
+
+    def _default_write_pages(self, env) -> None:
+        """Default page writing logic."""
         nav = self._build_nav()
         theme_name = self.config.theme.name
         console.print(
             f"Writing [cyan]{len(self.site.pages)}[/] pages (theme: {theme_name})"
         )
+
+        # Load theme context
+        theme_context = self._get_theme_context()
 
         for page in self.site.pages:
             page.dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -148,10 +156,52 @@ class Engine:
                     "content": page.html_content,
                     "nav": nav,
                     "config": self.config,
+                    **theme_context,
                 },
             )
             page.dest_path.write_text(html, encoding="utf-8")
             self._run_plugin_hook("on_page_write", page, html)
+
+    def _get_theme_context(self) -> dict:
+        """Get theme-specific context variables."""
+        theme_dir = get_theme_dir(self.config)
+        context = {}
+
+        # Load icons if available
+        try:
+            from ..themes.icons import _load_icons
+
+            context["icons"] = _load_icons()
+        except ImportError:
+            context["icons"] = {}
+
+        # Load theme config if available
+        theme_config_file = theme_dir / "theme.toml"
+        if theme_config_file.exists():
+            import tomllib
+
+            with open(theme_config_file, "rb") as f:
+                context["theme_config"] = tomllib.load(f)
+        else:
+            context["theme_config"] = {}
+
+        context["theme"] = self.config.theme
+        return context
+
+    def _load_theme_hooks(self, hooks_file: Path) -> dict:
+        """Load theme hooks from hooks.py."""
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("theme_hooks", hooks_file)
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return {
+                name: getattr(module, name)
+                for name in dir(module)
+                if callable(getattr(module, name)) and not name.startswith("_")
+            }
+        return {}
 
     def _build_nav(self) -> list[dict]:
         """Build hierarchical navigation tree from pages sorted by path."""
