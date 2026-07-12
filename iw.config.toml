@@ -14,5 +14,11 @@ lang = "zh-CN"
 favicon = "https://github.githubassets.com/favicons/favicon.svg"
 avatar = "https://github.githubassets.com/favicons/favicon.svg"
 
+[theme.social]
+github = "https://github.com/your-username"
+twitter = "https://twitter.com/your-username"
+email = "your-email@example.com"
+enable = ["github", "twitter", "email"]
+
 [plugins]
 enable = ["toc", "search"]
