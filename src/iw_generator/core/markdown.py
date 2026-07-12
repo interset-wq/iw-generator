@@ -101,15 +101,15 @@ def create_markdown_instance() -> markdown.Markdown:
         extension_configs={
             "pymdownx.highlight": {
                 "linenums": False,
-                "css_class": "highlight",
-                "pygments_style": "default",
+                "css_class": "",
+                "use_pygments": False,
             },
             "pymdownx.superfences": {},
             "pymdownx.tabbed": {
                 "alternate_style": True,
             },
             "toc": {
-                "permalink": True,
+                "permalink": False,
             },
             "pymdownx.emoji": {
                 "emoji_index": emoji.twemoji,

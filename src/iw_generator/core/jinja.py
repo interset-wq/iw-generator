@@ -35,6 +35,18 @@ def create_jinja_env(config: Config) -> Environment:
         trim_blocks=True,
         lstrip_blocks=True,
     )
+
+    # Add icon functions to environment
+    try:
+        from ..themes.iw.icons import get_icon, get_icon_or_default
+
+        env.globals["get_icon"] = get_icon
+        env.globals["get_icon_or_default"] = get_icon_or_default
+    except ImportError:
+        # Icons module not available (e.g., custom theme)
+        env.globals["get_icon"] = lambda name: ""
+        env.globals["get_icon_or_default"] = lambda name, default="": ""
+
     return env
 
 
