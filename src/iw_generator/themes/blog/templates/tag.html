@@ -49,7 +49,7 @@
 
 {% block script %}
 <script>
-document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
 
 let jsonData = {{ pages | tojson }};
 let labelsCount = {};
@@ -101,7 +101,7 @@ jsonData.forEach(page => {
     let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     svg.setAttributeNS(null, "class", "SideNav-icon octicon");
     svg.setAttributeNS(null, "style", "width:16px;height:16px");
-    path.setAttributeNS(null, "d", IconList["post"]);
+    path.setAttributeNS(null, "d", IconList["iw/post"]);
     svg.appendChild(path);
 
     let title = document.createElement("span");

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta name="description" content="{{ category }} - {{ site.name }}">
+<meta property="og:title" content="{{ category }} - {{ site.name }}">
+<meta property="og:description" content="Posts in category: {{ category }}">
+<meta property="og:type" content="website">
+<title>{{ category }} - {{ site.name }}</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.categoryTitle{margin:auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+.SideNav{min-width: 360px;}
+.SideNav-icon{margin-right: 16px}
+.SideNav-item .Label{color: #fff;margin-left:4px;}
+.d-flex{min-width:0;}
+.listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
+.listLabels{white-space:nowrap;display:flex;}
+.listLabels object{max-height:16px;max-width:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .categoryTitle{display:none;}
+    .LabelTime{display:none;}
+}
+</style>
+{% endblock %}
+
+{% block header %}
+<h1 class="categoryTitle">{{ category }}</h1>
+<div class="title-right">
+    <a href="/categories.html" class="btn btn-invisible circle" title="All Categories">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathCategories" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    <a href="/" class="btn btn-invisible circle" title="Home">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<nav class="SideNav border">
+{% for page in pages %}
+<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="{{ page.url }}">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop{{ 1 if page.pin > 0 else 0 }}" d=""></path></svg>
+        <span class="listTitle">{{ page.title }}</span>
+    </div>
+    <div class="listLabels">
+        {% for tag in page.tags %}
+        <span class="Label LabelName" style="background-color:#0969da"><object><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></object></span>
+        {% endfor %}
+        {% if page.date %}
+        <span class="Label LabelTime" style="background-color:#0969da">{{ page.date }}</span>
+        {% endif %}
+    </div>
+</a>
+{% endfor %}
+</nav>
+{% endblock %}
+
+{% block script %}
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
+document.getElementById("pathCategories").setAttribute("d",IconList["iw/folder"]);
+</script>
+{% endblock %}

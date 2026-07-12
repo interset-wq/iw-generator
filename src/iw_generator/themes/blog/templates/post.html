@@ -6,7 +6,7 @@
 <meta property="og:description" content="{{ page.description or site.description }}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<meta property="og:image" content="{{ site.url }}/avatar.svg">
+<meta property="og:image" content="{{ page.image or theme.og_image or theme.avatar or site.url ~ '/avatar.svg' }}">
 <title>{{ page.title }}</title>
 {% endblock %}
 
@@ -77,7 +77,10 @@
 
 {% block script %}
 <script>
-document.getElementById("pathHome").setAttribute("d",IconList["home"]);
-{% if page.issue %}document.getElementById("pathIssue").setAttribute("d",IconList["github"]);{% endif %}
+document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
+{% if page.issue %}document.getElementById("pathIssue").setAttribute("d",IconList["iw/github"]);{% endif %}
 </script>
+{%- if theme.gmeek_toc_url -%}
+<script src='{{ theme.gmeek_toc_url }}'></script>
+{%- endif -%}
 {% endblock %}

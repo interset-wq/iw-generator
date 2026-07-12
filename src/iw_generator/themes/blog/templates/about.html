@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta name="description" content="{{ page.description or 'About ' ~ site.name }}">
+<meta property="og:title" content="{{ page.title }} - {{ site.name }}">
+<meta property="og:description" content="{{ page.description or 'About ' ~ site.name }}">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="{{ site.url }}/about/">
+<meta property="og:image" content="{{ page.image or theme.avatar or site.url ~ '/avatar.svg' }}">
+<title>{{ page.title }} - {{ site.name }}</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.about-header{display:flex;align-items:center;margin-bottom:24px;}
+.about-avatar{width:96px;height:96px;border-radius:50%;margin-right:24px;}
+.about-title{font-size:32px;font-weight:bold;margin:0;}
+.about-subtitle{color:var(--color-fg-muted);margin-top:4px;}
+</style>
+{% endblock %}
+
+{% block header %}
+<h1 style="margin:auto 0;font-size:40px;font-weight:bold;">{{ page.title }}</h1>
+<div class="title-right">
+    <a href="/" class="btn btn-invisible circle" title="Home">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="markdown-body">
+{{ content | safe }}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+</script>
+{% endblock %}

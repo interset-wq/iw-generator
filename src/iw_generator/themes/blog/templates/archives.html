@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta name="description" content="Archives - {{ site.name }}">
+<meta property="og:title" content="Archives - {{ site.name }}">
+<meta property="og:description" content="All posts by date">
+<meta property="og:type" content="website">
+<title>Archives - {{ site.name }}</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.archives-year{font-size:24px;font-weight:bold;margin:24px 0 12px;color:var(--color-fg-muted);}
+.archives-list{list-style:none;padding:0;margin:0;}
+.archives-item{padding:8px 0;border-bottom:1px solid var(--borderColor-muted, var(--color-border-muted));}
+.archives-item a{color:inherit;text-decoration:none;}
+.archives-item a:hover{color:var(--color-accent-fg);}
+.archives-date{color:var(--color-fg-muted);margin-right:12px;font-size:14px;}
+.archives-title{font-size:16px;}
+.archives-count{color:var(--color-fg-muted);font-size:14px;margin-top:24px;}
+</style>
+{% endblock %}
+
+{% block header %}
+<h1 style="margin:auto 0;font-size:40px;font-weight:bold;">Archives</h1>
+<div class="title-right">
+    <a href="/" class="btn btn-invisible circle" title="Home">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="archives-count">{{ total_posts }} posts total</div>
+{% for year_data in archives %}
+<div class="archives-year">{{ year_data.year }}</div>
+<ul class="archives-list">
+    {% for page in year_data.pages %}
+    <li class="archives-item">
+        <span class="archives-date">{{ page.date }}</span>
+        <a href="{{ page.url }}" class="archives-title">{{ page.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
+</script>
+{% endblock %}
