@@ -102,19 +102,19 @@
 
 {% block script %}
 <script>
-document.getElementById("pathArchives").setAttribute("d",IconList["upload"]);
-document.getElementById("pathCategories").setAttribute("d",IconList["link"]);
-document.getElementById("pathTags").setAttribute("d",IconList["search"]);
-document.getElementById("pathAbout").setAttribute("d",IconList["about"]);
-document.getElementById("themeSwitch").setAttribute("d",IconList["sun"]);
+document.getElementById("pathArchives").setAttribute("d",IconList["material/archive-outline"]);
+document.getElementById("pathCategories").setAttribute("d",IconList["material/folder-outline"]);
+document.getElementById("pathTags").setAttribute("d",IconList["material/tag-outline"]);
+document.getElementById("pathAbout").setAttribute("d",IconList["material/account-outline"]);
+document.getElementById("themeSwitch").setAttribute("d",IconList["material/brightness-7"]);
 iconTOP=document.getElementsByClassName("svgTop1");
 iconPost=document.getElementsByClassName("svgTop0");
 for(var i=0;i<iconTOP.length;i++){
-    iconTOP[i].setAttribute("d",IconList["upload"]);
+    iconTOP[i].setAttribute("d",IconList["material/push-pin"]);
     iconTOP[i].parentNode.style.color="red";
 }
 for(var i=0;i<iconPost.length;i++){
-    iconPost[i].setAttribute("d",IconList["post"]);
+    iconPost[i].setAttribute("d",IconList["material/article-outline"]);
 }
 </script>
 {% endblock %}
