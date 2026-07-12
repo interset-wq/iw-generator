@@ -81,3 +81,54 @@ def test_site_tags():
     tags = site.all_tags()
     assert tags["python"] == 2
     assert tags["web"] == 1
+
+
+def test_page_about():
+    """Test about page detection."""
+    page = Page(
+        source_path=Path("docs/about.md"),
+        dest_path=Path("site/about/index.html"),
+        content_dir=Path("docs"),
+    )
+    assert page.source_path.name == "about.md"
+    assert "about" in str(page.dest_path)
+
+
+def test_page_frontmatter_fields():
+    """Test page frontmatter fields."""
+    page = Page(
+        source_path=Path("content/post.md"),
+        dest_path=Path("site/post/index.html"),
+        content_dir=Path("content"),
+    )
+    page.title = "Test Post"
+    page.date = "2026-01-01"
+    page.category = "tech"
+    page.tags = ["python", "testing"]
+    page.pin = 1
+    page.description = "A test post"
+
+    assert page.title == "Test Post"
+    assert page.date == "2026-01-01"
+    assert page.category == "tech"
+    assert page.tags == ["python", "testing"]
+    assert page.pin == 1
+    assert page.description == "A test post"
+
+
+def test_page_url_generation():
+    """Test URL generation for pages."""
+    page = Page(
+        source_path=Path("content/docs/guide.md"),
+        dest_path=Path("site/docs/guide/index.html"),
+        content_dir=Path("content"),
+    )
+    assert page.url == "/docs/guide/"
+
+    # Test index page
+    index_page = Page(
+        source_path=Path("content/index.md"),
+        dest_path=Path("site/index.html"),
+        content_dir=Path("content"),
+    )
+    assert index_page.url == "/"

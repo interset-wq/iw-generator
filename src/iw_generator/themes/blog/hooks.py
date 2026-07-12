@@ -45,6 +45,7 @@ def write_pages(engine, env, theme_dir):
     _write_archives(engine, env, theme_context)
     _write_categories(engine, env, theme_context)
     _write_tags_page(engine, env, theme_context)
+    _write_about_page(engine, env, theme_context)
     _write_post_list_json(engine)
 
 
@@ -263,6 +264,37 @@ def _write_legacy_tag_page(engine, env, theme_context, pages_by_tag):
     )
     tag_path.write_text(html, encoding="utf-8")
     console.print(f"  Written: [cyan]{tag_path}[/]")
+
+
+def _write_about_page(engine, env, theme_context):
+    """Write the about page if docs/about.md exists."""
+    # Find the about page in the site pages
+    about_page = None
+    for page in engine.site.pages:
+        if page.source_path.name == "about.md":
+            about_page = page
+            break
+
+    if not about_page:
+        # Create a default about page if no about.md exists
+        return
+
+    about_path = engine.config.output_dir / "about" / "index.html"
+    about_path.parent.mkdir(parents=True, exist_ok=True)
+
+    html = render_template(
+        env,
+        "about.html",
+        {
+            "site": engine.config.site,
+            "page": about_page,
+            "content": about_page.html_content,
+            "config": engine.config,
+            **theme_context,
+        },
+    )
+    about_path.write_text(html, encoding="utf-8")
+    console.print(f"  Written: [cyan]{about_path}[/]")
 
 
 def _write_post_list_json(engine):

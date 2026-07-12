@@ -11,12 +11,35 @@
 {%- if theme.favicon -%}
     <link rel="icon" href="{{ theme.favicon }}">
 {%- endif -%}
-{%- if theme.mode in ['iw', 'blog'] -%}
     <script>
-        let savedTheme = localStorage.getItem("meek_theme") || "light";
-        document.documentElement.setAttribute("data-color-mode", savedTheme);
+    var IconList={{ icons | tojson }};
+    {%- if theme.mode in ['iw', 'blog'] %}
+    let savedTheme = localStorage.getItem("meek_theme") || "light";
+    document.documentElement.setAttribute("data-color-mode", savedTheme);
+    let themeSettings={
+        "dark": ["dark","moon","#00f0ff","dark-blue"],
+        "light": ["light","sun","#ff5000","github-light"],
+        "auto": ["auto","sync","","preferred-color-scheme"]
+    };
+    function changeTheme(mode, icon, color){
+        document.documentElement.setAttribute("data-color-mode",mode);
+        var themeSwitch = document.getElementById("themeSwitch");
+        if(themeSwitch){
+            themeSwitch.setAttribute("d",IconList[icon]);
+            themeSwitch.parentNode.style.color=color;
+        }
+    }
+    function modeSwitch(){
+        let currentMode=document.documentElement.getAttribute('data-color-mode');
+        let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+        localStorage.setItem("meek_theme", newMode);
+        if(themeSettings[newMode]){
+            changeTheme(...themeSettings[newMode]);
+        }
+    }
+    if(themeSettings[savedTheme]){changeTheme(...themeSettings[savedTheme]);}
+    {%- endif %}
     </script>
-{%- endif -%}
     <style>
     html{height:100%;}
     body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 0 auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;display:flex;flex-direction:column;min-height:100vh;}
@@ -35,32 +58,5 @@
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">{% include 'footer.html' %}</div>
 </body>
-<script>
-var IconList={{ icons | tojson }};
-{%- if theme.mode in ['iw', 'blog'] %}
-let themeSettings={
-    "dark": ["dark","moon","#00f0ff","dark-blue"],
-    "light": ["light","sun","#ff5000","github-light"],
-    "auto": ["auto","sync","","preferred-color-scheme"]
-};
-function changeTheme(mode, icon, color, utheme){
-    document.documentElement.setAttribute("data-color-mode",mode);
-    var themeSwitch = document.getElementById("themeSwitch");
-    if(themeSwitch){
-        themeSwitch.setAttribute("d",IconList[icon]);
-        themeSwitch.parentNode.style.color=color;
-    }
-}
-function modeSwitch(){
-    let currentMode=document.documentElement.getAttribute('data-color-mode');
-    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
-    localStorage.setItem("meek_theme", newMode);
-    if(themeSettings[newMode]){
-        changeTheme(...themeSettings[newMode]);
-    }
-}
-if(themeSettings[savedTheme]){changeTheme(...themeSettings[savedTheme]);}
-{%- endif %}
-</script>
 {% block script %}{% endblock %}
 </html>
