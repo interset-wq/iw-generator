@@ -35,9 +35,11 @@ class ThemeFontSettings(BaseModel):
 class ThemeSettings(BaseModel):
     name: str = "iw"
     custom_dir: str = ""
-    mode: str = "docs"  # "docs" or "blog"
+    mode: str = "iw"  # "iw", "doc", or "blog"
     palette: ThemePaletteSettings = Field(default_factory=ThemePaletteSettings)
     font: ThemeFontSettings = Field(default_factory=ThemeFontSettings)
+    github_repo: str = ""
+    github_token: str = ""
 
 
 class PluginsSettings(BaseModel):
