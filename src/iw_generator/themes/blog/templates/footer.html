@@ -1,3 +1,46 @@
+{% set social_enable = theme.social.enable %}
+<div class="footer-links">
+    {% if 'github' in social_enable and theme.social.github %}
+    <a href="{{ theme.social.github }}" target="_blank" title="GitHub">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/github" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'twitter' in social_enable and theme.social.twitter %}
+    <a href="{{ theme.social.twitter }}" target="_blank" title="Twitter">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/x" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'telegram' in social_enable and theme.social.telegram %}
+    <a href="{{ theme.social.telegram }}" target="_blank" title="Telegram">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/telegram" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'discord' in social_enable and theme.social.discord %}
+    <a href="{{ theme.social.discord }}" target="_blank" title="Discord">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/discord" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'youtube' in social_enable and theme.social.youtube %}
+    <a href="{{ theme.social.youtube }}" target="_blank" title="YouTube">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/youtube" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'linkedin' in social_enable and theme.social.linkedin %}
+    <a href="{{ theme.social.linkedin }}" target="_blank" title="LinkedIn">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="logo/linkedin" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if 'email' in social_enable and theme.social.email %}
+    <a href="mailto:{{ theme.social.email }}" title="Email">
+        <svg class="octicon" width="16" height="16"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if site.url %}
+    <a href="/rss.xml" target="_blank" title="RSS">
+        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="iw/rss" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+</div>
 <div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a></div>
 <div id="footer2">
     <span>Powered by <a href="https://github.com/your-username/iw-generator" target="_blank">iw-generator</a></span>
@@ -6,4 +49,8 @@
 <script>
 var now=new Date();
 document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+document.querySelectorAll('.social-icon').forEach(function(el) {
+    var icon = el.getAttribute('data-icon');
+    if (IconList[icon]) el.setAttribute('d', IconList[icon]);
+});
 </script>

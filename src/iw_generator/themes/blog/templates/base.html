@@ -11,10 +11,10 @@
 {%- if theme.favicon -%}
     <link rel="icon" href="{{ theme.favicon }}">
 {%- endif -%}
-{%- if theme.mode == 'iw' -%}
+{%- if theme.mode in ['iw', 'blog'] -%}
     <script>
-        let theme = localStorage.getItem("meek_theme") || "light";
-        document.documentElement.setAttribute("data-color-mode", theme);
+        let savedTheme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", savedTheme);
     </script>
 {%- endif -%}
     <style>
@@ -23,6 +23,9 @@
     #header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
     #content{flex:1 0 auto;}
     #footer {flex-shrink:0;margin-top:auto;padding-top:32px;text-align: center;font-size: small;}
+    .footer-links {display:flex;justify-content:center;gap:16px;margin-bottom:16px;}
+    .footer-links a {color:var(--color-fg-muted);transition:color 0.2s;}
+    .footer-links a:hover {color:var(--color-accent-fg);}
     </style>
     {% block head %}{% endblock %}
     {% block style %}{% endblock %}
@@ -34,8 +37,7 @@
 </body>
 <script>
 var IconList={{ icons | tojson }};
-var utterancesLoad=0;
-{%- if theme.mode == 'iw' %}
+{%- if theme.mode in ['iw', 'blog'] %}
 let themeSettings={
     "dark": ["dark","moon","#00f0ff","dark-blue"],
     "light": ["light","sun","#ff5000","github-light"],
@@ -43,9 +45,11 @@ let themeSettings={
 };
 function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
-    document.getElementById("themeSwitch").setAttribute("d",IconList["iw/"+icon]);
-    document.getElementById("themeSwitch").parentNode.style.color=color;
-    if(utterancesLoad==1){utterancesTheme(utheme);}
+    var themeSwitch = document.getElementById("themeSwitch");
+    if(themeSwitch){
+        themeSwitch.setAttribute("d",IconList["iw/"+icon]);
+        themeSwitch.parentNode.style.color=color;
+    }
 }
 function modeSwitch(){
     let currentMode=document.documentElement.getAttribute('data-color-mode');
@@ -55,13 +59,7 @@ function modeSwitch(){
         changeTheme(...themeSettings[newMode]);
     }
 }
-function utterancesTheme(theme){
-    const message={type:'set-theme',theme: theme};
-    const iframe=document.getElementsByClassName('utterances-frame')[0];
-    iframe.contentWindow.postMessage(message,'https://utteranc.es');
-}
-if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
-console.log("\n %c Gmeek main https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+if(themeSettings[savedTheme]){changeTheme(...themeSettings[savedTheme]);}
 {%- endif %}
 </script>
 {% block script %}{% endblock %}
