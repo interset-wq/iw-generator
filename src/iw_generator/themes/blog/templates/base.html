@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://unpkg.com/@primer/css/dist/primer.css">
-    {% if site.url %}
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.url }}/rss.xml">
-    {% endif %}
     {%- if theme.mode == 'iw' -%}
     <script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -30,6 +27,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </body>
 <script>
 var IconList={{ icons | tojson }};
+var utterancesLoad=0;
 {%- if theme.mode == 'iw' %}
 let themeSettings={
     "dark": ["dark","moon","#00f0ff","dark-blue"],
@@ -40,6 +38,7 @@ function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
     document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
     document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
 }
 function modeSwitch(){
     let currentMode=document.documentElement.getAttribute('data-color-mode');
@@ -48,6 +47,11 @@ function modeSwitch(){
     if(themeSettings[newMode]){
         changeTheme(...themeSettings[newMode]);
     }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
 }
 if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
 {%- endif %}
