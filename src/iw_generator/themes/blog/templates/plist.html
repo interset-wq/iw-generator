@@ -57,13 +57,6 @@
             <path id="pathTags" fill-rule="evenodd"></path>
         </svg>
     </a>
-    {% if site.url %}
-    <a href="/rss.xml" target="_blank" id="buttonRSS" class="btn btn-invisible circle" title="RSS">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathRSS" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    {% endif %}
     {%- if theme.mode in ['iw', 'blog'] -%}
     <a class="btn btn-invisible circle" onclick="modeSwitch()" title="Switch theme">
         <svg class="octicon" width="16" height="16">
@@ -107,7 +100,6 @@
 document.getElementById("pathArchives").setAttribute("d",IconList["upload"]);
 document.getElementById("pathCategories").setAttribute("d",IconList["link"]);
 document.getElementById("pathTags").setAttribute("d",IconList["search"]);
-document.getElementById("pathRSS").setAttribute("d",IconList["rss"]);
 document.getElementById("themeSwitch").setAttribute("d",IconList["sun"]);
 iconTOP=document.getElementsByClassName("svgTop1");
 iconPost=document.getElementsByClassName("svgTop0");
