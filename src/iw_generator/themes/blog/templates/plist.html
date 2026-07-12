@@ -13,9 +13,9 @@
 <style>
 .avatar {transition: 0.8s;width:64px;height:64px;object-fit: cover;}
 .avatar:hover{transform: scale(1.15) rotate(360deg);}
-.title-left{display:flex;align-items:center;}
 .title-left a{color:inherit;text-decoration:none;vertical-align: bottom;font-size:40px;font-weight: bold;font-family:Monaco;margin-left:8px;}
 .title-right{display:flex;margin:auto 0 0 auto;}
+.title-right button{margin-right:8px;padding:16px;}
 .title-right .circle{padding: 14px 16px;}
 .SideNav{min-width: 360px;}
 .SideNav-icon{margin-right: 16px}
@@ -23,11 +23,13 @@
 .d-flex{min-width:0;}
 .listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
 .listLabels{white-space:nowrap;display:flex;}
-.LabelTime{display:none;}
+.listLabels object{max-height:16px;max-width:24px;}
 @media (max-width: 600px) {
     body {padding: 8px;}
     .avatar {width:40px;height:40px;}
     .blogTitle{display:none;}
+    #buttonRSS{display:none;}
+    .LabelTime{display:none;}
 }
 </style>
 {% endblock %}
@@ -35,18 +37,18 @@
 {% block header %}
 <div class="title-left">
     {% if site.avatar %}
-    <img src="{{ site.avatar }}" class="avatar circle" alt="avatar">
+    <img src="{{ site.avatar }}" class="avatar circle" id="avatarImg" alt="avatar">
     {% endif %}
     <a class="blogTitle">{{ site.name }}</a>
 </div>
 <div class="title-right">
-    <a href="/tag.html" class="btn btn-invisible circle" title="Tags">
+    <a href="/tag.html" id="buttonSearch" class="btn btn-invisible circle" title="Search">
         <svg class="octicon" width="16" height="16">
             <path id="pathSearch" fill-rule="evenodd"></path>
         </svg>
     </a>
     {% if site.url %}
-    <a href="/rss.xml" target="_blank" class="btn btn-invisible circle" title="RSS">
+    <a href="/rss.xml" target="_blank" id="buttonRSS" class="btn btn-invisible circle" title="RSS">
         <svg class="octicon" width="16" height="16">
             <path id="pathRSS" fill-rule="evenodd"></path>
         </svg>
@@ -63,9 +65,7 @@
 {% endblock %}
 
 {% block content %}
-{% if site.description %}
 <div style="margin-bottom: 16px;">{{ site.description }}</div>
-{% endif %}
 <nav class="SideNav border">
 {% for page in pages %}
 <a class="SideNav-item d-flex flex-items-center flex-justify-between" href="{{ page.url }}">
@@ -75,7 +75,7 @@
     </div>
     <div class="listLabels">
         {% for tag in page.tags %}
-        <span class="Label LabelName">{{ tag }}</span>
+        <span class="Label LabelName"><object><a style="color:#fff" href="tag.html#{{ tag }}">{{ tag }}</a></object></span>
         {% endfor %}
         {% if page.date %}
         <span class="Label LabelTime">{{ page.date }}</span>

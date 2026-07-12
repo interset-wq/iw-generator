@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="https://unpkg.com/@primer/css/dist/primer.css">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
     {%- if theme.mode == 'iw' -%}
     <script>
         let theme = localStorage.getItem("meek_theme") || "light";
@@ -36,7 +36,7 @@ let themeSettings={
 };
 function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
-    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").setAttribute("d",IconList[icon]);
     document.getElementById("themeSwitch").parentNode.style.color=color;
     if(utterancesLoad==1){utterancesTheme(utheme);}
 }
