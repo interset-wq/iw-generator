@@ -77,8 +77,9 @@
 
 {% block script %}
 <script>
-document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
-{% if page.issue %}document.getElementById("pathIssue").setAttribute("d",IconList["iw/github"]);{% endif %}
+document.getElementById("pathHome").setAttribute("d",IconList["upload"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["link"]);
+document.getElementById("themeSwitch").setAttribute("d",IconList["sun"]);
 </script>
 {%- if theme.gmeek_toc_url -%}
 <script src='{{ theme.gmeek_toc_url }}'></script>

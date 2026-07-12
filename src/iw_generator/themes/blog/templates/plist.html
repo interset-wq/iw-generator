@@ -104,18 +104,19 @@
 
 {% block script %}
 <script>
-document.getElementById("pathArchives").setAttribute("d",IconList["iw/archive"]);
-document.getElementById("pathCategories").setAttribute("d",IconList["iw/folder"]);
-document.getElementById("pathTags").setAttribute("d",IconList["iw/tag"]);
-document.getElementById("pathRSS").setAttribute("d",IconList["iw/rss"]);
+document.getElementById("pathArchives").setAttribute("d",IconList["upload"]);
+document.getElementById("pathCategories").setAttribute("d",IconList["link"]);
+document.getElementById("pathTags").setAttribute("d",IconList["search"]);
+document.getElementById("pathRSS").setAttribute("d",IconList["rss"]);
+document.getElementById("themeSwitch").setAttribute("d",IconList["sun"]);
 iconTOP=document.getElementsByClassName("svgTop1");
 iconPost=document.getElementsByClassName("svgTop0");
 for(var i=0;i<iconTOP.length;i++){
-    iconTOP[i].setAttribute("d",IconList["iw/upload"]);
+    iconTOP[i].setAttribute("d",IconList["upload"]);
     iconTOP[i].parentNode.style.color="red";
 }
 for(var i=0;i<iconPost.length;i++){
-    iconPost[i].setAttribute("d",IconList["iw/post"]);
+    iconPost[i].setAttribute("d",IconList["post"]);
 }
 </script>
 {% endblock %}

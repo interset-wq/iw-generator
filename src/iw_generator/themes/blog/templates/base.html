@@ -47,7 +47,7 @@ function changeTheme(mode, icon, color, utheme){
     document.documentElement.setAttribute("data-color-mode",mode);
     var themeSwitch = document.getElementById("themeSwitch");
     if(themeSwitch){
-        themeSwitch.setAttribute("d",IconList["iw/"+icon]);
+        themeSwitch.setAttribute("d",IconList[icon]);
         themeSwitch.parentNode.style.color=color;
     }
 }
