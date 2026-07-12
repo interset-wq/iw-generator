@@ -21,7 +21,7 @@ def get_icon(name: str) -> str:
     """Get SVG icon by name.
 
     Args:
-        name: Icon name in format "provider/name" (e.g., "material/menu")
+        name: Icon name in format "iw/name" (e.g., "iw/menu")
 
     Returns:
         SVG string or empty string if not found
@@ -29,11 +29,11 @@ def get_icon(name: str) -> str:
     return _load_icons().get(name, "")
 
 
-def get_icon_or_default(name: str, default: str = "material/school") -> str:
+def get_icon_or_default(name: str, default: str = "iw/school") -> str:
     """Get SVG icon by name with fallback to default.
 
     Args:
-        name: Icon name in format "provider/name"
+        name: Icon name in format "iw/name"
         default: Default icon name to use if requested icon not found
 
     Returns:
