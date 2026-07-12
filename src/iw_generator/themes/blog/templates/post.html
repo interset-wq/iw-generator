@@ -6,7 +6,8 @@
 <meta property="og:description" content="{{ page.description or site.description }}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<title>{{ page.title }} - {{ site.name }}</title>
+<meta property="og:image" content="{{ site.url }}/avatar.svg">
+<title>{{ page.title }}</title>
 {% endblock %}
 
 {% block style %}
@@ -16,35 +17,32 @@
 .title-right .circle{padding: 14px 16px;margin-right:8px;}
 #postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
 #postBody hr{height:2px;}
-.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word;}
-.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25;}
-.markdown-body h1{font-size:2em;border-bottom:1px solid var(--borderColor-muted, var(--color-border-muted));padding-bottom:.3em;}
-.markdown-body h2{font-size:1.5em;border-bottom:1px solid var(--borderColor-muted, var(--color-border-muted));padding-bottom:.3em;}
-.markdown-body p{margin-top:0;margin-bottom:16px;}
-.markdown-body code{padding:.2em .4em;margin:0;font-size:85%;background-color:rgba(175,184,193,0.2);border-radius:6px;font-family:sans-serif;}
-.markdown-body pre{margin-top:0;margin-bottom:16px;padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:var(--bgColor-muted, var(--color-canvas-subtle));border-radius:6px;}
-.markdown-body pre code{background:transparent;padding:0;margin:0;font-size:100%;word-wrap:normal;}
-.markdown-body blockquote{margin:0 0 16px 0;padding:0 1em;color:var(--fgColor-muted, var(--color-fg-muted));border-left:.25em solid var(--borderColor-default, var(--color-border-default));}
-.markdown-body ul,.markdown-body ol{margin-top:0;margin-bottom:16px;padding-left:2em;}
-.markdown-body li{margin-top:.25em;}
-.markdown-body table{display:block;width:fit-content;max-width:100%;overflow:auto;margin-top:0;margin-bottom:16px;border-spacing:0;border-collapse:collapse;}
-.markdown-body table th,.markdown-body table td{padding:6px 13px;border:1px solid var(--borderColor-default, var(--color-border-default));}
-.markdown-body table th{font-weight:600;background-color:var(--bgColor-muted, var(--color-canvas-subtle));}
-.markdown-body table tr:nth-child(2n){background-color:var(--bgColor-muted, var(--color-canvas-subtle));}
-.markdown-body img{max-width:100%;box-sizing:border-box;border-radius:6px;}
-.markdown-body a{color:var(--fgColor-accent, var(--color-accent-fg));text-decoration:none;}
-.markdown-body a:hover{text-decoration:underline;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
 @media (max-width: 600px) {
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
 </style>
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style><style>.markdown-alert.markdown-alert-tip {border-left-color:var(--borderColor-success-emphasis, var(--color-success-emphasis));background-color:var(--color-success-subtle);}.markdown-alert.markdown-alert-tip .markdown-alert-title {color: var(--fgColor-success,var(--color-success-fg));}</style><style>.markdown-alert.markdown-alert-important {border-left-color:var(--borderColor-done-emphasis, var(--color-done-emphasis));background-color:var(--color-done-subtle);}.markdown-alert.markdown-alert-important .markdown-alert-title {color: var(--fgColor-done,var(--color-done-fg));}</style><style>.markdown-alert.markdown-alert-caution {border-left-color:var(--borderColor-danger-emphasis, var(--color-danger-emphasis));background-color:var(--color-danger-subtle);}.markdown-alert.markdown-alert-caution .markdown-alert-title {color: var(--fgColor-danger,var(--color-danger-fg));}</style>
 {% endblock %}
 
 {% block header %}
 <h1 class="postTitle">{{ page.title }}</h1>
 <div class="title-right">
-    <a href="/" class="btn btn-invisible circle" title="Home">
+    <a href="/" id="buttonHome" class="btn btn-invisible circle" title="Home">
         <svg class="octicon" width="16" height="16">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
