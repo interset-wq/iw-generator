@@ -1,0 +1,264 @@
+/* iw theme CSS - highly customized blog theme */
+:root {
+  --iw-bg: #fff;
+  --iw-fg: #1f2328;
+  --iw-fg-muted: #656d76;
+  --iw-border: #d1d9e0;
+  --iw-link: #0969da;
+  --iw-code-bg: #f6f8fa;
+  --iw-code-fg: #1f2328;
+  --iw-max-width: 800px;
+  --iw-primary: #0366d6;
+  --iw-primary-hover: #0550ae;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --iw-bg: #0d1117;
+    --iw-fg: #e6edf3;
+    --iw-fg-muted: #8b949e;
+    --iw-border: #30363d;
+    --iw-link: #58a6ff;
+    --iw-code-bg: #161b22;
+    --iw-code-fg: #e6edf3;
+    --iw-primary: #58a6ff;
+    --iw-primary-hover: #79c0ff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--iw-text-font, "Roboto"), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--iw-fg);
+  background: var(--iw-bg);
+}
+
+.iw-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.iw-header {
+  border-bottom: 1px solid var(--iw-border);
+  padding: 1rem 0;
+  background: var(--iw-bg);
+}
+
+.iw-header__inner {
+  max-width: var(--iw-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.iw-header__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--iw-fg);
+  text-decoration: none;
+}
+
+.iw-header__title:hover {
+  color: var(--iw-primary);
+}
+
+.iw-header__source {
+  color: var(--iw-fg-muted);
+  text-decoration: none;
+}
+
+.iw-header__source:hover {
+  color: var(--iw-fg);
+}
+
+.iw-main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.iw-container {
+  max-width: var(--iw-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.iw-footer {
+  border-top: 1px solid var(--iw-border);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.iw-footer__inner {
+  max-width: var(--iw-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  color: var(--iw-fg-muted);
+  font-size: 0.875rem;
+}
+
+.iw-footer a {
+  color: var(--iw-fg-muted);
+  text-decoration: none;
+}
+
+.iw-footer a:hover {
+  color: var(--iw-primary);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--iw-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Code */
+code {
+  font-family: var(--iw-code-font, "Roboto Mono"), monospace;
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background: var(--iw-code-bg);
+  border-radius: 6px;
+}
+
+pre {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+  background: var(--iw-code-bg);
+  border-radius: 6px;
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+/* Blockquote */
+blockquote {
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  border-left: 4px solid var(--iw-border);
+  color: var(--iw-fg-muted);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--iw-border);
+  text-align: left;
+}
+
+th {
+  background: var(--iw-code-bg);
+  font-weight: 600;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Horizontal rule */
+hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--iw-border);
+}
+
+/* iw-specific: GitHub-style issue link */
+.iw-issue-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--iw-code-bg);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: var(--iw-fg);
+  text-decoration: none;
+}
+
+.iw-issue-link:hover {
+  background: var(--iw-border);
+  text-decoration: none;
+}
+
+/* iw-specific: Post metadata */
+.iw-post-meta {
+  margin-bottom: 1rem;
+  color: var(--iw-fg-muted);
+  font-size: 0.875rem;
+}
+
+.iw-post-meta__item {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+/* iw-specific: Tag list */
+.iw-tags {
+  margin-bottom: 1rem;
+}
+
+.iw-tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background: var(--iw-code-bg);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--iw-fg);
+  text-decoration: none;
+}
+
+.iw-tag:hover {
+  background: var(--iw-border);
+  text-decoration: none;
+}
