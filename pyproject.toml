@@ -40,7 +40,7 @@ line-length = 88
 select = ["E", "F", "I", "W", "UP", "B", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
-"src/iw_generator/themes/*/icons.py" = ["E501"]
+"src/iw_generator/themes/icons.py" = ["E501"]
 
 [tool.ruff.format]
 quote-style = "double"
