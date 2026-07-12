@@ -65,12 +65,25 @@ class Engine:
         stem = rel.stem
         parent = rel.parent
 
-        if stem == "index":
+        # Read and render first to get frontmatter
+        raw_content = md_path.read_text(encoding="utf-8")
+        frontmatter, html = self.renderer.render_string(raw_content)
+
+        # Check for custom slug in frontmatter
+        custom_slug = frontmatter.get("slug")
+        if custom_slug:
+            # Use custom slug from frontmatter
+            slug = custom_slug.strip("/")
+            dest_path = self.config.output_dir / slug / "index.html"
+        elif stem == "index":
             # index.md -> dir/index.html
             dest_path = self.config.output_dir / parent / "index.html"
         else:
-            # page.md -> page/index.html
-            dest_path = self.config.output_dir / parent / stem / "index.html"
+            # page.md -> page/index.html (use slugify for safe URLs)
+            from .markdown import slugify
+
+            safe_stem = slugify(stem)
+            dest_path = self.config.output_dir / parent / safe_stem / "index.html"
 
         page = Page(
             source_path=md_path,
@@ -78,9 +91,8 @@ class Engine:
             content_dir=content_dir,
         )
 
-        # Read and render
-        page.raw_content = md_path.read_text(encoding="utf-8")
-        frontmatter, html = self.renderer.render_string(page.raw_content)
+        # Set page data
+        page.raw_content = raw_content
         page.frontmatter = frontmatter
         page.title = frontmatter.get("title", rel.stem)
         page.date = str(frontmatter.get("date", ""))

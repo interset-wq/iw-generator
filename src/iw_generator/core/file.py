@@ -5,8 +5,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .markdown import slugify
-
 
 @dataclass
 class Page:
@@ -25,11 +23,13 @@ class Page:
 
     def __post_init__(self):
         if not self._slug:
-            rel = self.source_path.relative_to(self.content_dir)
-            parts = list(rel.with_suffix("").parts)
-            if parts[-1] == "index":
-                parts = parts[:-1]
-            self._slug = "/".join(slugify(p) for p in parts) if parts else ""
+            # Generate slug from dest_path
+            # e.g., /path/to/site/page/index.html -> /page
+            try:
+                rel = self.dest_path.parent.relative_to(self.dest_path.parents[1])
+                self._slug = "/" + str(rel).replace("\\", "/")
+            except (ValueError, IndexError):
+                self._slug = ""
 
     @property
     def slug(self) -> str:
@@ -37,7 +37,7 @@ class Page:
 
     @property
     def url(self) -> str:
-        return f"/{self.slug}/" if self.slug else "/"
+        return f"{self.slug}/" if self.slug else "/"
 
     @property
     def relative_path(self) -> str:
