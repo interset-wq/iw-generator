@@ -32,6 +32,18 @@ class ThemeFontSettings(BaseModel):
     code: str = ""
 
 
+class ThemeSocialSettings(BaseModel):
+    github: str = ""
+    twitter: str = ""
+    x: str = ""
+    telegram: str = ""
+    discord: str = ""
+    youtube: str = ""
+    linkedin: str = ""
+    email: str = ""
+    enable: list[str] = Field(default_factory=list)
+
+
 class ThemeSettings(BaseModel):
     name: str = "iw"
     custom_dir: str = ""
@@ -44,6 +56,7 @@ class ThemeSettings(BaseModel):
     gmeek_toc_url: str = ""  # URL for GmeekTOC.js
     palette: ThemePaletteSettings = Field(default_factory=ThemePaletteSettings)
     font: ThemeFontSettings = Field(default_factory=ThemeFontSettings)
+    social: ThemeSocialSettings = Field(default_factory=ThemeSocialSettings)
     github_repo: str = ""
     github_token: str = ""
 
