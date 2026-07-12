@@ -12,6 +12,9 @@ from .config import Config
 def get_theme_dir(config: Config) -> Path:
     """Get the path to the current theme directory."""
     theme_name = config.theme.name
+    # iw theme shares templates with blog theme
+    if theme_name == "iw":
+        theme_name = "blog"
     # Built-in themes are under the package's themes directory
     builtin = Path(__file__).parent.parent / "themes" / theme_name
     if builtin.is_dir():
