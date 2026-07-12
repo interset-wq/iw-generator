@@ -1,0 +1,9 @@
+<div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a></div>
+<div id="footer2">
+    <span>Powered by <a href="https://github.com/your-username/iw-generator" target="_blank">iw-generator</a></span>
+</div>
+
+<script>
+var now = new Date();
+document.getElementById("copyrightYear").innerHTML = now.getFullYear();
+</script>
