@@ -1,31 +1,35 @@
-<div class="footer-links">
-    <a href="/rss.xml" target="_blank" title="RSS">
-        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="material/rss-feed" fill-rule="evenodd"></path></svg>
-    </a>
-    {% if theme.social.github %}
-    <a href="{{ theme.social.github }}" target="_blank" title="GitHub">
-        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/github" fill-rule="evenodd"></path></svg>
-    </a>
-    {% endif %}
-    {% if theme.social.twitter %}
-    <a href="{{ theme.social.twitter }}" target="_blank" title="Twitter">
-        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/twitter" fill-rule="evenodd"></path></svg>
-    </a>
-    {% endif %}
-    {% if theme.social.telegram %}
-    <a href="{{ theme.social.telegram }}" target="_blank" title="Telegram">
-        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/telegram" fill-rule="evenodd"></path></svg>
-    </a>
-    {% endif %}
-    {% if theme.social.email %}
-    <a href="mailto:{{ theme.social.email }}" title="Email">
-        <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="material/email-outline" fill-rule="evenodd"></path></svg>
-    </a>
-    {% endif %}
-</div>
-<div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a></div>
-<div id="footer2">
-    <span>Powered by <a href="https://github.com/your-username/iw-generator" target="_blank">iw-generator</a></span>
+<div id="footer">
+    <div class="footer-inner">
+        <div class="footer-left">
+            <div>Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a></div>
+            <div>Powered by <a href="https://github.com/your-username/iw-generator" target="_blank">iw-generator</a></div>
+        </div>
+        <div class="footer-right">
+            <a href="/rss.xml" target="_blank" title="RSS">
+                <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="material/rss" fill-rule="evenodd"></path></svg>
+            </a>
+            {% if theme.social.github %}
+            <a href="{{ theme.social.github }}" target="_blank" title="GitHub">
+                <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/github" fill-rule="evenodd"></path></svg>
+            </a>
+            {% endif %}
+            {% if theme.social.twitter %}
+            <a href="{{ theme.social.twitter }}" target="_blank" title="Twitter">
+                <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/twitter" fill-rule="evenodd"></path></svg>
+            </a>
+            {% endif %}
+            {% if theme.social.telegram %}
+            <a href="{{ theme.social.telegram }}" target="_blank" title="Telegram">
+                <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="simple/telegram" fill-rule="evenodd"></path></svg>
+            </a>
+            {% endif %}
+            {% if theme.social.email %}
+            <a href="mailto:{{ theme.social.email }}" title="Email">
+                <svg class="octicon" width="16" height="16"><path class="social-icon" data-icon="material/email-outline" fill-rule="evenodd"></path></svg>
+            </a>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 <script>
