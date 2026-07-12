@@ -132,14 +132,16 @@ class Engine:
     def _write_pages(self) -> None:
         env = create_jinja_env(self.config)
         nav = self._build_nav()
-        mode = self.config.theme.mode
-        console.print(f"Writing [cyan]{len(self.site.pages)}[/] pages (mode: {mode})")
+        theme_name = self.config.theme.name
+        console.print(
+            f"Writing [cyan]{len(self.site.pages)}[/] pages (theme: {theme_name})"
+        )
 
         for page in self.site.pages:
             page.dest_path.parent.mkdir(parents=True, exist_ok=True)
             html = render_template(
                 env,
-                f"{mode}/base.html",
+                "base.html",
                 {
                     "site": self.config.site,
                     "page": page,
