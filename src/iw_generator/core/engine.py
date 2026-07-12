@@ -122,6 +122,13 @@ class Engine:
             dest = self.config.output_dir / "assets"
             copy_tree(assets_dir, dest)
 
+        # For doc theme, also copy Material compiled assets
+        if self.config.theme.mode == "doc":
+            material_assets = theme_dir / "assets"
+            if material_assets.is_dir():
+                dest = self.config.output_dir / "assets"
+                copy_tree(material_assets, dest)
+
     def _write_pages(self) -> None:
         env = create_jinja_env(self.config)
         nav = self._build_nav()
