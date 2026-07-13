@@ -1,0 +1,49 @@
+{# 
+  Reusable header wrapper - ensures consistent layout across all pages
+  Usage: 
+    {% include 'components/header.html' %}
+  
+  In your template, define these blocks before including:
+    {% block header_title %}<h1>Title</h1>{% endblock %}
+    
+  Variables (optional):
+    - show_archives: bool - show archives link
+    - show_categories: bool - show categories link  
+    - show_tags: bool - show tags link
+    - back_url: string - URL for back button (shows back icon instead of specific nav)
+    - back_title: string - tooltip for back button
+#}
+<div class="header-left">
+    {% block header_title %}{% endblock %}
+</div>
+<div class="header-right">
+    {% if back_url is defined and back_url %}
+    <a href="{{ back_url }}" class="btn btn-invisible circle" title="{{ back_title | default('Back') }}">
+        <svg class="octicon" width="16" height="16"><path id="pathBack" fill-rule="evenodd"></path></svg>
+    </a>
+    {% else %}
+    {% if show_archives is defined and show_archives %}
+    <a href="/archives.html" class="btn btn-invisible circle" title="Archives">
+        <svg class="octicon" width="16" height="16"><path id="pathArchives" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if show_categories is defined and show_categories %}
+    <a href="/categories.html" class="btn btn-invisible circle" title="Categories">
+        <svg class="octicon" width="16" height="16"><path id="pathCategories" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% if show_tags is defined and show_tags %}
+    <a href="/tags.html" class="btn btn-invisible circle" title="Tags">
+        <svg class="octicon" width="16" height="16"><path id="pathTags" fill-rule="evenodd"></path></svg>
+    </a>
+    {% endif %}
+    {% endif %}
+    <a href="/" class="btn btn-invisible circle" title="Home">
+        <svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>
+    </a>
+    {%- if theme.mode in ['iw', 'blog'] -%}
+    <a class="btn btn-invisible circle" onclick="modeSwitch()" title="Switch theme">
+        <svg class="octicon" width="16" height="16"><path id="themeSwitch" fill-rule="evenodd"></path></svg>
+    </a>
+    {%- endif -%}
+</div>

@@ -1,43 +1,36 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<meta name="description" content="{{ page.description or 'About ' ~ site.name }}">
-<meta property="og:title" content="{{ page.title }} - {{ site.name }}">
-<meta property="og:description" content="{{ page.description or 'About ' ~ site.name }}">
-<meta property="og:type" content="profile">
-<meta property="og:url" content="{{ site.url }}/about/">
-<meta property="og:image" content="{{ page.image or theme.avatar or site.url ~ '/avatar.svg' }}">
-<title>{{ page.title }} - {{ site.name }}</title>
+<meta name="description" content="About - {{ site.name }}">
+<meta property="og:title" content="About - {{ site.name }}">
+<meta property="og:description" content="About {{ site.name }}">
+<meta property="og:type" content="website">
+<title>About - {{ site.name }}</title>
 {% endblock %}
 
 {% block style %}
 <style>
-.about-header{display:flex;align-items:center;margin-bottom:24px;}
-.about-avatar{width:96px;height:96px;border-radius:50%;margin-right:24px;}
-.about-title{font-size:32px;font-weight:bold;margin:0;}
-.about-subtitle{color:var(--color-fg-muted);margin-top:4px;}
+.markdown-body{margin:32px 0;}
+.markdown-body h1{padding-bottom: 16px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));}
+@media (max-width:600px){body{padding:8px;}}
 </style>
 {% endblock %}
 
 {% block header %}
-<h1 style="margin:auto 0;font-size:40px;font-weight:bold;">{{ page.title }}</h1>
-<div class="title-right">
-    <a href="/" class="btn btn-invisible circle" title="Home">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathHome" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-</div>
+{% block header_title %}
+<h1 style="margin:0;font-size:40px;font-weight:bold;">About</h1>
+{% endblock %}
+{% set back_url = "/" %}
+{% set back_title = "Home" %}
+{% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
-<div class="markdown-body">
-{{ content | safe }}
-</div>
+<article class="markdown-body">
+{{ page.content }}
+</article>
 {% endblock %}
 
 {% block script %}
-<script>
-document.getElementById("pathHome").setAttribute("d",IconList["home"]);
-</script>
+<script src="/js/nav.js"></script>
 {% endblock %}

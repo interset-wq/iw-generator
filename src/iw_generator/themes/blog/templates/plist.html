@@ -14,107 +14,43 @@
 .avatar {transition: 0.8s;width:64px;height:64px;object-fit: cover;}
 .avatar:hover{transform: scale(1.15) rotate(360deg);}
 .title-left a{color:inherit;text-decoration:none;vertical-align: bottom;font-size:40px;font-weight: bold;font-family:Monaco;margin-left:8px;}
-.title-right{display:flex;margin:auto 0 0 auto;}
-.title-right button{margin-right:8px;padding:16px;}
-.title-right .circle{padding: 14px 16px;}
 .SideNav{min-width: 360px;}
 .SideNav-icon{margin-right: 16px}
 .SideNav-item .Label{color: #fff;margin-left:4px;}
 .d-flex{min-width:0;}
 .listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
 .listLabels{white-space:nowrap;display:flex;}
-.listLabels object{max-height:16px;max-width:24px;}
 @media (max-width: 600px) {
     body {padding: 8px;}
     .avatar {width:40px;height:40px;}
     .blogTitle{display:none;}
-    #buttonRSS{display:none;}
     .LabelTime{display:none;}
 }
 </style>
 {% endblock %}
 
 {% block header %}
-<div class="title-left">
-    {% if site.avatar %}
-    <img src="{{ site.avatar }}" class="avatar circle" id="avatarImg" alt="avatar">
-    {% endif %}
-    <a class="blogTitle" href="/">{{ site.name }}</a>
-</div>
-<div class="title-right">
-    <a href="/archives.html" class="btn btn-invisible circle" title="Archives">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathArchives" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    <a href="/categories.html" class="btn btn-invisible circle" title="Categories">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathCategories" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    <a href="/tags.html" id="buttonTags" class="btn btn-invisible circle" title="Tags">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathTags" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    <a href="/about/" class="btn btn-invisible circle" title="About">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathAbout" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    {%- if theme.mode in ['iw', 'blog'] -%}
-    <a class="btn btn-invisible circle" onclick="modeSwitch()" title="Switch theme">
-        <svg class="octicon" width="16" height="16">
-            <path id="themeSwitch" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    {%- endif -%}
-</div>
+{% block header_title %}
+{% if site.avatar %}
+<img src="{{ site.avatar }}" class="avatar circle" alt="avatar">
+{% endif %}
+<a class="blogTitle" href="/" style="font-size:40px;font-weight:bold;font-family:Monaco;">{{ site.name }}</a>
+{% endblock %}
+{% set show_archives = true %}
+{% set show_categories = true %}
+{% set show_tags = true %}
+{% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
 <div style="margin-bottom: 16px;">{{ site.description }}</div>
 <nav class="SideNav border">
 {% for page in pages %}
-<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="{{ page.url }}">
-    <div class="d-flex flex-items-center">
-        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop{{ 1 if page.pin > 0 else 0 }}" d=""></path></svg>
-        <span class="listTitle">{{ page.title }}</span>
-    </div>
-    <div class="listLabels">
-        {% if page.comments_count is defined and page.comments_count > 0 %}
-        <span class="Label" style="background-color:#006b75">{{ page.comments_count }}</span>
-        {% endif %}
-        {% if page.category %}
-        <span class="Label LabelName" style="background-color:#0E8A16"><object><a style="color:#fff" href="tag.html#{{ page.category }}">{{ page.category }}</a></object></span>
-        {% endif %}
-        {% for tag in page.tags %}
-        <span class="Label LabelName" style="background-color:{{ tag_colors.get(tag, '#0969da') }}"><object><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></object></span>
-        {% endfor %}
-        {% if page.date %}
-        <span class="Label LabelTime" style="background-color:{{ year_colors.get(page.date[:4], '#0969da') }}">{{ page.date }}</span>
-        {% endif %}
-    </div>
-</a>
+{% include 'components/post_list_item.html' %}
 {% endfor %}
 </nav>
 {% endblock %}
 
 {% block script %}
-<script>
-document.getElementById("pathArchives").setAttribute("d",IconList["material/archive-outline"]);
-document.getElementById("pathCategories").setAttribute("d",IconList["material/folder-outline"]);
-document.getElementById("pathTags").setAttribute("d",IconList["material/tag-outline"]);
-document.getElementById("pathAbout").setAttribute("d",IconList["material/account-outline"]);
-document.getElementById("themeSwitch").setAttribute("d",IconList["material/brightness-7"]);
-iconTOP=document.getElementsByClassName("svgTop1");
-iconPost=document.getElementsByClassName("svgTop0");
-for(var i=0;i<iconTOP.length;i++){
-    iconTOP[i].setAttribute("d",IconList["material/push-pin"]);
-    iconTOP[i].parentNode.style.color="red";
-}
-for(var i=0;i<iconPost.length;i++){
-    iconPost[i].setAttribute("d",IconList["material/article-outline"]);
-}
-</script>
+<script src="/js/nav.js"></script>
 {% endblock %}

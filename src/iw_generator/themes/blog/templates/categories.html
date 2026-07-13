@@ -15,18 +15,15 @@
 .category-name{font-size:20px;font-weight:bold;color:inherit;text-decoration:none;}
 .category-name:hover{color:var(--color-accent-fg);}
 .category-count{color:var(--color-fg-muted);font-size:14px;}
+@media (max-width:600px){body{padding:8px;}}
 </style>
 {% endblock %}
 
 {% block header %}
-<h1 style="margin:auto 0;font-size:40px;font-weight:bold;">Categories</h1>
-<div class="title-right">
-    <a href="/" class="btn btn-invisible circle" title="Home">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathHome" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-</div>
+{% block header_title %}
+<h1 style="margin:0;font-size:40px;font-weight:bold;">Categories</h1>
+{% endblock %}
+{% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
@@ -41,7 +38,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
-</script>
+<script src="/js/nav.js"></script>
 {% endblock %}
