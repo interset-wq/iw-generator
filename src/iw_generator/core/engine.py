@@ -180,7 +180,6 @@ class Engine:
 
     def _get_theme_context(self) -> dict:
         """Get theme-specific context variables."""
-        theme_dir = get_theme_dir(self.config)
         context = {}
 
         # Load icons if available
@@ -191,16 +190,8 @@ class Engine:
         except ImportError:
             context["icons"] = {}
 
-        # Load theme config if available
-        theme_config_file = theme_dir / "theme.toml"
-        if theme_config_file.exists():
-            import tomllib
-
-            with open(theme_config_file, "rb") as f:
-                context["theme_config"] = tomllib.load(f)
-        else:
-            context["theme_config"] = {}
-
+        # Pass theme_config (loaded from theme.toml in config)
+        context["theme_config"] = self.config.theme_config
         context["theme"] = self.config.theme
         return context
 

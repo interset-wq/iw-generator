@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tomllib
 from pathlib import Path
+from types import SimpleNamespace
 
 from pydantic import BaseModel, Field
 
@@ -19,70 +20,39 @@ class SiteSettings(BaseModel):
 class PathsSettings(BaseModel):
     content: str = "content"
     output: str = "site"
-    static: str = "static"
-
-
-class ThemeSocialSettings(BaseModel):
-    github: str = ""
-    twitter: str = ""
-    telegram: str = ""
-    email: str = ""
-
-
-class GiscusSettings(BaseModel):
-    enabled: bool = False
-    repo: str = ""
-    repo_id: str = ""
-    category: str = ""
-    category_id: str = ""
-    mapping: str = "pathname"
-    reactions_enabled: bool = True
-    theme: str = "light"
-
-
-class IwThemeSettings(BaseModel):
-    """Settings specific to the iw theme (GitHub Pages + GitHub Issues)."""
-
-    github_repo: str = ""  # owner/repo format
-    github_token: str = ""  # GitHub Personal Access Token
-    categories: dict[str, str] = Field(default_factory=dict)
-    default_category: str = "Uncategorized"
-    exclude_labels: list[str] = Field(default_factory=list)  # labels to exclude
-    posts_per_page: int = 20
 
 
 class ThemeSettings(BaseModel):
     name: str = "blog"
-    mode: str = "blog"  # "iw", "doc", or "blog"
     lang: str = "en"
     favicon: str = ""
     avatar: str = ""
-    social: ThemeSocialSettings = Field(default_factory=ThemeSocialSettings)
-    giscus: GiscusSettings = Field(default_factory=GiscusSettings)
-    iw: IwThemeSettings = Field(default_factory=IwThemeSettings)
 
 
 class PluginsSettings(BaseModel):
     enable: list[str] = Field(default_factory=list)
 
 
-class MarkdownSettings(BaseModel):
-    highlight_theme: str = "monokai"
-
-
 class Config(BaseModel):
+    model_config = {"arbitrary_types_allowed": True}
+
     site: SiteSettings = Field(default_factory=SiteSettings)
     paths: PathsSettings = Field(default_factory=PathsSettings)
     theme: ThemeSettings = Field(default_factory=ThemeSettings)
     plugins: PluginsSettings = Field(default_factory=PluginsSettings)
-    markdown: MarkdownSettings = Field(default_factory=MarkdownSettings)
+    theme_config: SimpleNamespace = Field(default_factory=SimpleNamespace)
 
     @classmethod
     def load(cls, config_path: Path | str | None = None) -> Config:
         """Load config from TOML file, merging with defaults."""
         path = _resolve_config_path(config_path)
         raw = _read_toml(path) if path else {}
-        return cls.model_validate(raw)
+        cfg = cls.model_validate(raw)
+
+        # Load theme.toml from theme directory
+        _load_theme_config(cfg)
+
+        return cfg
 
     @property
     def content_dir(self) -> Path:
@@ -94,7 +64,7 @@ class Config(BaseModel):
 
     @property
     def static_dir(self) -> Path:
-        return Path(self.paths.static)
+        return self.content_dir / "static"
 
 
 def _resolve_config_path(config_path: Path | str | None) -> Path | None:
@@ -109,3 +79,31 @@ def _resolve_config_path(config_path: Path | str | None) -> Path | None:
 def _read_toml(path: Path) -> dict:
     with open(path, "rb") as f:
         return tomllib.load(f)
+
+
+def _load_theme_config(cfg: Config) -> None:
+    """Load theme.toml from theme directory and attach to config.theme_config."""
+    from .jinja import get_theme_dir
+
+    theme_dir = get_theme_dir(cfg)
+    theme_toml = theme_dir / "theme.toml"
+
+    if not theme_toml.exists():
+        return
+
+    with open(theme_toml, "rb") as f:
+        theme_raw = tomllib.load(f)
+
+    # Store entire theme.toml as nested namespace on config.theme_config
+    cfg.theme_config = _dict_to_namespace(theme_raw)
+
+
+def _dict_to_namespace(d: dict) -> SimpleNamespace:
+    """Convert a dict to a nested SimpleNamespace for attribute access."""
+    result = SimpleNamespace()
+    for key, value in d.items():
+        if isinstance(value, dict):
+            setattr(result, key, _dict_to_namespace(value))
+        else:
+            setattr(result, key, value)
+    return result
