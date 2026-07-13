@@ -130,21 +130,22 @@ class MarkdownRenderer:
     def __init__(self) -> None:
         self.md = create_markdown_instance()
 
-    def render_file(self, path: Path) -> tuple[dict, str, list[dict]]:
+    def render_file(self, path: Path) -> tuple[dict, str]:
         raw = path.read_text(encoding="utf-8")
         return self.render_string(raw)
 
-    def render_string(self, raw: str) -> tuple[dict, str, list[dict]]:
+    def render_string(self, raw: str) -> tuple[dict, str]:
+        """Render markdown to (frontmatter, html)."""
         frontmatter, body = _parse_frontmatter(raw)
         self.md.reset()
         html = self.md.convert(body)
+        return frontmatter, html
 
-        # Extract TOC tokens (structured data for sidebar)
-        toc_items = []
+    def get_toc(self) -> list[dict]:
+        """Get TOC items from last render. Call after render_string()."""
         if hasattr(self.md, "toc_tokens"):
-            toc_items = _flatten_toc_tokens(self.md.toc_tokens)
-
-        return frontmatter, html, toc_items
+            return _flatten_toc_tokens(self.md.toc_tokens)
+        return []
 
 
 def _flatten_toc_tokens(tokens: list[dict], level: int = 1) -> list[dict]:

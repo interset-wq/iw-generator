@@ -67,7 +67,8 @@ class Engine:
 
         # Read and render first to get frontmatter
         raw_content = md_path.read_text(encoding="utf-8")
-        frontmatter, html, toc_items = self.renderer.render_string(raw_content)
+        frontmatter, html = self.renderer.render_string(raw_content)
+        toc_items = self.renderer.get_toc()
 
         # Check for custom slug in frontmatter
         custom_slug = frontmatter.get("slug")
