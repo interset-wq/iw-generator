@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0"><channel><title>My Blog</title><link>https://interset-wq.github.io/iw</link><description>A blog powered by GitHub Issues</description><item><title>Code Highlighting Test</title><link>https://interset-wq.github.io/iw/code-highlight-test/</link><description>---
+title: Code Highlighting Test
+date: 2025-01-20
+category: Test
+tags: [code, highlight, test]
+---
+
+# Code Highlighting Test
+
+This post tests code block highlighting with multiple languages.
+
+## Python
+
+```python
+def fibonacci(n: int) -&gt; list[int]:
+    """Generate Fibonacci sequence."""
+    if n &lt;=</description></item><item><title>Mixed Chinese and Special</title><link>https://interset-wq.github.io/iw/e6b58b-e8af95-1/</link><description>---
+title: Mixed Chinese and Special
+date: 2024-01-22
+tags: [test, mixed]
+category: Test
+---
+
+# Mixed Chinese and Special Characters
+
+This file tests URL handling for mixed content.
+
+## Test Cases
+
+- Chinese + English
+- Parentheses
+- Spaces
+
+## Expected Result
+
+URL should be properly slugified and s</description></item><item><title>Hello World Special Chars</title><link>https://interset-wq.github.io/iw/hello-world/</link><description>---
+title: Hello World Special Chars
+date: 2024-01-21
+tags: [test, special-chars]
+category: Test
+---
+
+# Hello World Special Chars
+
+This file tests URL handling for filenames with special characters.
+
+## Test Characters
+
+- Spaces
+- Exclamation mark (!)
+- At sign (@)
+- Hash (#)
+- Dollar sign ($)
+- Per</description></item><item><title>中文文件名测试</title><link>https://interset-wq.github.io/iw/e4b8ad-e69687-e6b58b-e8af95/</link><description>---
+title: 中文文件名测试
+date: 2024-01-20
+tags: [test, 中文]
+category: Test
+---
+
+# 中文文件名测试
+
+这篇文章用于测试中文文件名是否能正确转换为URL安全的slug。
+
+## 测试内容
+
+- 中文标题
+- 中文标签
+- 特殊字符处理
+
+## 期望结果
+
+URL应该类似：`/zhong-wen-ce-shi/` 或 `/-e4-b8-ad-e6-96-87/`
+</description></item><item><title>Quick Start</title><link>https://interset-wq.github.io/iw/getting-started/quickstart/</link><description>---
+title: "Quick Start"
+date: 2024-01-16
+tags: [setup, tutorial]
+category: Tutorial
+pin: 2
+description: "Get started with iw-generator in 3 steps"
+---
+
+# Quick Start
+
+## 1. Initialize a site
+
+```bash
+iw init
+```
+
+This creates:
+
+```
+iw.config.toml
+content/
+  index.md
+```
+
+## 2. Write content
+
+Create</description></item><item><title>Installation</title><link>https://interset-wq.github.io/iw/getting-started/installation/</link><description>---
+title: "Installation"
+date: 2024-01-15
+tags: [setup, python]
+category: Tutorial
+pin: 1
+description: "How to install iw-generator"
+---
+
+# Installation
+
+```bash
+pip install iw-generator
+```
+
+## Requirements
+
+- Python &gt;= 3.11
+</description></item><item><title>About</title><link>https://interset-wq.github.io/iw/about/</link><description>---
+title: About
+description: About me and this blog
+---
+
+# About Me
+
+This is a personal blog powered by iw-generator.
+
+## What is iw-generator?
+
+iw-generator is a general-purpose Markdown static site generator library that supports:
+
+- **Blog mode**: Full-featured blog with categories, tags, and ar</description></item><item><title>Configuration</title><link>https://interset-wq.github.io/iw/guide/config/</link><description>---
+title: "Configuration"
+---
+
+# Configuration
+
+`iw.config.toml` in the project root:
+
+```toml
+[site]
+name = "My Site"
+url = "https://example.com"
+
+[paths]
+content = "content"
+output = "site"
+
+[theme]
+name = "iw"
+
+[plugins]
+enable = ["toc", "search"]
+
+[markdown]
+highlight_theme = "monokai"
+```
+</description></item><item><title>Writing Content</title><link>https://interset-wq.github.io/iw/guide/content/</link><description>---
+title: "Writing Content"
+---
+
+# Writing Content
+
+## Directory Structure
+
+Place `.md` files under `content/`. Nested directories are preserved in output.
+
+```
+content/
+  index.md              -&gt; site/index.md
+  getting-started/
+    quickstart.md       -&gt; site/getting-started/quickstart.md
+```
+
+##</description></item><item><title>iw-generator</title><link>https://interset-wq.github.io/iw/</link><description>---
+title: "iw-generator"
+---
+
+# iw-generator
+
+A general-purpose Markdown static site generator.
+
+## Quick Start
+
+```bash
+iw init
+iw build
+```
+
+## Features
+
+- TOML config with Pydantic validation
+- YAML/TOML frontmatter in markdown
+- Plugin system (entry_points)
+- Built-in iw theme
+- Code highlighti</description></item><item><title>Plugins</title><link>https://interset-wq.github.io/iw/plugins/</link><description>---
+title: "Plugins"
+---
+
+# Plugins
+
+## Built-in
+
+| Plugin | Description |
+|--------|-------------|
+| `toc` | Table of contents |
+| `search` | Client-side search index |
+| `rss` | RSS feed |
+| `sitemap` | Sitemap.xml |
+| `highlight` | Code highlighting |
+
+## Enable
+
+```toml
+[plugins]
+enable = ["toc"</description></item><item><title>Writing Plugins</title><link>https://interset-wq.github.io/iw/plugins/writing/</link><description>---
+title: "Writing Plugins"
+---
+
+# Writing Plugins
+
+Subclass `PluginBase`:
+
+```python
+from iw_generator.core.plugin import PluginBase
+
+class MyPlugin(PluginBase):
+    name = "my_plugin"
+
+    def on_config_loaded(self, config):
+        pass
+
+    def on_page_render(self, page, html):
+        return h</description></item></channel></rss>
