@@ -23,6 +23,7 @@ class Page:
     frontmatter: dict = field(default_factory=dict)
     raw_content: str = ""
     html_content: str = ""
+    toc_items: list = field(default_factory=list)
     comments_count: int = 0  # For blog theme (from GitHub Issues)
     _slug: str = field(default="", repr=False)
 

@@ -40,7 +40,7 @@ def test_page_slug_index():
 
 def test_markdown_frontmatter_yaml():
     renderer = MarkdownRenderer()
-    fm, html = renderer.render_string("---\ntitle: Hello\n---\n\n# World\n")
+    fm, html, toc = renderer.render_string("---\ntitle: Hello\n---\n\n# World\n")
     assert fm["title"] == "Hello"
     assert "<h1" in html
     assert "World" in html
@@ -48,14 +48,14 @@ def test_markdown_frontmatter_yaml():
 
 def test_markdown_frontmatter_toml():
     renderer = MarkdownRenderer()
-    fm, html = renderer.render_string('+++\ntitle = "Hello"\n+++\n\n# World\n')
+    fm, html, toc = renderer.render_string('+++\ntitle = "Hello"\n+++\n\n# World\n')
     assert fm["title"] == "Hello"
     assert "<h1" in html
 
 
 def test_markdown_code_highlight():
     renderer = MarkdownRenderer()
-    _, html = renderer.render_string("```python\nprint('hi')\n```\n")
+    _, html, _ = renderer.render_string("```python\nprint('hi')\n```\n")
     assert "highlight" in html
     assert "print" in html
 

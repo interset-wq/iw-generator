@@ -130,12 +130,35 @@ class MarkdownRenderer:
     def __init__(self) -> None:
         self.md = create_markdown_instance()
 
-    def render_file(self, path: Path) -> tuple[dict, str]:
+    def render_file(self, path: Path) -> tuple[dict, str, list[dict]]:
         raw = path.read_text(encoding="utf-8")
         return self.render_string(raw)
 
-    def render_string(self, raw: str) -> tuple[dict, str]:
+    def render_string(self, raw: str) -> tuple[dict, str, list[dict]]:
         frontmatter, body = _parse_frontmatter(raw)
         self.md.reset()
         html = self.md.convert(body)
-        return frontmatter, html
+
+        # Extract TOC tokens (structured data for sidebar)
+        toc_items = []
+        if hasattr(self.md, "toc_tokens"):
+            toc_items = _flatten_toc_tokens(self.md.toc_tokens)
+
+        return frontmatter, html, toc_items
+
+
+def _flatten_toc_tokens(tokens: list[dict], level: int = 1) -> list[dict]:
+    """Flatten TOC tokens into a flat list with level info."""
+    items = []
+    for token in tokens:
+        items.append(
+            {
+                "id": token.get("id", ""),
+                "title": token.get("name", ""),
+                "level": level,
+            }
+        )
+        children = token.get("children", [])
+        if children:
+            items.extend(_flatten_toc_tokens(children, level + 1))
+    return items

@@ -67,7 +67,7 @@ class Engine:
 
         # Read and render first to get frontmatter
         raw_content = md_path.read_text(encoding="utf-8")
-        frontmatter, html = self.renderer.render_string(raw_content)
+        frontmatter, html, toc_items = self.renderer.render_string(raw_content)
 
         # Check for custom slug in frontmatter
         custom_slug = frontmatter.get("slug")
@@ -102,6 +102,7 @@ class Engine:
         page.pin = int(frontmatter.get("pin", 0))
         tags = frontmatter.get("tags", [])
         page.tags = tags if isinstance(tags, list) else []
+        page.toc_items = toc_items
 
         # Plugin hooks
         self._run_plugin_hook("on_page_read", page)
