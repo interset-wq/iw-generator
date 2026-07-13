@@ -36,6 +36,10 @@
         {% if page.date %}
         <span>Published: {{ page.date }}</span>
         {% endif %}
+        {% if page.category %}
+        <span>·</span>
+        <a href="/category/{{ page.category }}.html" class="Label" style="background-color:#0E8A16;color:#fff;text-decoration:none;">{{ page.category }}</a>
+        {% endif %}
         {% if page.tags is defined and page.tags %}
         <span>·</span>
         <div style="display:flex;gap:4px;">
