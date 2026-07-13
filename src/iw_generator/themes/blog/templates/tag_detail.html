@@ -21,9 +21,9 @@
 {% endblock %}
 
 {% block header %}
-{% block header_title %}
+{% set title_html %}
 <h1 style="margin:0;font-size:40px;font-weight:bold;">#{{ tag }}</h1>
-{% endblock %}
+{% endset %}
 {% set back_url = "/tags.html" %}
 {% set back_title = "All Tags" %}
 {% include 'components/header.html' %}
@@ -38,5 +38,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="/js/nav.js"></script>
+<script src="/assets/js/nav.js"></script>
 {% endblock %}

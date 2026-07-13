@@ -1,20 +1,7 @@
-{# 
-  Reusable header wrapper - ensures consistent layout across all pages
-  Usage: 
-    {% include 'components/header.html' %}
-  
-  In your template, define these blocks before including:
-    {% block header_title %}<h1>Title</h1>{% endblock %}
-    
-  Variables (optional):
-    - show_archives: bool - show archives link
-    - show_categories: bool - show categories link  
-    - show_tags: bool - show tags link
-    - back_url: string - URL for back button (shows back icon instead of specific nav)
-    - back_title: string - tooltip for back button
-#}
+{# Reusable header wrapper #}
+{# Variables: title_html, show_archives, show_categories, show_tags, show_search, back_url, back_title #}
 <div class="header-left">
-    {% block header_title %}{% endblock %}
+    {{ title_html | safe }}
 </div>
 <div class="header-right">
     {% if back_url is defined and back_url %}
@@ -37,6 +24,11 @@
         <svg class="octicon" width="16" height="16"><path id="pathTags" fill-rule="evenodd"></path></svg>
     </a>
     {% endif %}
+    {% endif %}
+    {% if show_search is defined and show_search %}
+    <a href="/search.html" class="btn btn-invisible circle" title="Search">
+        <svg class="octicon" width="16" height="16"><path id="pathSearch" fill-rule="evenodd"></path></svg>
+    </a>
     {% endif %}
     <a href="/" class="btn btn-invisible circle" title="Home">
         <svg class="octicon" width="16" height="16"><path id="pathHome" fill-rule="evenodd"></path></svg>

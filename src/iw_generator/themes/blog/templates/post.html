@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block header %}
-{% block header_title %}
+{% set title_html %}
 <div>
     <h1 style="margin:0;font-size:28px;font-weight:bold;">{{ page.title }}</h1>
     <div class="article-meta">
@@ -40,7 +40,7 @@
         {% endif %}
     </div>
 </div>
-{% endblock %}
+{% endset %}
 {% set back_url = "/" %}
 {% set back_title = "Home" %}
 {% include 'components/header.html' %}
@@ -48,10 +48,10 @@
 
 {% block content %}
 <article class="markdown-body">
-{{ page.content }}
+{{ page.html_content | safe }}
 </article>
 {% endblock %}
 
 {% block script %}
-<script src="/js/nav.js"></script>
+<script src="/assets/js/nav.js"></script>
 {% endblock %}

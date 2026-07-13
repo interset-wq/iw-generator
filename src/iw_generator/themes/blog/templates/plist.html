@@ -13,13 +13,19 @@
 <style>
 .avatar {transition: 0.8s;width:64px;height:64px;object-fit: cover;}
 .avatar:hover{transform: scale(1.15) rotate(360deg);}
-.title-left a{color:inherit;text-decoration:none;vertical-align: bottom;font-size:40px;font-weight: bold;font-family:Monaco;margin-left:8px;}
 .SideNav{min-width: 360px;}
-.SideNav-icon{margin-right: 16px}
+.SideNav-item{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;text-decoration:none;color:inherit;border:1px solid transparent;border-radius:6px;}
+.SideNav-item:hover{background-color:var(--color-canvas-subtle);}
+.SideNav-icon{flex-shrink:0;}
 .SideNav-item .Label{color: #fff;margin-left:4px;}
-.d-flex{min-width:0;}
-.listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
-.listLabels{white-space:nowrap;display:flex;}
+.listTitle{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%;}
+.listLabels{white-space:nowrap;display:flex;align-items:center;}
+.nav-item-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+.nav-item-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-item-child .SideNav-item{padding-left:24px;}
+.nav-arrow{color:var(--color-fg-muted);transition:transform 0.2s;}
+.nav-parent{cursor:pointer;}
+.nav-parent:hover .nav-arrow{color:var(--color-accent-fg);}
 @media (max-width: 600px) {
     body {padding: 8px;}
     .avatar {width:40px;height:40px;}
@@ -30,27 +36,43 @@
 {% endblock %}
 
 {% block header %}
-{% block header_title %}
+{% set title_html %}
 {% if site.avatar %}
 <img src="{{ site.avatar }}" class="avatar circle" alt="avatar">
 {% endif %}
 <a class="blogTitle" href="/" style="font-size:40px;font-weight:bold;font-family:Monaco;">{{ site.name }}</a>
-{% endblock %}
+{% endset %}
 {% set show_archives = true %}
 {% set show_categories = true %}
 {% set show_tags = true %}
+{% set show_search = true %}
 {% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
 <div style="margin-bottom: 16px;">{{ site.description }}</div>
 <nav class="SideNav border">
-{% for page in pages %}
-{% include 'components/post_list_item.html' %}
-{% endfor %}
+{% include 'components/nav_tree.html' %}
 </nav>
 {% endblock %}
 
 {% block script %}
-<script src="/js/nav.js"></script>
+<script>
+function toggleNav(el) {
+    const children = el.nextElementSibling;
+    const arrow = el.querySelector('.nav-arrow');
+    const folderIcon = el.querySelector('.nav-folder');
+    if (children && children.classList.contains('nav-children')) {
+        const isHidden = children.style.display === 'none';
+        children.style.display = isHidden ? 'block' : 'none';
+        if (arrow) {
+            arrow.style.transform = isHidden ? 'rotate(90deg)' : '';
+        }
+        if (folderIcon) {
+            folderIcon.setAttribute('d', isHidden ? IconList['material/folder-open-outline'] : IconList['material/folder-outline']);
+        }
+    }
+}
+</script>
+<script src="/assets/js/nav.js"></script>
 {% endblock %}

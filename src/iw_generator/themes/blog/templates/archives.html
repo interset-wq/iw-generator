@@ -23,9 +23,9 @@
 {% endblock %}
 
 {% block header %}
-{% block header_title %}
+{% set title_html %}
 <h1 style="margin:0;font-size:40px;font-weight:bold;">Archives</h1>
-{% endblock %}
+{% endset %}
 {% include 'components/header.html' %}
 {% endblock %}
 
@@ -45,5 +45,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="/js/nav.js"></script>
+<script src="/assets/js/nav.js"></script>
 {% endblock %}
