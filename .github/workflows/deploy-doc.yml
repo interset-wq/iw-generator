@@ -1,26 +1,20 @@
-name: Build and Deploy Themes
+name: Deploy Doc Theme
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'iw.config.doc.toml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - theme: blog
-            config: iw.config.blog.toml
-          - theme: doc
-            config: iw.config.doc.toml
-          - theme: iw
-            config: iw.config.iw.toml
-
     steps:
       - uses: actions/checkout@v4
 
@@ -32,13 +26,12 @@ jobs:
 
       - run: uv sync
 
-      - name: Build ${{ matrix.theme }} theme
-        run: uv run iw build . -c ${{ matrix.config }} -o _site
+      - name: Build doc theme
+        run: uv run iw build . -c iw.config.doc.toml -o _site
 
-      - name: Deploy to ${{ matrix.theme }} branch
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: false
-          publish_branch: ${{ matrix.theme }}
