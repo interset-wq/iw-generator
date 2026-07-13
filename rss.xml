@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0"><channel><title>My Blog</title><link>https://interset-wq.github.io</link><description>A personal blog powered by iw-generator</description><item><title>Code Highlighting Demo</title><link>https://interset-wq.github.io/code-highlight-demo/</link><description>---
+title: "Code Highlighting Demo"
+date: 2025-07-12
+category: Test
+tags: [code, highlight, test]
+---
+
+# Code Highlighting Demo
+
+iw-generator supports syntax highlighting for multiple languages using Pygments.
+
+## Python
+
+```python
+def fibonacci(n: int) -&gt; list[int]:
+    """Generate Fibonacci sequen</description></item><item><title>Building a Static Site Generator</title><link>https://interset-wq.github.io/building-ssg/</link><description>---
+title: "Building a Static Site Generator"
+date: 2025-07-11
+category: Tutorial
+tags: [python, tutorial, setup]
+---
+
+# Building a Static Site Generator
+
+A step-by-step guide to building your own static site generator with Python.
+
+## Why Static Sites?
+
+Static sites are fast, secure, and easy to de</description></item><item><title>Hello World</title><link>https://interset-wq.github.io/hello-world/</link><description>---
+title: "Hello World"
+date: 2025-07-10
+category: Blog
+tags: [introduction, blog]
+---
+
+# Hello World
+
+Welcome to my blog! This is the first post powered by **iw-generator**.
+
+## What is iw-generator?
+
+iw-generator is a general-purpose Markdown static site generator that supports multiple themes:
+
+</description></item></channel></rss>
