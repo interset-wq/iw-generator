@@ -22,10 +22,30 @@ def write_pages(engine, env, theme_dir):
         f"Writing [cyan]{len(engine.site.pages)}[/] pages (theme: {theme_name})"
     )
 
+    # Build sorted page list for prev/next navigation
+    sorted_pages = _sort_pages(engine.site.pages)
+
     # Write individual post pages (skip index.md - it's the homepage)
-    for page in engine.site.pages:
+    for i, page in enumerate(sorted_pages):
         if page.source_path.name == "index.md":
             continue
+
+        # Get prev/next pages
+        prev_page = sorted_pages[i - 1] if i > 0 else None
+        next_page = sorted_pages[i + 1] if i < len(sorted_pages) - 1 else None
+
+        # Skip index.md for prev/next
+        while prev_page and prev_page.source_path.name == "index.md":
+            i -= 1
+            prev_page = sorted_pages[i - 1] if i > 0 else None
+        while next_page and next_page.source_path.name == "index.md":
+            next_page_index = sorted_pages.index(next_page)
+            next_page = (
+                sorted_pages[next_page_index + 1]
+                if next_page_index < len(sorted_pages) - 1
+                else None
+            )
+
         page.dest_path.parent.mkdir(parents=True, exist_ok=True)
         html = render_template(
             env,
@@ -35,6 +55,8 @@ def write_pages(engine, env, theme_dir):
                 "page": page,
                 "content": page.html_content,
                 "nav": nav,
+                "prev_page": prev_page,
+                "next_page": next_page,
                 "config": engine.config,
                 **theme_context,
             },
