@@ -10,7 +10,7 @@
 {%- endif -%}
     <script>
     var IconList={{ icons | tojson }};
-    {%- if theme.mode in ['iw', 'blog'] %}
+    {%- if theme.name in ['iw', 'blog'] %}
     let savedTheme = localStorage.getItem("meek_theme") || "light";
     document.documentElement.setAttribute("data-color-mode", savedTheme);
     let themeSettings={

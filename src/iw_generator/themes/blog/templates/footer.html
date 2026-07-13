@@ -7,23 +7,23 @@
             <a href="/rss.xml" target="_blank" title="RSS">
                 <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="material/rss"></path></svg>
             </a>
-            {% if theme.social.github %}
-            <a href="{{ theme.social.github }}" target="_blank" title="GitHub">
+            {% if theme_config.theme.social.github %}
+            <a href="{{ theme_config.theme.social.github }}" target="_blank" title="GitHub">
                 <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/github"></path></svg>
             </a>
             {% endif %}
-            {% if theme.social.twitter %}
-            <a href="{{ theme.social.twitter }}" target="_blank" title="Twitter">
+            {% if theme_config.theme.social.twitter %}
+            <a href="{{ theme_config.theme.social.twitter }}" target="_blank" title="Twitter">
                 <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/twitter"></path></svg>
             </a>
             {% endif %}
-            {% if theme.social.telegram %}
-            <a href="{{ theme.social.telegram }}" target="_blank" title="Telegram">
+            {% if theme_config.theme.social.telegram %}
+            <a href="{{ theme_config.theme.social.telegram }}" target="_blank" title="Telegram">
                 <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/telegram"></path></svg>
             </a>
             {% endif %}
-            {% if theme.social.email %}
-            <a href="mailto:{{ theme.social.email }}" title="Email">
+            {% if theme_config.theme.social.email %}
+            <a href="mailto:{{ theme_config.theme.social.email }}" title="Email">
                 <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="material/email-outline"></path></svg>
             </a>
             {% endif %}
