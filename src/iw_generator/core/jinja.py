@@ -51,6 +51,13 @@ def create_jinja_env(config: Config) -> Environment:
         env.globals["get_icon"] = lambda name: ""
         env.globals["get_icon_or_default"] = lambda name, default="": ""
 
+    # Add path utilities to environment
+    from .paths import get_base_path, get_page_url, resolve_asset
+
+    env.globals["get_base_path"] = get_base_path
+    env.globals["resolve_asset"] = resolve_asset
+    env.globals["get_page_url"] = get_page_url
+
     return env
 
 

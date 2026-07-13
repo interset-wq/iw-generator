@@ -165,6 +165,10 @@ class Engine:
 
         for page in self.site.pages:
             page.dest_path.parent.mkdir(parents=True, exist_ok=True)
+            # Calculate base_path for relative asset paths
+            from .paths import get_base_path
+
+            base_path = get_base_path(page.slug)
             html = render_template(
                 env,
                 "base.html",
@@ -174,6 +178,7 @@ class Engine:
                     "content": page.html_content,
                     "nav": nav,
                     "config": self.config,
+                    "base_path": base_path,
                     **theme_context,
                 },
             )
