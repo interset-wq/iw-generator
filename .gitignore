@@ -222,3 +222,6 @@ temp/
 
 # iw-generator build output
 site/
+
+# opencode config
+opencode.json
