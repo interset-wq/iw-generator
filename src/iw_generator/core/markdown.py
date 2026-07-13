@@ -142,24 +142,27 @@ class MarkdownRenderer:
         return frontmatter, html
 
     def get_toc(self) -> list[dict]:
-        """Get TOC items from last render. Call after render_string()."""
+        """Get TOC items from last render. Call after render_string().
+
+        Returns nested structure:
+        [{"id": "...", "title": "...", "children": [...]}]
+        """
         if hasattr(self.md, "toc_tokens"):
-            return _flatten_toc_tokens(self.md.toc_tokens)
+            return _build_toc_tree(self.md.toc_tokens)
         return []
 
 
-def _flatten_toc_tokens(tokens: list[dict], level: int = 1) -> list[dict]:
-    """Flatten TOC tokens into a flat list with level info."""
+def _build_toc_tree(tokens: list[dict]) -> list[dict]:
+    """Build nested TOC tree from toc_tokens."""
     items = []
     for token in tokens:
-        items.append(
-            {
-                "id": token.get("id", ""),
-                "title": token.get("name", ""),
-                "level": level,
-            }
-        )
+        item = {
+            "id": token.get("id", ""),
+            "title": token.get("name", ""),
+            "url": f"#{token.get('id', '')}",
+        }
         children = token.get("children", [])
         if children:
-            items.extend(_flatten_toc_tokens(children, level + 1))
+            item["children"] = _build_toc_tree(children)
+        items.append(item)
     return items
