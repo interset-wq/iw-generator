@@ -1,0 +1,41 @@
+<footer class="md-footer">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        Copyright &copy; <span id="docCopyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a>
+        <br>
+        Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+      </div>
+      <div class="md-footer-social">
+        <a href="/rss.xml" target="_blank" title="RSS" class="md-footer-social__link">
+          {{ get_icon("material/rss") | safe }}
+        </a>
+        {% if theme_config.theme.social.github is defined and theme_config.theme.social.github %}
+        <a href="{{ theme_config.theme.social.github }}" target="_blank" title="GitHub" class="md-footer-social__link">
+          {{ get_icon("simple/github") | safe }}
+        </a>
+        {% endif %}
+        {% if theme_config.theme.social.twitter is defined and theme_config.theme.social.twitter %}
+        <a href="{{ theme_config.theme.social.twitter }}" target="_blank" title="Twitter" class="md-footer-social__link">
+          {{ get_icon("simple/twitter") | safe }}
+        </a>
+        {% endif %}
+        {% if theme_config.theme.social.telegram is defined and theme_config.theme.social.telegram %}
+        <a href="{{ theme_config.theme.social.telegram }}" target="_blank" title="Telegram" class="md-footer-social__link">
+          {{ get_icon("simple/telegram") | safe }}
+        </a>
+        {% endif %}
+        {% if theme_config.theme.social.email is defined and theme_config.theme.social.email %}
+        <a href="mailto:{{ theme_config.theme.social.email }}" title="Email" class="md-footer-social__link">
+          {{ get_icon("material/email-outline") | safe }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+var now=new Date();
+document.getElementById("docCopyrightYear").innerHTML=now.getFullYear();
+</script>

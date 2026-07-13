@@ -1,0 +1,23 @@
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+  <div class="md-sidebar__scrollwrap">
+    <div class="md-sidebar__inner">
+      {% if toc is defined and toc %}
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  <label class="md-nav__title" for="__toc">
+    <span class="md-nav__icon md-icon"></span>
+    Table of contents
+  </label>
+  <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    {% for item in toc %}
+    <li class="md-nav__item" style="padding-left: {{ (item.level - 1) * 0.8 }}rem;">
+      <a href="#{{ item.id }}" class="md-nav__link">
+        <span class="md-ellipsis">{{ item.title }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+      {% endif %}
+    </div>
+  </div>
+</div>
