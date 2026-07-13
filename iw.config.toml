@@ -1,23 +1,96 @@
+# =============================================================================
+# iw-generator Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Site
+# -----------------------------------------------------------------------------
 [site]
 name = "My Blog"
 url = "https://example.com"
 description = "A personal blog powered by iw-generator"
 
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
 [paths]
 content = "docs"
 output = "site"
+static = "static"
 
+# -----------------------------------------------------------------------------
+# Theme
+# -----------------------------------------------------------------------------
 [theme]
 name = "blog"
 mode = "blog"
-lang = "zh-CN"
-favicon = "https://github.githubassets.com/favicons/favicon.svg"
-avatar = "https://github.githubassets.com/favicons/favicon.svg"
+lang = "en"
+favicon = ""
+avatar = ""
 
+# -----------------------------------------------------------------------------
+# Social Links (shown in footer)
+# -----------------------------------------------------------------------------
 [theme.social]
-github = "https://github.com/interset-wq"
-email = "intersetwq@qq.com"
-enable = ["github", "email"]
+github = ""
+twitter = ""
+telegram = ""
+email = ""
 
+# -----------------------------------------------------------------------------
+# Comments (Giscus)
+# https://giscus.app
+# -----------------------------------------------------------------------------
+[theme.giscus]
+enabled = false
+repo = ""
+repo_id = ""
+category = ""
+category_id = ""
+mapping = "pathname"
+reactions_enabled = true
+theme = "light"
+
+# -----------------------------------------------------------------------------
+# Plugins
+# -----------------------------------------------------------------------------
 [plugins]
-enable = ["toc", "search", "rss"]
+enable = ["toc", "highlight", "search", "rss"]
+
+# -----------------------------------------------------------------------------
+# Markdown
+# -----------------------------------------------------------------------------
+[markdown]
+highlight_theme = "monokai"
+
+
+# =============================================================================
+# iw Theme Config (GitHub Pages + GitHub Issues)
+# =============================================================================
+# When using mode = "iw", the theme fetches content from GitHub Issues
+# and generates a static site for GitHub Pages.
+#
+# Example:
+#   [theme]
+#   name = "iw"
+#   mode = "iw"
+#
+#   [theme.iw]
+#   github_repo = "owner/repo"
+#   github_token = "ghp_xxxxxxxxxxxx"
+#
+#   [theme.iw.categories]
+#   "bug" = "Bug Reports"
+#   "feature" = "Features"
+#   "docs" = "Documentation"
+# -----------------------------------------------------------------------------
+# [theme.iw]
+# github_repo = ""
+# github_token = ""
+# default_category = "Uncategorized"
+# exclude_labels = ["wontfix", "duplicate"]
+# posts_per_page = 20
+#
+# [theme.iw.categories]
+# "bug" = "Bug Reports"
+# "feature" = "Features"

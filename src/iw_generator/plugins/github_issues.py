@@ -48,8 +48,8 @@ class GitHubIssuesPlugin(PluginBase):
             return
 
         # Get GitHub config from theme settings
-        github_repo = getattr(self.config.theme, "github_repo", None)
-        github_token = getattr(self.config.theme, "github_token", None)
+        github_repo = getattr(self.config.theme.iw, "github_repo", None)
+        github_token = getattr(self.config.theme.iw, "github_token", None)
 
         if not github_repo:
             console.print("[yellow]GitHub repo not configured[/]")

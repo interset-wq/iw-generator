@@ -22,43 +22,44 @@ class PathsSettings(BaseModel):
     static: str = "static"
 
 
-class ThemePaletteSettings(BaseModel):
-    default: str = "light"
-    toggle: bool = True
-
-
-class ThemeFontSettings(BaseModel):
-    text: str = ""
-    code: str = ""
-
-
 class ThemeSocialSettings(BaseModel):
     github: str = ""
     twitter: str = ""
-    x: str = ""
     telegram: str = ""
-    discord: str = ""
-    youtube: str = ""
-    linkedin: str = ""
     email: str = ""
-    enable: list[str] = Field(default_factory=list)
+
+
+class GiscusSettings(BaseModel):
+    enabled: bool = False
+    repo: str = ""
+    repo_id: str = ""
+    category: str = ""
+    category_id: str = ""
+    mapping: str = "pathname"
+    reactions_enabled: bool = True
+    theme: str = "light"
+
+
+class IwThemeSettings(BaseModel):
+    """Settings specific to the iw theme (GitHub Pages + GitHub Issues)."""
+
+    github_repo: str = ""  # owner/repo format
+    github_token: str = ""  # GitHub Personal Access Token
+    categories: dict[str, str] = Field(default_factory=dict)
+    default_category: str = "Uncategorized"
+    exclude_labels: list[str] = Field(default_factory=list)  # labels to exclude
+    posts_per_page: int = 20
 
 
 class ThemeSettings(BaseModel):
-    name: str = "iw"
-    custom_dir: str = ""
-    mode: str = "iw"  # "iw", "doc", or "blog"
-    lang: str = "en"  # "en", "zh-CN", etc.
+    name: str = "blog"
+    mode: str = "blog"  # "iw", "doc", or "blog"
+    lang: str = "en"
     favicon: str = ""
-    og_image: str = ""
     avatar: str = ""
-    gmeek_vercount_url: str = ""  # URL for GmeekVercount.js
-    gmeek_toc_url: str = ""  # URL for GmeekTOC.js
-    palette: ThemePaletteSettings = Field(default_factory=ThemePaletteSettings)
-    font: ThemeFontSettings = Field(default_factory=ThemeFontSettings)
     social: ThemeSocialSettings = Field(default_factory=ThemeSocialSettings)
-    github_repo: str = ""
-    github_token: str = ""
+    giscus: GiscusSettings = Field(default_factory=GiscusSettings)
+    iw: IwThemeSettings = Field(default_factory=IwThemeSettings)
 
 
 class PluginsSettings(BaseModel):

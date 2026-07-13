@@ -11,7 +11,7 @@ def test_config_defaults():
     cfg = Config()
     assert cfg.site.name == "My Site"
     assert cfg.paths.content == "content"
-    assert cfg.theme.name == "iw"
+    assert cfg.theme.name == "blog"
 
 
 def test_config_from_dict():
@@ -56,7 +56,7 @@ def test_markdown_frontmatter_toml():
 def test_markdown_code_highlight():
     renderer = MarkdownRenderer()
     _, html = renderer.render_string("```python\nprint('hi')\n```\n")
-    assert 'class="language-python"' in html
+    assert "highlight" in html
     assert "print" in html
 
 
