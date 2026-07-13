@@ -83,6 +83,23 @@
 
     <script src="{{ base_path }}assets/javascripts/bundle.min.js"></script>
 
+    <script>
+    (function() {
+      var header = document.querySelector(".md-header");
+      if (!header) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) {
+            header.classList.add("md-header--shadow");
+          } else {
+            header.classList.remove("md-header--shadow");
+          }
+        });
+      }, { threshold: 0, rootMargin: "-1px 0px 0px 0px" });
+      observer.observe(document.querySelector(".md-hero") || document.body);
+    })();
+    </script>
+
     {% block script %}{% endblock %}
 
   </body>

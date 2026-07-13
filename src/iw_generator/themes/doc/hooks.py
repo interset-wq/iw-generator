@@ -22,14 +22,22 @@ def write_pages(engine, env, theme_dir):
     nav = engine._build_nav()
     theme_name = engine.config.theme.name
 
+    # Build flat page list for prev/next navigation
+    sorted_pages = _sort_pages_by_nav(engine.site.pages, nav)
+
     console.print(
         f"Writing [cyan]{len(engine.site.pages)}[/] pages (theme: {theme_name})"
     )
 
-    for page in engine.site.pages:
+    for i, page in enumerate(sorted_pages):
         page.dest_path.parent.mkdir(parents=True, exist_ok=True)
         # Calculate base_path for relative asset paths
         base_path = get_base_path(page.slug)
+
+        # Get prev/next pages
+        prev_page = sorted_pages[i - 1] if i > 0 else None
+        next_page = sorted_pages[i + 1] if i < len(sorted_pages) - 1 else None
+
         html = render_template(
             env,
             "page.html",
@@ -41,6 +49,8 @@ def write_pages(engine, env, theme_dir):
                 "nav": nav,
                 "config": engine.config,
                 "base_path": base_path,
+                "prev_page": prev_page,
+                "next_page": next_page,
                 **theme_context,
             },
         )
@@ -51,6 +61,33 @@ def write_pages(engine, env, theme_dir):
     _write_search_index(engine)
     search_path = engine.config.output_dir / "search_index.json"
     console.print(f"  Written: [cyan]{search_path}[/]")
+
+
+def _sort_pages_by_nav(pages, nav):
+    """Sort pages according to navigation order."""
+    # Build ordered list from nav tree
+    ordered = []
+
+    def collect_from_nav(items):
+        for item in items:
+            if "children" in item:
+                collect_from_nav(item["children"])
+            else:
+                # Find matching page
+                for page in pages:
+                    if page.url == item.get("url"):
+                        if page not in ordered:
+                            ordered.append(page)
+                        break
+
+    collect_from_nav(nav)
+
+    # Add any pages not in nav (fallback to path order)
+    for page in pages:
+        if page not in ordered:
+            ordered.append(page)
+
+    return ordered
 
 
 def _get_icon_svg(

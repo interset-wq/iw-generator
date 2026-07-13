@@ -1,4 +1,21 @@
-<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+{% macro render_toc_item(item) %}
+<li class="md-nav__item">
+  <a href="{{ item.url }}" class="md-nav__link">
+    <span class="md-ellipsis">{{ item.title }}</span>
+  </a>
+  {% if item.children is defined and item.children %}
+  <nav class="md-nav" aria-label="{{ item.title }}">
+    <ul class="md-nav__list">
+      {% for child in item.children %}
+        {{ render_toc_item(child) }}
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+</li>
+{% endmacro %}
+
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
   <div class="md-sidebar__scrollwrap">
     <div class="md-sidebar__inner">
       {% if toc is defined and toc %}
@@ -9,11 +26,7 @@
   </label>
   <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
     {% for item in toc %}
-    <li class="md-nav__item" style="padding-left: {{ (item.level - 1) * 0.8 }}rem;">
-      <a href="#{{ item.id }}" class="md-nav__link">
-        <span class="md-ellipsis">{{ item.title }}</span>
-      </a>
-    </li>
+      {{ render_toc_item(item) }}
     {% endfor %}
   </ul>
 </nav>
