@@ -1,0 +1,28 @@
+# Blog theme config
+[site]
+name = "My Blog"
+url = "https://interset-wq.github.io"
+description = "A personal blog powered by iw-generator"
+
+[paths]
+content = "blog-content"
+output = "_site"
+
+[theme]
+name = "blog"
+mode = "blog"
+lang = "en"
+avatar = "https://github.githubassets.com/favicons/favicon.svg"
+
+[theme.social]
+github = "https://github.com/interset-wq"
+email = "intersetwq@qq.com"
+
+[theme.giscus]
+enabled = false
+
+[plugins]
+enable = ["toc", "highlight", "search", "rss"]
+
+[markdown]
+highlight_theme = "monokai"

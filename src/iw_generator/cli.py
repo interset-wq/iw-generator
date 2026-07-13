@@ -40,7 +40,8 @@ def build_cmd(source: str, config_path: str | None, output_path: str | None):
     # Load config
     cfg = Config.load(config_path)
     if output_path:
-        cfg = cfg.model_copy(update={"paths": {"output": output_path}})
+        new_paths = cfg.paths.model_copy(update={"output": output_path})
+        cfg = cfg.model_copy(update={"paths": new_paths})
 
     # Build
     site = build(cfg)

@@ -1,0 +1,30 @@
+# iw theme config (GitHub Issues powered)
+[site]
+name = "My Blog"
+url = "https://interset-wq.github.io/iw"
+description = "A blog powered by GitHub Issues"
+
+[paths]
+content = "docs"
+output = "_site"
+
+[theme]
+name = "iw"
+mode = "iw"
+lang = "en"
+
+[theme.social]
+github = "https://github.com/interset-wq"
+
+[theme.iw]
+github_repo = "interset-wq/iw-generator"
+github_token = ""
+default_category = "Uncategorized"
+exclude_labels = ["wontfix", "duplicate"]
+posts_per_page = 20
+
+[plugins]
+enable = ["toc", "highlight", "search", "rss"]
+
+[markdown]
+highlight_theme = "monokai"
