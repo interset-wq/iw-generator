@@ -7,12 +7,16 @@ import json
 from rich.console import Console
 
 from iw_generator.core.jinja import render_template
+from iw_generator.themes.icons import get_icon
 
 console = Console()
 
 
 def write_pages(engine, env, theme_dir):
     """Write all pages for doc theme."""
+    # Register doc-theme-specific icon function
+    env.globals["get_icon_svg"] = _get_icon_svg
+
     theme_context = engine._get_theme_context()
     nav = engine._build_nav()
     theme_name = engine.config.theme.name
@@ -43,6 +47,28 @@ def write_pages(engine, env, theme_dir):
     _write_search_index(engine)
     search_path = engine.config.output_dir / "search_index.json"
     console.print(f"  Written: [cyan]{search_path}[/]")
+
+
+def _get_icon_svg(
+    name: str,
+    size: int = 24,
+    *,
+    classes: str = "",
+    aria_label: str = "",
+) -> str:
+    """Get a complete <svg> element for MkDocs Material-style rendering."""
+    path_data = get_icon(name)
+    if not path_data:
+        return ""
+
+    cls_attr = f' class="{classes}"' if classes else ""
+    aria_attr = f' aria-label="{aria_label}"' if aria_label else ""
+
+    return (
+        f'<svg{cls_attr}{aria_attr} width="{size}" height="{size}" '
+        f'viewBox="0 0 24 24" fill="currentColor">'
+        f'<path d="{path_data}"/></svg>'
+    )
 
 
 def _write_search_index(engine):
