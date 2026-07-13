@@ -22,8 +22,10 @@ def write_pages(engine, env, theme_dir):
         f"Writing [cyan]{len(engine.site.pages)}[/] pages (theme: {theme_name})"
     )
 
-    # Write individual post pages
+    # Write individual post pages (skip index.md - it's the homepage)
     for page in engine.site.pages:
+        if page.source_path.name == "index.md":
+            continue
         page.dest_path.parent.mkdir(parents=True, exist_ok=True)
         html = render_template(
             env,
@@ -46,6 +48,7 @@ def write_pages(engine, env, theme_dir):
     _write_categories(engine, env, theme_context)
     _write_tags_page(engine, env, theme_context)
     _write_about_page(engine, env, theme_context)
+    _write_search_page(engine, env, theme_context)
     _write_post_list_json(engine)
 
 
@@ -54,8 +57,8 @@ def _write_blog_index(engine, env, theme_context):
     index_path = engine.config.output_dir / "index.html"
     index_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Sort pages: pinned first, then by date (newest first)
-    sorted_pages = _sort_pages(engine.site.pages)
+    # Build hierarchical navigation tree
+    nav_tree = _build_nav_tree(engine.site.pages)
 
     # Default Gmeek-style tag and year colors
     tag_colors = {
@@ -75,7 +78,7 @@ def _write_blog_index(engine, env, theme_context):
         "plist.html",
         {
             "site": engine.config.site,
-            "pages": sorted_pages,
+            "nav_items": nav_tree,
             "config": engine.config,
             "tag_colors": tag_colors,
             "year_colors": year_colors,
@@ -297,6 +300,24 @@ def _write_about_page(engine, env, theme_context):
     console.print(f"  Written: [cyan]{about_path}[/]")
 
 
+def _write_search_page(engine, env, theme_context):
+    """Write the search page."""
+    search_path = engine.config.output_dir / "search.html"
+    search_path.parent.mkdir(parents=True, exist_ok=True)
+
+    html = render_template(
+        env,
+        "search.html",
+        {
+            "site": engine.config.site,
+            "config": engine.config,
+            **theme_context,
+        },
+    )
+    search_path.write_text(html, encoding="utf-8")
+    console.print(f"  Written: [cyan]{search_path}[/]")
+
+
 def _write_post_list_json(engine):
     """Write postList.json for tag page filtering."""
     json_path = engine.config.output_dir / "postList.json"
@@ -315,6 +336,87 @@ def _write_post_list_json(engine):
 
     json_path.write_text(json.dumps(post_list, ensure_ascii=False), encoding="utf-8")
     console.print(f"  Written: [cyan]{json_path}[/]")
+
+
+def _build_nav_tree(pages: list) -> list:
+    """Build hierarchical navigation tree from pages."""
+    # Group pages by their parent directory
+    tree = {}
+
+    for page in pages:
+        # Get relative path from content dir
+        rel_path = page.source_path.relative_to(page.content_dir)
+        parts = rel_path.parts[:-1]  # Directory parts (excluding filename)
+
+        # Build tree structure
+        current_level = tree
+        for part in parts:
+            if part not in current_level:
+                current_level[part] = {"_pages": [], "_children": {}}
+            current_level = current_level[part]["_children"]
+
+        # Add page to current level
+        current_level.setdefault("_pages", []).append(page)
+
+    # Convert tree to list format for template
+    def tree_to_list(tree_level):
+        items = []
+
+        # First add directory entries (as section headers)
+        for dir_name, dir_data in sorted(tree_level.items()):
+            if dir_name.startswith("_"):
+                continue
+
+            # Find if there's an index page for this directory
+            index_page = None
+            for page in dir_data.get("_pages", []):
+                if page.source_path.name == "index.md":
+                    index_page = page
+                    break
+
+            # Create directory item
+            dir_item = {
+                "title": dir_name.replace("-", " ").replace("_", " ").title(),
+                "url": index_page.url if index_page else f"/{dir_name}/",
+                "children": tree_to_list(dir_data["_children"]),
+                "icon": "material/folder-outline",
+            }
+
+            # Add index page metadata if it exists
+            if index_page:
+                dir_item["category"] = index_page.category
+                dir_item["tags"] = index_page.tags
+                dir_item["date"] = index_page.date
+                dir_item["pin"] = index_page.pin
+
+            items.append(dir_item)
+
+        # Then add pages in this directory
+        for page in sorted(
+            tree_level.get("_pages", []),
+            key=lambda p: (-p.pin, p.date or "0000-00-00"),
+            reverse=True,
+        ):
+            if page.source_path.name == "index.md":
+                continue  # Skip index pages, they're directory headers
+
+            items.append(
+                {
+                    "title": page.title,
+                    "url": page.url,
+                    "category": page.category,
+                    "tags": page.tags,
+                    "date": page.date,
+                    "pin": page.pin,
+                    "icon": "material/article-outline"
+                    if page.pin == 0
+                    else "material/push-pin",
+                }
+            )
+
+        return items
+
+    return tree_to_list(tree)
 
 
 def _sort_pages(pages: list) -> list:
