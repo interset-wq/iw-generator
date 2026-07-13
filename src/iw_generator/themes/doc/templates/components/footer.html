@@ -8,26 +8,26 @@
       </div>
       <div class="md-footer-social">
         <a href="/rss.xml" target="_blank" title="RSS" class="md-footer-social__link">
-          {{ get_icon("material/rss") | safe }}
+          {{ get_icon_svg("material/rss", 16) | safe }}
         </a>
         {% if theme_config.theme.social.github is defined and theme_config.theme.social.github %}
         <a href="{{ theme_config.theme.social.github }}" target="_blank" title="GitHub" class="md-footer-social__link">
-          {{ get_icon("simple/github") | safe }}
+          {{ get_icon_svg("simple/github", 16) | safe }}
         </a>
         {% endif %}
         {% if theme_config.theme.social.twitter is defined and theme_config.theme.social.twitter %}
         <a href="{{ theme_config.theme.social.twitter }}" target="_blank" title="Twitter" class="md-footer-social__link">
-          {{ get_icon("simple/twitter") | safe }}
+          {{ get_icon_svg("simple/twitter", 16) | safe }}
         </a>
         {% endif %}
         {% if theme_config.theme.social.telegram is defined and theme_config.theme.social.telegram %}
         <a href="{{ theme_config.theme.social.telegram }}" target="_blank" title="Telegram" class="md-footer-social__link">
-          {{ get_icon("simple/telegram") | safe }}
+          {{ get_icon_svg("simple/telegram", 16) | safe }}
         </a>
         {% endif %}
         {% if theme_config.theme.social.email is defined and theme_config.theme.social.email %}
         <a href="mailto:{{ theme_config.theme.social.email }}" title="Email" class="md-footer-social__link">
-          {{ get_icon("material/email-outline") | safe }}
+          {{ get_icon_svg("material/email-outline", 16) | safe }}
         </a>
         {% endif %}
       </div>
