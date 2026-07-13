@@ -21,7 +21,7 @@ output = "site"
 # Theme
 # -----------------------------------------------------------------------------
 [theme]
-name = "blog"
+name = "doc"
 lang = "en"
 favicon = ""
 avatar = ""
