@@ -20,43 +20,50 @@ def get_theme_dir(config: Config) -> Path:
     if builtin.is_dir():
         return builtin
     # Fall back to user-specified custom_dir
-    if config.theme.custom_dir:
+    if hasattr(config.theme, "custom_dir") and config.theme.custom_dir:
         custom = Path(config.theme.custom_dir)
         if custom.is_dir():
             return custom
     return builtin
 
 
+def get_shared_dir() -> Path:
+    """Get the path to the shared themes directory."""
+    return Path(__file__).parent.parent / "themes" / "shared"
+
+
 def create_jinja_env(config: Config) -> Environment:
     """Create a Jinja2 environment with the theme's templates."""
     theme_dir = get_theme_dir(config)
     templates_dir = theme_dir / "templates"
+    shared_dir = get_shared_dir()
+
+    # Search paths: theme templates first, then shared directory
+    search_paths = [str(templates_dir)]
+    if shared_dir.is_dir():
+        search_paths.append(str(shared_dir))
 
     env = Environment(
-        loader=FileSystemLoader(str(templates_dir)),
+        loader=FileSystemLoader(search_paths),
         autoescape=select_autoescape(["html", "xml"]),
         trim_blocks=True,
         lstrip_blocks=True,
     )
 
-    # Add icon functions to environment
+    # Register shared icon function
+    from ..themes.shared.icons import get_icon_svg
+
+    env.globals["get_icon_svg"] = get_icon_svg
+
+    # Register legacy icon functions (for backward compatibility)
     try:
-        # Load icons from shared themes/icons.py
         from ..themes.icons import get_icon, get_icon_or_default
 
         env.globals["get_icon"] = get_icon
         env.globals["get_icon_or_default"] = get_icon_or_default
     except ImportError:
-        # Icons module not available (e.g., custom theme)
         env.globals["get_icon"] = lambda name: ""
         env.globals["get_icon_or_default"] = lambda name, default="": ""
-
-    # Add path utilities to environment
-    from .paths import get_base_path, get_page_url, resolve_asset
-
-    env.globals["get_base_path"] = get_base_path
-    env.globals["resolve_asset"] = resolve_asset
-    env.globals["get_page_url"] = get_page_url
 
     return env
 

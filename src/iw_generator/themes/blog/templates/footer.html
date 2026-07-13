@@ -1,38 +1,22 @@
 <div class="footer-inner">
         <div class="footer-left">
-            <div>Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a></div>
+            <div>{% if site.copyright %}{{ site.copyright }}{% else %}Copyright © <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a>{% endif %}</div>
             <div>Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank">iw-generator</a></div>
         </div>
         <div class="footer-right">
-            <a href="/rss.xml" target="_blank" title="RSS">
-                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="material/rss"></path></svg>
+            {% set social_links = social.get_all_links() %}
+            {% for item in social_links %}
+            <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}">
+                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="{{ item.icon }}"></path></svg>
             </a>
-            {% if theme_config.theme.social.github %}
-            <a href="{{ theme_config.theme.social.github }}" target="_blank" title="GitHub">
-                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/github"></path></svg>
-            </a>
-            {% endif %}
-            {% if theme_config.theme.social.twitter %}
-            <a href="{{ theme_config.theme.social.twitter }}" target="_blank" title="Twitter">
-                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/twitter"></path></svg>
-            </a>
-            {% endif %}
-            {% if theme_config.theme.social.telegram %}
-            <a href="{{ theme_config.theme.social.telegram }}" target="_blank" title="Telegram">
-                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="simple/telegram"></path></svg>
-            </a>
-            {% endif %}
-            {% if theme_config.theme.social.email %}
-            <a href="mailto:{{ theme_config.theme.social.email }}" title="Email">
-                <svg class="octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path class="social-icon" data-icon="material/email-outline"></path></svg>
-            </a>
-            {% endif %}
+            {% endfor %}
     </div>
 </div>
 
 <script>
 var now=new Date();
-document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+var el = document.getElementById("copyrightYear");
+if (el) el.innerHTML=now.getFullYear();
 document.querySelectorAll('.social-icon').forEach(function(el) {
     var icon = el.getAttribute('data-icon');
     if (IconList[icon]) el.setAttribute('d', IconList[icon]);

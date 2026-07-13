@@ -1,0 +1,25 @@
+{# Shared Giscus comment component.
+
+Usage:
+  {% include "shared/components/giscus.html" %}
+#}
+
+{% if comment.provider == "giscus" and comment.giscus.repo %}
+<div id="giscus-container" style="margin-top:48px;padding-top:24px;border-top:1px solid var(--borderColor-muted, var(--color-border-muted, #d0d7de));">
+<script src="https://giscus.app/client.js"
+    data-repo="{{ comment.giscus.repo }}"
+    data-repo-id="{{ comment.giscus.repo_id }}"
+    data-category="{{ comment.giscus.category }}"
+    data-category-id="{{ comment.giscus.category_id }}"
+    data-mapping="{{ comment.giscus.mapping }}"
+    data-strict="0"
+    data-reactions-enabled="{{ 1 if comment.giscus.reactions_enabled else 0 }}"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="{{ comment.giscus.theme }}"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+</script>
+</div>
+{% endif %}

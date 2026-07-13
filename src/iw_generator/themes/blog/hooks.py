@@ -8,6 +8,7 @@ from collections import defaultdict
 from rich.console import Console
 
 from iw_generator.core.jinja import render_template
+from iw_generator.themes.shared.utils import sort_pages_by_date, write_search_index
 
 console = Console()
 
@@ -23,7 +24,7 @@ def write_pages(engine, env, theme_dir):
     )
 
     # Build sorted page list for prev/next navigation
-    sorted_pages = _sort_pages(engine.site.pages)
+    sorted_pages = sort_pages_by_date(engine.site.pages)
 
     # Write individual post pages (skip index.md - it's the homepage)
     for i, page in enumerate(sorted_pages):
@@ -72,6 +73,9 @@ def write_pages(engine, env, theme_dir):
     _write_about_page(engine, env, theme_context)
     _write_search_page(engine, env, theme_context)
     _write_post_list_json(engine)
+
+    # Generate search index using shared utility
+    write_search_index(engine.site.pages, engine.config.output_dir)
 
 
 def _write_blog_index(engine, env, theme_context):
@@ -160,7 +164,7 @@ def _write_categories(engine, env, theme_context):
 
     categories = []
     for cat_name in sorted(pages_by_category.keys()):
-        cat_pages = _sort_pages(pages_by_category[cat_name])
+        cat_pages = sort_pages_by_date(pages_by_category[cat_name])
         categories.append(
             {
                 "name": cat_name,
@@ -188,7 +192,7 @@ def _write_categories(engine, env, theme_context):
         cat_path = category_dir / f"{cat_name}.html"
         cat_path.parent.mkdir(parents=True, exist_ok=True)
 
-        sorted_pages = _sort_pages(cat_pages)
+        sorted_pages = sort_pages_by_date(cat_pages)
         html = render_template(
             env,
             "category.html",
@@ -219,7 +223,7 @@ def _write_tags_page(engine, env, theme_context):
 
     tags = []
     for tag_name in sorted(pages_by_tag.keys()):
-        tag_pages = _sort_pages(pages_by_tag[tag_name])
+        tag_pages = sort_pages_by_date(pages_by_tag[tag_name])
         tags.append({"name": tag_name, "pages": tag_pages, "count": len(tag_pages)})
 
     html = render_template(
@@ -241,7 +245,7 @@ def _write_tags_page(engine, env, theme_context):
         tag_path = tag_dir / f"{tag_name}.html"
         tag_path.parent.mkdir(parents=True, exist_ok=True)
 
-        sorted_pages = _sort_pages(tag_pages)
+        sorted_pages = sort_pages_by_date(tag_pages)
         html = render_template(
             env,
             "tag_detail.html",
@@ -439,17 +443,3 @@ def _build_nav_tree(pages: list) -> list:
         return items
 
     return tree_to_list(tree)
-
-
-def _sort_pages(pages: list) -> list:
-    """Sort pages: pinned first (by pin order), then by date (newest first)."""
-    pinned = sorted(
-        [p for p in pages if p.pin > 0],
-        key=lambda p: -p.pin,
-    )
-    unpinned = sorted(
-        [p for p in pages if p.pin == 0],
-        key=lambda p: p.date or "0000-00-00",
-        reverse=True,
-    )
-    return pinned + unpinned

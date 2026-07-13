@@ -1,4 +1,4 @@
-# Doc theme config (uses docs/ directory)
+# Doc theme config
 [site]
 name = "iw-generator"
 url = "https://interset-wq.github.io/doc"
@@ -10,14 +10,10 @@ output = "_site"
 
 [theme]
 name = "doc"
-mode = "doc"
 lang = "en"
 
-[theme.social]
+[social]
 github = "https://github.com/interset-wq/iw-generator"
 
 [plugins]
 enable = ["toc", "highlight", "search"]
-
-[markdown]
-highlight_theme = "monokai"

@@ -53,11 +53,33 @@ class Engine:
             return
 
         md_files = sorted(content_dir.rglob("*.md"))
+
+        # Apply ignore patterns
+        ignore_patterns = self.config.paths.ignore
+        if ignore_patterns:
+            md_files = self._filter_ignored(md_files, content_dir, ignore_patterns)
+
         console.print(f"Found [cyan]{len(md_files)}[/] markdown files")
 
         for md_path in md_files:
             page = self._process_page(md_path, content_dir)
             self.site.pages.append(page)
+
+    def _filter_ignored(self, files, content_dir, patterns):
+        """Filter out files matching ignore patterns."""
+        import fnmatch
+
+        filtered = []
+        for f in files:
+            rel = str(f.relative_to(content_dir))
+            ignored = False
+            for pattern in patterns:
+                if fnmatch.fnmatch(rel, pattern) or fnmatch.fnmatch(f.name, pattern):
+                    ignored = True
+                    break
+            if not ignored:
+                filtered.append(f)
+        return filtered
 
     def _process_page(self, md_path: Path, content_dir: Path) -> Page:
         # Determine output path - generate directory-based URLs
@@ -197,9 +219,12 @@ class Engine:
         except ImportError:
             context["icons"] = {}
 
-        # Pass theme_config (loaded from theme.toml in config)
-        context["theme_config"] = self.config.theme_config
+        # Pass config sections directly
         context["theme"] = self.config.theme
+        context["social"] = self.config.social
+        context["comment"] = self.config.comment
+        context["navigation"] = self.config.navigation
+        context["extra"] = self.config.extra
         return context
 
     def _load_theme_hooks(self, hooks_file: Path) -> dict:
