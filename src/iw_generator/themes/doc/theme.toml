@@ -1,0 +1,5 @@
+# Doc theme configuration
+
+[theme]
+name = "doc"
+description = "A documentation theme similar to MkDocs Material"

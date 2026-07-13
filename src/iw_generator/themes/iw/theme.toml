@@ -1,0 +1,17 @@
+# iw theme configuration (GitHub Pages + GitHub Issues)
+
+[theme]
+name = "iw"
+description = "A GitHub Issues-powered blog theme"
+
+[theme.iw]
+github_repo = ""
+github_token = ""
+default_category = "Uncategorized"
+exclude_labels = ["wontfix", "duplicate"]
+posts_per_page = 20
+
+[theme.iw.categories]
+"bug" = "Bug Reports"
+"feature" = "Features"
+"docs" = "Documentation"
