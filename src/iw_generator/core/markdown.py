@@ -101,10 +101,14 @@ def create_markdown_instance() -> markdown.Markdown:
         extension_configs={
             "pymdownx.highlight": {
                 "linenums": False,
-                "css_class": "",
-                "use_pygments": False,
+                "css_class": "highlight",
+                "use_pygments": True,
+                "pygments_style": "monokai",
+                "pygments_lang_class": True,
             },
-            "pymdownx.superfences": {},
+            "pymdownx.superfences": {
+                "css_class": "highlight",
+            },
             "pymdownx.tabbed": {
                 "alternate_style": True,
             },
