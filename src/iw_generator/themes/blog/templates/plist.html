@@ -11,7 +11,7 @@
 
 {% block style %}
 <style>
-.avatar {transition: 0.8s;width:64px;height:64px;object-fit: cover;}
+.avatar {transition: 0.8s;width:36px;height:36px;object-fit: cover;}
 .avatar:hover{transform: scale(1.15) rotate(360deg);}
 .SideNav{min-width: 360px;}
 .SideNav-item{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;text-decoration:none;color:inherit;border:1px solid transparent;border-radius:6px;}
@@ -28,8 +28,11 @@
 .nav-parent:hover .nav-arrow{color:var(--color-accent-fg);}
 @media (max-width: 600px) {
     body {padding: 8px;}
-    .avatar {width:40px;height:40px;}
-    .blogTitle{display:none;}
+    .avatar {width:24px;height:24px;}
+    #header{flex-direction:column;gap:8px;padding-bottom:12px;}
+    .header-left{flex-direction:row;align-items:center;gap:8px;}
+    .blogTitle{font-size:18px !important;}
+    .SideNav{min-width:unset;width:100%;}
     .LabelTime{display:none;}
 }
 </style>
@@ -37,8 +40,8 @@
 
 {% block header %}
 {% set title_html %}
-{% if site.avatar %}
-<img src="{{ site.avatar }}" class="avatar circle" alt="avatar">
+{% if theme.avatar %}
+<img src="{{ theme.avatar }}" class="avatar circle" alt="avatar">
 {% endif %}
 <a class="blogTitle" href="/" style="font-size:40px;font-weight:bold;font-family:Monaco;">{{ site.name }}</a>
 {% endset %}
