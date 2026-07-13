@@ -7,6 +7,7 @@ import json
 from rich.console import Console
 
 from iw_generator.core.jinja import render_template
+from iw_generator.core.paths import get_base_path
 from iw_generator.themes.icons import get_icon
 
 console = Console()
@@ -27,6 +28,8 @@ def write_pages(engine, env, theme_dir):
 
     for page in engine.site.pages:
         page.dest_path.parent.mkdir(parents=True, exist_ok=True)
+        # Calculate base_path for relative asset paths
+        base_path = get_base_path(page.slug)
         html = render_template(
             env,
             "page.html",
@@ -37,6 +40,7 @@ def write_pages(engine, env, theme_dir):
                 "toc": page.toc_items,
                 "nav": nav,
                 "config": engine.config,
+                "base_path": base_path,
                 **theme_context,
             },
         )
