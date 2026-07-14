@@ -8,7 +8,7 @@ from rich.console import Console
 
 from .config import Config
 from .file import Page, Site
-from .jinja import create_jinja_env, get_theme_dir, render_template
+from .jinja import create_jinja_env, get_shared_dir, get_theme_dir, render_template
 from .markdown import MarkdownRenderer
 from .plugin import PluginBase, discover_plugins
 from .utils import clean_dir, copy_tree
@@ -153,11 +153,22 @@ class Engine:
             console.print(f"Copying static: [cyan]{static_dir}[/]")
             copy_tree(static_dir, dest)
 
+        # Copy shared assets (css, js)
+        shared_dir = get_shared_dir()
+        shared_css = shared_dir / "css"
+        shared_js = shared_dir / "js"
+        dest_base = self.config.output_dir / "assets" / "shared"
+        if shared_css.is_dir():
+            copy_tree(shared_css, dest_base / "css")
+        if shared_js.is_dir():
+            copy_tree(shared_js, dest_base / "js")
+
         # Copy theme assets
         theme_dir = get_theme_dir(self.config)
         assets_dir = theme_dir / "assets"
         if assets_dir.is_dir():
-            dest = self.config.output_dir / "assets"
+            theme_name = self.config.theme.name
+            dest = self.config.output_dir / "assets" / theme_name
             copy_tree(assets_dir, dest)
 
     def _write_pages(self) -> None:
