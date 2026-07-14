@@ -15,6 +15,7 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 ## Key Files
 
 - `PLAN.md` — Full architecture and implementation plan. Read this first for context on intended structure, plugin system, theme system, and build pipeline.
+- `docs/CSS_CONVENTION.md` — CSS naming conventions and design tokens. **Must read before any CSS work.**
 - `temp/material/` — Cloned MkDocs Material repo for CSS/SCSS reference
 - `main.py` — Placeholder entry point only.
 
@@ -24,7 +25,8 @@ Requires Python >= 3.11 (built-in `tomllib`). Use local Python for development.
 - Config format: TOML (`iw.config.toml`) using Python `tomllib`
 - Core engine: `src/iw_generator/core/` — config, engine, file model, markdown, jinja, plugin base
 - Built-in plugins: `src/iw_generator/plugins/` — toc, highlight, search, rss, sitemap, blog, docs
-- Default theme: `src/iw_generator/themes/iw/`
+- Default theme: `src/iw_generator/themes/blog/`
+- Shared components: `src/iw_generator/themes/shared/` — CSS, JS, templates shared across themes
 - CLI: Click-based, registered via `[project.scripts]`
 - Plugin discovery: Python entry_points (`iw_generator.plugins`)
 

@@ -12,7 +12,7 @@ content = "docs"
 output = "site"
 
 [theme]
-name = "doc"
+name = "iwblog"
 lang = "en"
 
 [social]

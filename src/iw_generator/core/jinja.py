@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -54,6 +55,9 @@ def create_jinja_env(config: Config) -> Environment:
     from ..themes.shared.icons import get_icon_svg
 
     env.globals["get_icon_svg"] = get_icon_svg
+
+    # Register current datetime for templates
+    env.globals["now"] = datetime.now()
 
     # Register legacy icon functions (for backward compatibility)
     try:
