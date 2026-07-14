@@ -1,0 +1,18 @@
+{# Reusable post list item for SideNav #}
+<a class="SideNav-item d-flex flex-items-center flex-justify-between" href="{{ page.url }}">
+    <div class="d-flex flex-items-center">
+        <svg class="SideNav-icon octicon" style="width:16px;height:16px"><path class="svgTop{{ 1 if page.pin > 0 else 0 }}" d=""></path></svg>
+        <span class="listTitle">{{ page.title }}</span>
+    </div>
+    <div class="listLabels">
+        {% if page.category is defined and page.category %}
+        <span class="Label" style="background-color:#0E8A16"><object><a style="color:#fff" href="/category/{{ page.category }}.html">{{ page.category }}</a></object></span>
+        {% endif %}
+        {% for tag in page.tags %}
+        <span class="Label" style="background-color:#0969da"><object><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></object></span>
+        {% endfor %}
+        {% if page.date %}
+        <span class="Label LabelTime" style="background-color:{{ year_colors.get(page.date[:4], '#0969da') if year_colors is defined else '#0969da' }}">{{ page.date }}</span>
+        {% endif %}
+    </div>
+</a>

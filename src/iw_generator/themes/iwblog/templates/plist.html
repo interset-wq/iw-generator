@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<meta name="description" content="{{ site.description }}">
+{% endblock %}
+
+{% block og %}
+<meta property="og:title" content="{{ site.name }}">
+<meta property="og:description" content="{{ site.description }}">
+<meta property="og:type" content="blog">
+<meta property="og:url" content="{{ site.url }}">
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<style>
+.iw-blog__avatar {transition: 0.8s;width:36px;height:36px;object-fit: cover;}
+.iw-blog__avatar:hover{transform: scale(1.15) rotate(360deg);}
+.iw-nav-tree__link .iw-nav-tree__label{color: #fff;margin-left:4px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .iw-blog__avatar {width:24px;height:24px;}
+    .iw-blog__header{flex-direction:column;gap:8px;padding-bottom:12px;}
+    .iw-blog__header-left{flex-direction:row;align-items:center;gap:8px;}
+    .iw-blog__title{font-size:18px !important;}
+    .iw-nav-tree__link .iw-nav-tree__label--time{display:none;}
+}
+</style>
+{% endblock %}
+
+{% block header %}
+{% set title_html %}
+{% if theme.avatar %}
+<img src="{{ theme.avatar }}" class="iw-blog__avatar circle" alt="avatar">
+{% endif %}
+<a class="iw-blog__title" href="/">{{ site.name }}</a>
+{% endset %}
+{% set show_archives = true %}
+{% set show_categories = true %}
+{% set show_tags = true %}
+{% set show_search = true %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="iw-blog">
+    <div class="iw-blog__description">{{ site.description }}</div>
+    <nav class="iw-nav-tree">
+        {% include 'components/nav_tree.html' %}
+    </nav>
+</div>
+{% endblock %}
+
+{% block body_js %}
+<script>
+function toggleNav(el) {
+    const children = el.nextElementSibling;
+    const arrow = el.querySelector('.iw-nav-tree__arrow');
+    const folderIcon = el.querySelector('.iw-nav-tree__folder');
+    if (children && children.classList.contains('iw-nav-tree__children')) {
+        const isHidden = children.style.display === 'none';
+        children.style.display = isHidden ? 'block' : 'none';
+        if (arrow) {
+            arrow.style.transform = isHidden ? 'rotate(90deg)' : '';
+        }
+        if (folderIcon) {
+            folderIcon.setAttribute('d', isHidden ? icons['material/folder-open-outline'] : icons['material/folder-outline']);
+        }
+    }
+}
+</script>
+{% endblock %}

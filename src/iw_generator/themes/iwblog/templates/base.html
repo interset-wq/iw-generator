@@ -1,0 +1,11 @@
+{# iwblog theme base template.
+
+Extends shared base and adds theme-specific styles.
+#}
+{% extends "components/base.html" %}
+
+{% block title %}{{ site.name }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ base_path }}assets/iwblog/css/blog.css">
+{% endblock %}

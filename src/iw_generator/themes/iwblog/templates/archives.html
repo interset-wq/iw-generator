@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<meta name="description" content="Archives - {{ site.name }}">
+{% endblock %}
+
+{% block og %}
+<meta property="og:title" content="Archives - {{ site.name }}">
+<meta property="og:description" content="All posts by date">
+<meta property="og:type" content="website">
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<style>
+.iw-blog__archives-year{font-size:24px;font-weight:bold;margin:24px 0 12px;color:var(--iw-color-fg-muted);}
+.iw-blog__archives-list{list-style:none;padding:0;margin:0;}
+.iw-blog__archives-item{padding:8px 0;border-bottom:1px solid var(--iw-color-border-muted);}
+.iw-blog__archives-item a{color:inherit;text-decoration:none;}
+.iw-blog__archives-item a:hover{color:var(--iw-color-accent-fg);}
+.iw-blog__archives-date{color:var(--iw-color-fg-muted);margin-right:12px;font-size:14px;}
+.iw-blog__archives-title{font-size:16px;}
+.iw-blog__archives-count{color:var(--iw-color-fg-muted);font-size:14px;margin-top:24px;}
+@media (max-width:600px){body{padding:8px;}}
+</style>
+{% endblock %}
+
+{% block header %}
+{% set title_html %}
+<h1 class="iw-blog__title" style="margin:0;font-size:40px;font-weight:bold;">Archives</h1>
+{% endset %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="iw-blog">
+    <div class="iw-blog__archives-count">{{ total_posts }} posts total</div>
+    {% for year_data in archives %}
+    <div class="iw-blog__archives-year">{{ year_data.year }}</div>
+    <ul class="iw-blog__archives-list">
+        {% for page in year_data.pages %}
+        <li class="iw-blog__archives-item">
+            <span class="iw-blog__archives-date">{{ page.date }}</span>
+            <a href="{{ page.url }}" class="iw-blog__archives-title">{{ page.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}

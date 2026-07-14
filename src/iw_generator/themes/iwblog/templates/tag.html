@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta name="description" content="{{ site.name }} tags">
+<title>Tags - {{ site.name }}</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.tagTitle{margin:auto 0;font-size:40px;font-weight:bold;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+.SideNav-icon{margin-right:16px}
+.Label{color: #fff;margin-left:4px;}
+#taglabel .Label {margin-bottom:8px;}
+.Counter{color:#fff;background-color:rgba(234, 238, 242, 0.5)}
+.d-flex{min-width:0;}
+.listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
+.listLabels{white-space:nowrap;}
+@media (max-width: 600px) {
+    body { padding: 8px;}
+    .tagTitle{display:none;}
+}
+</style>
+{% endblock %}
+
+{% block header %}
+<span class="tagTitle">Tags</span>
+<div class="title-right">
+    <a href="/" class="btn btn-invisible circle" title="Home">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    {%- if theme.name == 'iw' -%}
+    <a class="btn btn-invisible circle" onclick="modeSwitch()" title="Switch theme">
+        <svg class="octicon" width="16" height="16">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    {%- endif -%}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="taglabel" style="margin-bottom:8px;"></div>
+<nav class="SideNav border" id="postList"></nav>
+{% endblock %}
+
+{% block script %}
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["iw/home"]);
+
+let jsonData = {{ pages | tojson }};
+let labelsCount = {};
+let tagList = [];
+
+// Count labels
+jsonData.forEach(page => {
+    if (page.tags && Array.isArray(page.tags)) {
+        page.tags.forEach(label => {
+            labelsCount[label] = (labelsCount[label] || 0) + 1;
+        });
+    }
+});
+
+// Sort labels by count
+let sortedLabels = Object.keys(labelsCount).sort((a, b) => labelsCount[b] - labelsCount[a]);
+
+// Create tag buttons
+let taglabel = document.getElementById("taglabel");
+sortedLabels.forEach(label => {
+    tagList.push(label);
+    let btn = document.createElement("button");
+    btn.setAttribute("class", "Label");
+    btn.setAttribute("style", "padding:4px;");
+    btn.innerHTML = "&nbsp;&nbsp;" + label + " ";
+    btn.setAttribute("onclick", "javascript:updateShowTag('" + label + "');");
+
+    let counter = document.createElement("span");
+    counter.setAttribute("class", "Counter");
+    counter.innerHTML = labelsCount[label];
+    btn.appendChild(counter);
+    taglabel.appendChild(btn);
+});
+
+// Create post list
+let postList = document.getElementById("postList");
+jsonData.forEach(page => {
+    let div = document.createElement("div");
+    div.setAttribute("class", "lists " + (page.tags || []).join(" "));
+
+    let item = document.createElement("a");
+    item.setAttribute("class", "SideNav-item d-flex flex-items-center flex-justify-between");
+    item.setAttribute("href", page.url);
+
+    let center = document.createElement("div");
+    center.setAttribute("class", "d-flex flex-items-center");
+
+    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    svg.setAttributeNS(null, "class", "SideNav-icon octicon");
+    svg.setAttributeNS(null, "style", "width:16px;height:16px");
+    path.setAttributeNS(null, "d", IconList["iw/post"]);
+    svg.appendChild(path);
+
+    let title = document.createElement("span");
+    title.setAttribute("class", "listTitle");
+    title.innerHTML = page.title;
+    center.appendChild(svg);
+    center.appendChild(title);
+
+    let listLabels = document.createElement("div");
+    listLabels.setAttribute("class", "listLabels");
+
+    (page.tags || []).forEach(label => {
+        let LabelName = document.createElement("span");
+        LabelName.setAttribute("class", "Label LabelName");
+        LabelName.innerHTML = label;
+        listLabels.appendChild(LabelName);
+    });
+
+    if (page.date) {
+        let LabelTime = document.createElement("span");
+        LabelTime.setAttribute("class", "Label LabelTime");
+        LabelTime.innerHTML = page.date;
+        listLabels.appendChild(LabelTime);
+    }
+
+    item.appendChild(center);
+    item.appendChild(listLabels);
+    div.appendChild(item);
+    postList.appendChild(div);
+});
+
+function updateShowTag(label) {
+    let lists = document.getElementsByClassName("lists");
+    document.getElementsByClassName("tagTitle")[0].innerHTML = "Tag #" + label;
+    document.title = label + " - {{ site.name }}";
+
+    for (let i = 0; i < lists.length; i++) {
+        if (label === "All") {
+            lists[i].style.display = 'block';
+        } else if (lists[i].classList.contains(label)) {
+            lists[i].style.display = 'block';
+        } else {
+            lists[i].style.display = 'none';
+        }
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{# 
+  Reusable navigation tree - shows hierarchical page structure
+  Usage: {% include 'components/nav_tree.html' %}
+  Variables: nav_items (list of dicts with title, url, children, icon)
+#}
+{% macro render_nav(items, level=0) %}
+{% for item in items %}
+<div class="iw-nav-tree__item{% if level > 0 %} iw-nav-tree__item--child{% endif %}">
+    <a class="iw-nav-tree__link{% if item.children %} iw-nav-tree__link--parent{% endif %}" 
+       href="{{ item.url }}" 
+       {% if item.children %}onclick="toggleNav(this);return false;"{% endif %}>
+        <div class="iw-nav-tree__item-left">
+            {% if item.children %}
+            <svg class="iw-nav-tree__icon octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path class="iw-nav-tree__folder" d="{{ icons['material/folder-outline'] }}"></path>
+            </svg>
+            {% elif item.pin is defined and item.pin > 0 %}
+            <svg class="iw-nav-tree__icon octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path class="iw-nav-tree__pin" d="{{ icons['material/pin'] }}"></path>
+            </svg>
+            {% else %}
+            <svg class="iw-nav-tree__icon octicon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path class="iw-nav-tree__file" d="{{ icons['material/file-document-outline'] }}"></path>
+            </svg>
+            {% endif %}
+            <span class="iw-nav-tree__title">{{ item.title }}</span>
+        </div>
+        <div class="iw-nav-tree__item-right">
+            <div class="iw-nav-tree__labels">
+                {% if item.category is defined and item.category %}
+                <span class="iw-nav-tree__label" style="background-color:#0E8A16"><a style="color:#fff" href="/category/{{ item.category }}.html">{{ item.category }}</a></span>
+                {% endif %}
+                {% if item.tags is defined %}
+                {% for tag in item.tags %}
+                <span class="iw-nav-tree__label" style="background-color:#0969da"><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></span>
+                {% endfor %}
+                {% endif %}
+                {% if item.date is defined and item.date %}
+                <span class="iw-nav-tree__label iw-nav-tree__label--time" style="background-color:{{ year_colors.get(item.date[:4], '#0969da') if year_colors is defined else '#0969da' }}">{{ item.date }}</span>
+                {% endif %}
+            </div>
+            {% if item.children %}
+            <svg class="iw-nav-tree__arrow octicon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="{{ icons['material/chevron-right'] }}"></path>
+            </svg>
+            {% endif %}
+        </div>
+    </a>
+    {% if item.children %}
+    <div class="iw-nav-tree__children" style="display:none;padding-left:24px;">
+        {{ render_nav(item.children, level + 1) }}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+{% endmacro %}
+
+{{ render_nav(nav_items) }}

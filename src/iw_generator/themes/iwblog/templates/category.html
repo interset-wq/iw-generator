@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta name="description" content="{{ category }} - {{ site.name }}">
+<meta property="og:title" content="{{ category }} - {{ site.name }}">
+<meta property="og:description" content="Posts in category: {{ category }}">
+<meta property="og:type" content="website">
+<title>{{ category }} - {{ site.name }}</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.SideNav{min-width: 360px;}
+.SideNav-icon{margin-right: 16px}
+.SideNav-item .Label{color: #fff;margin-left:4px;}
+.d-flex{min-width:0;}
+.listTitle{overflow:hidden;white-space:nowrap;text-overflow: ellipsis;max-width: 100%;}
+.listLabels{white-space:nowrap;display:flex;}
+@media (max-width:600px){body{padding:8px;}.LabelTime{display:none;}}
+</style>
+{% endblock %}
+
+{% block header %}
+{% set title_html %}
+<h1 style="margin:0;font-size:40px;font-weight:bold;">{{ category }}</h1>
+{% endset %}
+{% set back_url = "/categories.html" %}
+{% set back_title = "All Categories" %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+<nav class="SideNav border">
+{% for page in pages %}
+{% include 'components/post_list_item.html' %}
+{% endfor %}
+</nav>
+{% endblock %}
+
+{% block script %}
+<script src="/assets/js/nav.js"></script>
+{% endblock %}

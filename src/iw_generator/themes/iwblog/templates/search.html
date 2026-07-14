@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<meta name="description" content="Search - {{ site.name }}">
+{% endblock %}
+
+{% block og %}
+<meta property="og:title" content="Search - {{ site.name }}">
+<meta property="og:description" content="Search posts">
+<meta property="og:type" content="website">
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<style>
+.iw-blog__search-box{margin:16px 0;}
+.iw-blog__search-input{width:100%;padding:12px 16px;font-size:16px;border:1px solid var(--iw-color-border-muted);border-radius:6px;background:var(--iw-color-bg);color:var(--iw-color-fg);outline:none;}
+.iw-blog__search-input:focus{border-color:var(--iw-color-accent-fg);box-shadow:0 0 0 3px var(--iw-color-accent-subtle);}
+.iw-blog__search-results{margin-top:16px;}
+.iw-blog__search-result{padding:12px 0;border-bottom:1px solid var(--iw-color-border-muted);}
+.iw-blog__search-result a{color:inherit;text-decoration:none;font-size:18px;font-weight:bold;}
+.iw-blog__search-result a:hover{color:var(--iw-color-accent-fg);}
+.iw-blog__search-result p{color:var(--iw-color-fg-muted);font-size:14px;margin:4px 0 0;}
+.iw-blog__search-empty{color:var(--iw-color-fg-muted);text-align:center;padding:32px 0;}
+@media (max-width:600px){body{padding:8px;}}
+</style>
+{% endblock %}
+
+{% block header %}
+{% set title_html %}
+<h1 class="iw-blog__title" style="margin:0;font-size:40px;font-weight:bold;">Search</h1>
+{% endset %}
+{% set back_url = "/" %}
+{% set back_title = "Home" %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="iw-blog">
+    <div class="iw-blog__search-box">
+        <input type="text" class="iw-blog__search-input" id="searchInput" placeholder="Type to search..." autofocus>
+    </div>
+    <div class="iw-blog__search-results" id="searchResults"></div>
+</div>
+{% endblock %}
+
+{% block body_js %}
+<script>
+let searchIndex = [];
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+// Load search index
+fetch('{{ base_path }}search_index.json')
+    .then(r => r.json())
+    .then(data => { searchIndex = data; })
+    .catch(() => {});
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function highlightText(text, query) {
+    if (!query) return escapeHtml(text);
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'gi');
+    return escapeHtml(text).replace(regex, '<strong>$1</strong>');
+}
+
+searchInput.addEventListener('input', function() {
+    const query = this.value.trim().toLowerCase();
+    if (!query) {
+        searchResults.innerHTML = '';
+        return;
+    }
+    
+    const results = searchIndex.filter(item => {
+        return item.title.toLowerCase().includes(query) || 
+               item.content.toLowerCase().includes(query);
+    });
+    
+    if (results.length === 0) {
+        searchResults.innerHTML = '<div class="iw-blog__search-empty">No results found</div>';
+        return;
+    }
+    
+    searchResults.innerHTML = results.map(item => {
+        const snippet = item.content.substring(0, 200);
+        return `
+            <div class="iw-blog__search-result">
+                <a href="${item.url}">${highlightText(item.title, query)}</a>
+                <p>${highlightText(snippet, query)}...</p>
+            </div>
+        `;
+    }).join('');
+});
+</script>
+{% endblock %}
