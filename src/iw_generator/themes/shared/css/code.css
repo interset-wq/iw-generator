@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Code Highlighting
+   
+   Naming: .iw-code*
+   ========================================================================== */
+
+.iw-code {
+  position: relative;
+  margin: var(--iw-space-4) 0;
+  border-radius: var(--iw-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--iw-color-code-border);
+  background-color: var(--iw-color-code-bg);
+}
+
+.iw-code__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--iw-space-2) var(--iw-space-4);
+  border-bottom: 1px solid var(--iw-color-code-border);
+  font-size: var(--iw-font-size-sm);
+  background-color: var(--iw-color-code-bg);
+}
+
+.iw-code__lang {
+  margin-right: auto;
+  font-size: var(--iw-font-size-xs);
+  font-weight: var(--iw-font-weight-medium);
+  opacity: 0.7;
+  text-transform: uppercase;
+  color: var(--iw-color-fg-muted);
+}
+
+.iw-code__copy {
+  cursor: pointer;
+  opacity: 0.5;
+  padding: var(--iw-space-1);
+  border-radius: var(--iw-radius-sm);
+  transition: opacity var(--iw-transition-fast);
+  color: var(--iw-color-fg-muted);
+}
+
+.iw-code__copy:hover {
+  opacity: 1;
+}
+
+.iw-code .highlight {
+  margin: 0;
+  border-radius: 0;
+}
+
+.iw-code pre {
+  margin: 0;
+  padding: var(--iw-space-4);
+  overflow-x: auto;
+  background-color: var(--iw-color-code-bg);
+}
+
+.iw-code code {
+  font-family: var(--iw-font-mono);
+  font-size: var(--iw-font-size-sm);
+  color: var(--iw-color-code-text);
+  background: transparent;
+}

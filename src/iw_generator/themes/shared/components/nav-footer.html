@@ -1,0 +1,65 @@
+{# Shared footer with navigation component.
+
+Usage:
+  {% include "shared/components/nav-footer.html" %}
+
+Requires in context: site, social, now (datetime), prev_page, next_page (optional)
+#}
+
+{% if prev_page is defined and prev_page or next_page is defined and next_page %}
+<nav class="iw-nav" aria-label="Page navigation">
+  <div class="iw-container">
+    <div class="iw-nav__inner">
+      {% if prev_page %}
+      <a href="{{ prev_page.url }}" class="iw-nav__item iw-nav__item--prev" aria-label="Previous: {{ prev_page.title }}">
+        <div class="iw-nav__arrow">
+          {{ get_icon_svg("material/arrow-left", 20) | safe }}
+        </div>
+        <div class="iw-nav__info">
+          <span class="iw-nav__label">Previous</span>
+          <span class="iw-nav__title">{{ prev_page.title }}</span>
+        </div>
+      </a>
+      {% endif %}
+      {% if next_page %}
+      <a href="{{ next_page.url }}" class="iw-nav__item iw-nav__item--next" aria-label="Next: {{ next_page.title }}">
+        <div class="iw-nav__info iw-nav__info--right">
+          <span class="iw-nav__label">Next</span>
+          <span class="iw-nav__title">{{ next_page.title }}</span>
+        </div>
+        <div class="iw-nav__arrow">
+          {{ get_icon_svg("material/arrow-right", 20) | safe }}
+        </div>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% endif %}
+
+<footer class="iw-footer">
+  <div class="iw-container">
+    <div class="iw-footer__inner">
+      <div class="iw-footer__left">
+        <div class="iw-footer__copyright">
+          {% if site.copyright %}
+            {{ site.copyright }}
+          {% else %}
+            Copyright &copy; {{ now.year }} <a href="{{ site.url or '/' }}">{{ site.name }}</a>
+          {% endif %}
+        </div>
+        <div class="iw-footer__powered">
+          Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+        </div>
+      </div>
+      <div class="iw-footer__right">
+        {% set social_links = social.get_all_links() %}
+        {% for item in social_links %}
+          <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}" class="iw-footer__social">
+            {{ get_icon_svg(item.icon, 16) | safe }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</footer>

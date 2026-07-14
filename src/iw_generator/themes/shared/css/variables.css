@@ -1,0 +1,233 @@
+/* ==========================================================================
+   iw-generator Design Tokens
+   
+   Naming convention:
+   - CSS variables: --iw-{category}-{property}
+   - Classes: .iw-{block}__{element}--{modifier}
+   ========================================================================== */
+
+:root {
+  /* =========================================================================
+     Colors - Light Mode (default)
+     ========================================================================= */
+
+  /* Base colors */
+  --iw-color-bg: #ffffff;
+  --iw-color-bg-subtle: #f6f8fa;
+  --iw-color-bg-muted: #eaeef2;
+  --iw-color-fg: #1f2328;
+  --iw-color-fg-subtle: #656d76;
+  --iw-color-fg-muted: #8b949e;
+
+  /* Border */
+  --iw-color-border: #d0d7de;
+  --iw-color-border-muted: #d8dee4;
+
+  /* Accent */
+  --iw-color-accent: #0969da;
+  --iw-color-accent-fg: #0969da;
+  --iw-color-accent-subtle: #ddf4ff;
+
+  /* Success */
+  --iw-color-success: #1a7f37;
+  --iw-color-success-subtle: #dafbe1;
+
+  /* Danger */
+  --iw-color-danger: #d1242f;
+  --iw-color-danger-subtle: #ffebe9;
+
+  /* Code */
+  --iw-color-code-bg: #f6f8fa;
+  --iw-color-code-border: #d0d7de;
+  --iw-color-code-text: #1f2328;
+
+  /* Header */
+  --iw-color-header-bg: #ffffff;
+  --iw-color-header-border: #d0d7de;
+
+  /* Footer */
+  --iw-color-footer-bg: #f6f8fa;
+  --iw-color-footer-border: #d0d7de;
+  --iw-color-footer-fg: #656d76;
+
+  /* Nav */
+  --iw-color-nav-border: #d0d7de;
+  --iw-color-nav-hover-bg: #f6f8fa;
+
+  /* Sidebar */
+  --iw-color-sidebar-bg: #f6f8fa;
+  --iw-color-sidebar-border: #d0d7de;
+  --iw-color-sidebar-active: #0969da;
+
+  /* =========================================================================
+     Typography
+     ========================================================================= */
+
+  --iw-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  --iw-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --iw-font-size-xs: 12px;
+  --iw-font-size-sm: 13px;
+  --iw-font-size-base: 16px;
+  --iw-font-size-lg: 18px;
+  --iw-font-size-xl: 20px;
+  --iw-font-size-2xl: 24px;
+  --iw-font-size-3xl: 32px;
+
+  --iw-line-height-tight: 1.25;
+  --iw-line-height-normal: 1.5;
+  --iw-line-height-relaxed: 1.75;
+
+  --iw-font-weight-normal: 400;
+  --iw-font-weight-medium: 500;
+  --iw-font-weight-semibold: 600;
+  --iw-font-weight-bold: 700;
+
+  /* =========================================================================
+     Spacing
+     ========================================================================= */
+
+  --iw-space-0: 0;
+  --iw-space-1: 4px;
+  --iw-space-2: 8px;
+  --iw-space-3: 12px;
+  --iw-space-4: 16px;
+  --iw-space-5: 20px;
+  --iw-space-6: 24px;
+  --iw-space-8: 32px;
+  --iw-space-10: 40px;
+  --iw-space-12: 48px;
+
+  /* =========================================================================
+     Border Radius
+     ========================================================================= */
+
+  --iw-radius-sm: 4px;
+  --iw-radius-md: 6px;
+  --iw-radius-lg: 8px;
+  --iw-radius-full: 9999px;
+
+  /* =========================================================================
+     Shadows
+     ========================================================================= */
+
+  --iw-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --iw-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --iw-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* =========================================================================
+     Layout
+     ========================================================================= */
+
+  --iw-max-width: 1200px;
+  --iw-content-width: 720px;
+  --iw-sidebar-width: 200px;
+  --iw-header-height: 60px;
+
+  /* =========================================================================
+     Transitions
+     ========================================================================= */
+
+  --iw-transition-fast: 150ms ease;
+  --iw-transition-normal: 200ms ease;
+  --iw-transition-slow: 300ms ease;
+}
+
+/* =========================================================================
+   Dark Mode
+   ========================================================================= */
+
+[data-color-mode="dark"],
+[data-md-color-scheme="slate"] {
+  --iw-color-bg: #0d1117;
+  --iw-color-bg-subtle: #161b22;
+  --iw-color-bg-muted: #21262d;
+  --iw-color-fg: #e6edf3;
+  --iw-color-fg-subtle: #8b949e;
+  --iw-color-fg-muted: #6e7681;
+
+  --iw-color-border: #30363d;
+  --iw-color-border-muted: #21262d;
+
+  --iw-color-accent: #58a6ff;
+  --iw-color-accent-fg: #58a6ff;
+  --iw-color-accent-subtle: #0d2239;
+
+  --iw-color-success: #3fb950;
+  --iw-color-success-subtle: #033a16;
+
+  --iw-color-danger: #f85149;
+  --iw-color-danger-subtle: #67060c;
+
+  --iw-color-code-bg: #161b22;
+  --iw-color-code-border: #30363d;
+  --iw-color-code-text: #e6edf3;
+
+  --iw-color-header-bg: #161b22;
+  --iw-color-header-border: #30363d;
+
+  --iw-color-footer-bg: #0d1117;
+  --iw-color-footer-border: #30363d;
+  --iw-color-footer-fg: #8b949e;
+
+  --iw-color-nav-border: #30363d;
+  --iw-color-nav-hover-bg: #161b22;
+
+  --iw-color-sidebar-bg: #161b22;
+  --iw-color-sidebar-border: #30363d;
+  --iw-color-sidebar-active: #58a6ff;
+
+  --iw-shadow-sm: 0 0 transparent;
+  --iw-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --iw-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================================
+   Auto Mode (follows system preference)
+   ========================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  [data-color-mode="auto"] {
+    --iw-color-bg: #0d1117;
+    --iw-color-bg-subtle: #161b22;
+    --iw-color-bg-muted: #21262d;
+    --iw-color-fg: #e6edf3;
+    --iw-color-fg-subtle: #8b949e;
+    --iw-color-fg-muted: #6e7681;
+
+    --iw-color-border: #30363d;
+    --iw-color-border-muted: #21262d;
+
+    --iw-color-accent: #58a6ff;
+    --iw-color-accent-fg: #58a6ff;
+    --iw-color-accent-subtle: #0d2239;
+
+    --iw-color-success: #3fb950;
+    --iw-color-success-subtle: #033a16;
+
+    --iw-color-danger: #f85149;
+    --iw-color-danger-subtle: #67060c;
+
+    --iw-color-code-bg: #161b22;
+    --iw-color-code-border: #30363d;
+    --iw-color-code-text: #e6edf3;
+
+    --iw-color-header-bg: #161b22;
+    --iw-color-header-border: #30363d;
+
+    --iw-color-footer-bg: #0d1117;
+    --iw-color-footer-border: #30363d;
+    --iw-color-footer-fg: #8b949e;
+
+    --iw-color-nav-border: #30363d;
+    --iw-color-nav-hover-bg: #161b22;
+
+    --iw-color-sidebar-bg: #161b22;
+    --iw-color-sidebar-border: #30363d;
+    --iw-color-sidebar-active: #58a6ff;
+
+    --iw-shadow-sm: 0 0 transparent;
+    --iw-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --iw-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+}

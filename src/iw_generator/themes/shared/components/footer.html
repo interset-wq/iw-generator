@@ -1,38 +1,34 @@
-{# Shared site footer component.
+{# Shared site footer component (plain variant).
 
 Usage:
-  {% include "components/footer.html" %}
+  {% include "shared/components/footer.html" %}
 
-Requires in context: site, social
+Requires in context: site, social, now (datetime)
 #}
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="site-footer__left">
-      <div class="site-footer__copyright">
-        {% if site.copyright %}
-          {{ site.copyright }}
-        {% else %}
-          Copyright &copy; <span class="site-footer__year"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a>
-        {% endif %}
+<footer class="iw-footer">
+  <div class="iw-container">
+    <div class="iw-footer__inner">
+      <div class="iw-footer__left">
+        <div class="iw-footer__copyright">
+          {% if site.copyright %}
+            {{ site.copyright }}
+          {% else %}
+            Copyright &copy; {{ now.year }} <a href="{{ site.url or '/' }}">{{ site.name }}</a>
+          {% endif %}
+        </div>
+        <div class="iw-footer__powered">
+          Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+        </div>
       </div>
-      <div class="site-footer__powered">
-        Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+      <div class="iw-footer__right">
+        {% set social_links = social.get_all_links() %}
+        {% for item in social_links %}
+          <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}" class="iw-footer__social">
+            {{ get_icon_svg(item.icon, 16) | safe }}
+          </a>
+        {% endfor %}
       </div>
-    </div>
-    <div class="site-footer__right">
-      {% set social_links = social.get_all_links() %}
-      {% for item in social_links %}
-        <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}" class="site-footer__social">
-          {{ get_icon_svg(item.icon, 16) | safe }}
-        </a>
-      {% endfor %}
     </div>
   </div>
 </footer>
-
-<script>
-var now = new Date();
-var els = document.querySelectorAll('.site-footer__year');
-els.forEach(function(el) { el.textContent = now.getFullYear(); });
-</script>

@@ -1,0 +1,61 @@
+{# Shared base template for all themes.
+
+Usage in themes:
+  {% extends "shared/base.html" %}
+
+Placeholders:
+  - title: Page title (<title>)
+  - meta: Meta tags (<meta>)
+  - og: Open Graph tags
+  - css: Page-specific CSS
+  - head_js: JavaScript in <head>
+  - header: Page header
+  - content: Main content
+  - footer: Page footer (default: shared footer)
+  - body_js: JavaScript at end of <body>
+
+Required context: site, social, now (datetime)
+#}
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark_colorblind" data-light-theme="light" lang="{{ theme.lang | default('en') }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{ site.description }}">
+    <link rel="icon" href="{{ theme.favicon }}">
+
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+
+    {# Core CSS - always required #}
+    <link rel="stylesheet" href="{{ base_path }}assets/shared/css/normalize.css">
+    <link rel="stylesheet" href="{{ base_path }}assets/shared/css/variables.css">
+    <link rel="stylesheet" href="{{ base_path }}assets/shared/css/base.css">
+
+    {# Theme-specific CSS #}
+    {% block css %}{% endblock %}
+
+    {# Additional meta tags #}
+    {% block meta %}{% endblock %}
+
+    {# Open Graph tags #}
+    {% block og %}{% endblock %}
+
+    {# Theme toggle script #}
+    <script src="{{ base_path }}assets/shared/js/theme.js"></script>
+
+    {# Head JavaScript #}
+    {% block head_js %}{% endblock %}
+</head>
+<body>
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% include "components/footer.html" %}{% endblock %}
+
+    {# Copy button script #}
+    <script src="{{ base_path }}assets/shared/js/copy.js"></script>
+
+    {# Body JavaScript #}
+    {% block body_js %}{% endblock %}
+</body>
+</html>
