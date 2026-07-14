@@ -33,27 +33,28 @@
     [data-color-mode="dark"] .highlight-tools{background:#161b22;}
     [data-color-mode="dark"] .code-lang{color:#8b949e;}
     [data-color-mode="dark"] .copy-button{color:#8b949e;}
-    .site-nav{display:flex;gap:16px;margin-top:48px;padding-top:24px;border-top:1px solid var(--md-border-color, #e0e0e0);}
+    .site-nav{display:flex;gap:16px;margin-top:48px;padding-top:24px;border-top:1px solid var(--md-typeset-color, rgba(0,0,0,.1));}
     .site-nav__inner{display:flex;gap:16px;width:100%;}
-    .site-nav__item{display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--md-border-color, #e0e0e0);border-radius:6px;text-decoration:none;color:inherit;transition:border-color 0.2s,background-color 0.2s;flex:1;min-width:0;}
-    .site-nav__item:hover{border-color:var(--md-primary-fg-color, #526cfe);background-color:var(--md-code-bg-color, #f6f8fa);}
+    .site-nav__item{display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--md-typeset-color, rgba(0,0,0,.1));border-radius:6px;text-decoration:none;color:var(--md-default-fg-color);transition:border-color 0.2s,background-color 0.2s;flex:1;min-width:0;}
+    .site-nav__item:hover{border-color:var(--md-primary-fg-color);background-color:var(--md-code-bg-color);}
     .site-nav__item--prev{justify-content:flex-start;}
     .site-nav__item--next{justify-content:flex-end;}
     .site-nav__info{display:flex;flex-direction:column;gap:4px;min-width:0;}
     .site-nav__info--right{text-align:right;}
-    .site-nav__label{font-size:12px;color:var(--md-default-fg-color--lighter, #666);text-transform:uppercase;}
-    .site-nav__title{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .site-nav__arrow{color:var(--md-default-fg-color--lighter, #666);flex-shrink:0;}
-    .site-footer{padding:16px 0;border-top:1px solid var(--md-border-color, #e0e0e0);font-size:13px;color:var(--md-default-fg-color--lighter, #666);}
-    .site-footer__inner{display:flex;justify-content:space-between;align-items:center;}
-    .site-footer__left{display:flex;flex-direction:column;gap:4px;}
-    .site-footer__left a,.site-footer__right a{color:var(--md-default-fg-color--lighter, #666);transition:color 0.2s;}
-    .site-footer__left a:hover,.site-footer__right a:hover{color:var(--md-primary-fg-color, #526cfe);}
+    .site-nav__label{font-size:12px;color:var(--md-default-fg-color--lighter);text-transform:uppercase;}
+    .site-nav__title{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--md-default-fg-color);}
+    .site-nav__arrow{color:var(--md-default-fg-color--lighter);flex-shrink:0;}
+    .site-footer{padding:20px 0;border-top:1px solid var(--md-typeset-color, rgba(0,0,0,.1));font-size:13px;color:var(--md-default-fg-color--lighter);background:var(--md-default-bg-color);}
+    .site-footer__inner{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
+    .site-footer__left{display:flex;flex-direction:column;gap:2px;}
+    .site-footer__left a,.site-footer__right a{color:var(--md-default-fg-color--lighter);transition:color 0.2s;}
+    .site-footer__left a:hover,.site-footer__right a:hover{color:var(--md-primary-fg-color);}
     .site-footer__right{display:flex;align-items:center;gap:16px;}
-    .site-footer__right a{display:flex;align-items:center;}
-    [data-md-color-scheme="slate"] .site-nav__item{border-color:var(--md-border-color, #404040);}
-    [data-md-color-scheme="slate"] .site-nav__item:hover{background-color:var(--md-code-bg-color, #1e1e1e);}
-    [data-md-color-scheme="slate"] .site-footer{border-top-color:var(--md-border-color, #404040);}
+    .site-footer__right a{display:flex;align-items:center;color:var(--md-default-fg-color--lighter);}
+    .site-footer__right a:hover{color:var(--md-primary-fg-color);}
+    [data-md-color-scheme="slate"] .site-nav__item{border-color:rgba(255,255,255,.1);}
+    [data-md-color-scheme="slate"] .site-nav__item:hover{background-color:rgba(255,255,255,.05);}
+    [data-md-color-scheme="slate"] .site-footer{border-top-color:rgba(255,255,255,.1);}
     @media (max-width:600px){.site-nav__inner{flex-direction:column;gap:12px;}.site-footer__inner{flex-direction:column;gap:12px;text-align:center;}}
     </style>
     {% block head %}{% endblock %}
