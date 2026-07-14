@@ -27,20 +27,32 @@ def write_pages(engine, env, theme_dir):
     # Build sorted page list for prev/next navigation
     sorted_pages = sort_pages_by_date(engine.site.pages)
 
-    # Write individual post pages (skip index.md - it's the homepage)
+    # Write individual post pages (skip root index.md - it's the homepage)
     for i, page in enumerate(sorted_pages):
-        if page.source_path.name == "index.md":
+        # Only skip the root index.md (docs/index.md)
+        is_root_index = (
+            page.source_path.name == "index.md"
+            and page.source_path.parent == page.content_dir
+        )
+        if is_root_index:
             continue
 
         # Get prev/next pages
         prev_page = sorted_pages[i - 1] if i > 0 else None
         next_page = sorted_pages[i + 1] if i < len(sorted_pages) - 1 else None
 
-        # Skip index.md for prev/next
-        while prev_page and prev_page.source_path.name == "index.md":
+        # Skip root index.md for prev/next
+        def is_root_index(p):
+            return (
+                p
+                and p.source_path.name == "index.md"
+                and p.source_path.parent == p.content_dir
+            )
+
+        while is_root_index(prev_page):
             i -= 1
             prev_page = sorted_pages[i - 1] if i > 0 else None
-        while next_page and next_page.source_path.name == "index.md":
+        while is_root_index(next_page):
             next_page_index = sorted_pages.index(next_page)
             next_page = (
                 sorted_pages[next_page_index + 1]
