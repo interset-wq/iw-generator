@@ -43,7 +43,8 @@ def _get_pygments_css() -> str:
     light_scoped = (
         """/* Light theme */
 [data-color-mode="light"] .highlight,
-[data-color-mode="auto"][data-light-theme="light"] .highlight {
+[data-color-mode="auto"][data-light-theme="light"] .highlight,
+[data-md-color-scheme="default"] .highlight {
 """
         + light_indented
         + "\n}"
@@ -54,7 +55,8 @@ def _get_pygments_css() -> str:
     dark_scoped = (
         """/* Dark theme */
 [data-color-mode="dark"] .highlight,
-[data-color-mode="auto"][data-dark-theme*="dark"] .highlight {
+[data-color-mode="auto"][data-dark-theme*="dark"] .highlight,
+[data-md-color-scheme="slate"] .highlight {
 """
         + dark_indented
         + "\n}"

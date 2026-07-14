@@ -245,7 +245,15 @@ class Engine:
     def _build_nav(self) -> list[dict]:
         """Build hierarchical navigation tree from pages sorted by path."""
         nav: list[dict] = []
-        sorted_pages = sorted(self.site.pages, key=lambda p: p.source_path.parts)
+
+        def _nav_sort_key(p):
+            rel = p.source_path.relative_to(self.config.content_dir)
+            parts = rel.parts
+            # Prioritize index.md at root level
+            is_index = rel.stem == "index" and len(parts) == 1
+            return (len(parts), 0 if is_index else 1, parts)
+
+        sorted_pages = sorted(self.site.pages, key=_nav_sort_key)
 
         for page in sorted_pages:
             rel = page.source_path.relative_to(self.config.content_dir)
