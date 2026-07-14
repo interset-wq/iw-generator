@@ -1,0 +1,36 @@
+{# Shared prev/next navigation component.
+
+Usage:
+  {% include "components/nav.html" %}
+
+Requires in context: prev_page, next_page
+#}
+
+{% if prev_page is defined and prev_page or next_page is defined and next_page %}
+<nav class="site-nav" aria-label="Page navigation">
+  <div class="site-nav__inner">
+    {% if prev_page %}
+    <a href="{{ prev_page.url }}" class="site-nav__item site-nav__item--prev" aria-label="Previous: {{ prev_page.title }}">
+      <div class="site-nav__arrow">
+        {{ get_icon_svg("material/arrow-left", 20) | safe }}
+      </div>
+      <div class="site-nav__info">
+        <span class="site-nav__label">Previous</span>
+        <span class="site-nav__title">{{ prev_page.title }}</span>
+      </div>
+    </a>
+    {% endif %}
+    {% if next_page %}
+    <a href="{{ next_page.url }}" class="site-nav__item site-nav__item--next" aria-label="Next: {{ next_page.title }}">
+      <div class="site-nav__info site-nav__info--right">
+        <span class="site-nav__label">Next</span>
+        <span class="site-nav__title">{{ next_page.title }}</span>
+      </div>
+      <div class="site-nav__arrow">
+        {{ get_icon_svg("material/arrow-right", 20) | safe }}
+      </div>
+    </a>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

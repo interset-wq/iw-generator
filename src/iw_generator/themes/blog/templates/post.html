@@ -91,30 +91,7 @@ body{max-width:1200px;}
 {{ page.html_content | safe }}
 </article>
 
-<nav class="post-nav">
-    {% if prev_page %}
-    <a href="{{ prev_page.url }}" class="post-nav-item post-nav-prev">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
-        </svg>
-        <div class="post-nav-info">
-            <span class="post-nav-label">Previous</span>
-            <span class="post-nav-title">{{ prev_page.title }}</span>
-        </div>
-    </a>
-    {% endif %}
-    {% if next_page %}
-    <a href="{{ next_page.url }}" class="post-nav-item post-nav-next">
-        <div class="post-nav-info" style="text-align:right;">
-            <span class="post-nav-label">Next</span>
-            <span class="post-nav-title">{{ next_page.title }}</span>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
-        </svg>
-    </a>
-    {% endif %}
-</nav>
+{% include "components/nav.html" %}
 
 {% include 'components/giscus.html' %}
 </div>

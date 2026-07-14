@@ -1,71 +1,38 @@
-{# Shared footer macro for all themes.
+{# Shared site footer component.
 
 Usage:
-  {% from "shared/components/footer.html" import render_footer with context %}
-  {{ render_footer(prev_page, next_page, css_prefix) }}
+  {% include "components/footer.html" %}
 
-Arguments:
-  prev_page: Previous page object (or null)
-  next_page: Next page object (or null)
-  css_prefix: CSS class prefix ("md-" for doc, "" for blog)
+Requires in context: site, social
 #}
 
-{% macro render_footer(prev_page, next_page, css_prefix="md-") %}
-
-{% if prev_page is defined and prev_page %}
-<div class="{{ css_prefix }}footer__inner {{ css_prefix }}grid">
-  <a href="{{ prev_page.url }}" class="{{ css_prefix }}footer__link {{ css_prefix }}footer__link--prev" aria-label="Previous: {{ prev_page.title }}">
-    <div class="{{ css_prefix }}footer__button {{ css_prefix }}icon">
-      {{ get_icon_svg("material/arrow-left", 24) | safe }}
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__left">
+      <div class="site-footer__copyright">
+        {% if site.copyright %}
+          {{ site.copyright }}
+        {% else %}
+          Copyright &copy; <span class="site-footer__year"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a>
+        {% endif %}
+      </div>
+      <div class="site-footer__powered">
+        Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+      </div>
     </div>
-    <div class="{{ css_prefix }}footer__title">
-      <span class="{{ css_prefix }}footer__direction">Previous</span>
-      <div class="{{ css_prefix }}ellipsis">{{ prev_page.title }}</div>
-    </div>
-  </a>
-</div>
-{% endif %}
-
-{% if next_page is defined and next_page %}
-<div class="{{ css_prefix }}footer__inner {{ css_prefix }}grid">
-  <a href="{{ next_page.url }}" class="{{ css_prefix }}footer__link {{ css_prefix }}footer__link--next" aria-label="Next: {{ next_page.title }}">
-    <div class="{{ css_prefix }}footer__title">
-      <span class="{{ css_prefix }}footer__direction">Next</span>
-      <div class="{{ css_prefix }}ellipsis">{{ next_page.title }}</div>
-    </div>
-    <div class="{{ css_prefix }}footer__button {{ css_prefix }}icon">
-      {{ get_icon_svg("material/arrow-right", 24) | safe }}
-    </div>
-  </a>
-</div>
-{% endif %}
-
-<div class="{{ css_prefix }}footer-meta {{ css_prefix }}typeset">
-  <div class="{{ css_prefix }}footer-meta__inner {{ css_prefix }}grid">
-    <div class="{{ css_prefix }}footer-copyright">
-      {% if site.copyright %}
-        {{ site.copyright }}
-      {% else %}
-        Copyright &copy; <span id="copyrightYear"></span> <a href="{{ site.url or '/' }}">{{ site.name }}</a>
-      {% endif %}
-      <br>
-      Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
-    </div>
-    <div class="{{ css_prefix }}footer-social">
+    <div class="site-footer__right">
       {% set social_links = social.get_all_links() %}
       {% for item in social_links %}
-        <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}" class="{{ css_prefix }}footer-social__link">
+        <a href="{{ item.link }}" target="_blank" title="{{ item.icon.split('/')[-1] }}" class="site-footer__social">
           {{ get_icon_svg(item.icon, 16) | safe }}
         </a>
       {% endfor %}
     </div>
   </div>
-</div>
+</footer>
 
 <script>
 var now = new Date();
-var el = document.getElementById("copyrightYear");
-if (el) el.innerHTML = now.getFullYear();
+var els = document.querySelectorAll('.site-footer__year');
+els.forEach(function(el) { el.textContent = now.getFullYear(); });
 </script>
-
-{% endmacro %}
