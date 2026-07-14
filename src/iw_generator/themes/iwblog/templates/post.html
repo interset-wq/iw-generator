@@ -38,7 +38,7 @@
 .post-toc ul ul{padding-left:12px;border-left:1px solid var(--iw-color-border-muted);}
 .markdown-body{margin:0;max-width:720px;}
 .markdown-body h1{display:none;}
-.post-header{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;}
+.post-header{margin-bottom:32px;}
 .post-title{margin:0;font-size:28px;font-weight:bold;line-height:1.3;}
 .post-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--iw-color-fg-muted);font-size:14px;}
 .post-meta .Label{margin:0;}
@@ -56,34 +56,37 @@
 
 {% block header %}
 {% set title_html %}
-<div class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <div class="post-meta">
-        {% if page.date %}
-        <span>Published: {{ page.date }}</span>
-        {% endif %}
-        {% if page.category %}
-        <span>·</span>
-        <a href="/category/{{ page.category }}.html" class="Label" style="background-color:#0E8A16;color:#fff;text-decoration:none;">{{ page.category }}</a>
-        {% endif %}
-        {% if page.tags is defined and page.tags %}
-        <span>·</span>
-        <div style="display:flex;gap:4px;">
-            {% for tag in page.tags %}
-            <span class="Label" style="background-color:#0969da"><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></span>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-</div>
+<span class="iw-blog__title">{{ page.title }}</span>
 {% endset %}
-{% set back_url = "/" %}
-{% set back_title = "Home" %}
+{% set show_archives = true %}
+{% set show_categories = true %}
+{% set show_tags = true %}
+{% set show_search = true %}
 {% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
 <div class="iw-blog">
+    <div class="post-header">
+        <div class="post-meta">
+            {% if page.date %}
+            <span>Published: {{ page.date }}</span>
+            {% endif %}
+            {% if page.category %}
+            <span>·</span>
+            <a href="/category/{{ page.category }}.html" class="Label" style="background-color:#0E8A16;color:#fff;text-decoration:none;">{{ page.category }}</a>
+            {% endif %}
+            {% if page.tags is defined and page.tags %}
+            <span>·</span>
+            <div style="display:flex;gap:4px;">
+                {% for tag in page.tags %}
+                <span class="Label" style="background-color:#0969da"><a style="color:#fff" href="/tag/{{ tag }}.html">{{ tag }}</a></span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="post-layout">
         <div class="post-main">
             <article class="markdown-body">
@@ -118,6 +121,8 @@
     </div>
 </div>
 {% endblock %}
+
+{% block footer %}{% endblock %}
 
 {% block body_js %}
 <script>

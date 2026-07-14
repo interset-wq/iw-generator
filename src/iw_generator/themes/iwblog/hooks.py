@@ -8,6 +8,7 @@ from collections import defaultdict
 from rich.console import Console
 
 from iw_generator.core.jinja import render_template
+from iw_generator.core.paths import get_base_path
 from iw_generator.themes.shared.utils import sort_pages_by_date, write_search_index
 
 console = Console()
@@ -48,6 +49,7 @@ def write_pages(engine, env, theme_dir):
             )
 
         page.dest_path.parent.mkdir(parents=True, exist_ok=True)
+        base_path = get_base_path(page.slug)
         html = render_template(
             env,
             "post.html",
@@ -59,6 +61,7 @@ def write_pages(engine, env, theme_dir):
                 "prev_page": prev_page,
                 "next_page": next_page,
                 "config": engine.config,
+                "base_path": base_path,
                 **theme_context,
             },
         )
@@ -106,6 +109,7 @@ def _write_blog_index(engine, env, theme_context):
             "site": engine.config.site,
             "nav_items": nav_tree,
             "config": engine.config,
+            "base_path": "./",
             "tag_colors": tag_colors,
             "year_colors": year_colors,
             **theme_context,
@@ -143,6 +147,7 @@ def _write_archives(engine, env, theme_context):
             "archives": archives,
             "total_posts": len(engine.site.pages),
             "config": engine.config,
+            "base_path": "./",
             **theme_context,
         },
     )
@@ -180,6 +185,7 @@ def _write_categories(engine, env, theme_context):
             "site": engine.config.site,
             "categories": categories,
             "config": engine.config,
+            "base_path": "./",
             **theme_context,
         },
     )
@@ -201,6 +207,7 @@ def _write_categories(engine, env, theme_context):
                 "category": cat_name,
                 "pages": sorted_pages,
                 "config": engine.config,
+                "base_path": "../",
                 **theme_context,
             },
         )
@@ -233,6 +240,7 @@ def _write_tags_page(engine, env, theme_context):
             "site": engine.config.site,
             "tags": tags,
             "config": engine.config,
+            "base_path": "./",
             **theme_context,
         },
     )
@@ -254,6 +262,7 @@ def _write_tags_page(engine, env, theme_context):
                 "tag": tag_name,
                 "pages": sorted_pages,
                 "config": engine.config,
+                "base_path": "../",
                 **theme_context,
             },
         )
@@ -288,6 +297,7 @@ def _write_legacy_tag_page(engine, env, theme_context, pages_by_tag):
             "site": engine.config.site,
             "pages": post_list,
             "config": engine.config,
+            "base_path": "./",
             **theme_context,
         },
     )
@@ -319,6 +329,7 @@ def _write_about_page(engine, env, theme_context):
             "page": about_page,
             "content": about_page.html_content,
             "config": engine.config,
+            "base_path": "../",
             **theme_context,
         },
     )
@@ -337,6 +348,7 @@ def _write_search_page(engine, env, theme_context):
         {
             "site": engine.config.site,
             "config": engine.config,
+            "base_path": "./",
             **theme_context,
         },
     )
