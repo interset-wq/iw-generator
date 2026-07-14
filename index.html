@@ -31,6 +31,28 @@
     [data-color-mode="dark"] .highlight-tools{background:#161b22;}
     [data-color-mode="dark"] .code-lang{color:#8b949e;}
     [data-color-mode="dark"] .copy-button{color:#8b949e;}
+    .site-nav{display:flex;gap:16px;margin-top:48px;padding-top:24px;border-top:1px solid var(--md-border-color, #e0e0e0);}
+    .site-nav__inner{display:flex;gap:16px;width:100%;}
+    .site-nav__item{display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--md-border-color, #e0e0e0);border-radius:6px;text-decoration:none;color:inherit;transition:border-color 0.2s,background-color 0.2s;flex:1;min-width:0;}
+    .site-nav__item:hover{border-color:var(--md-primary-fg-color, #526cfe);background-color:var(--md-code-bg-color, #f6f8fa);}
+    .site-nav__item--prev{justify-content:flex-start;}
+    .site-nav__item--next{justify-content:flex-end;}
+    .site-nav__info{display:flex;flex-direction:column;gap:4px;min-width:0;}
+    .site-nav__info--right{text-align:right;}
+    .site-nav__label{font-size:12px;color:var(--md-default-fg-color--lighter, #666);text-transform:uppercase;}
+    .site-nav__title{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .site-nav__arrow{color:var(--md-default-fg-color--lighter, #666);flex-shrink:0;}
+    .site-footer{padding:16px 0;border-top:1px solid var(--md-border-color, #e0e0e0);font-size:13px;color:var(--md-default-fg-color--lighter, #666);}
+    .site-footer__inner{display:flex;justify-content:space-between;align-items:center;}
+    .site-footer__left{display:flex;flex-direction:column;gap:4px;}
+    .site-footer__left a,.site-footer__right a{color:var(--md-default-fg-color--lighter, #666);transition:color 0.2s;}
+    .site-footer__left a:hover,.site-footer__right a:hover{color:var(--md-primary-fg-color, #526cfe);}
+    .site-footer__right{display:flex;align-items:center;gap:16px;}
+    .site-footer__right a{display:flex;align-items:center;}
+    [data-md-color-scheme="slate"] .site-nav__item{border-color:var(--md-border-color, #404040);}
+    [data-md-color-scheme="slate"] .site-nav__item:hover{background-color:var(--md-code-bg-color, #1e1e1e);}
+    [data-md-color-scheme="slate"] .site-footer{border-top-color:var(--md-border-color, #404040);}
+    @media (max-width:600px){.site-nav__inner{flex-direction:column;gap:12px;}.site-footer__inner{flex-direction:column;gap:12px;text-align:center;}}
     </style>
 
     <script>__md_scope=new URL("./",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -488,15 +510,16 @@ iw<span class="w"> </span>build
 <li>Code highlighting with Pygments</li>
 </ul>
 
-<nav class="md-footer" aria-label="Footer navigation">
-  <div class="md-footer__inner md-grid">
-    <a href="/hello-world/" class="md-footer__link md-footer__link--next" aria-label="Next: Hello World Special Chars">
-      <div class="md-footer__title">
-        <span class="md-footer__direction">Next</span>
-        <div class="md-ellipsis">Hello World Special Chars</div>
+
+<nav class="site-nav" aria-label="Page navigation">
+  <div class="site-nav__inner">
+    <a href="/hello-world/" class="site-nav__item site-nav__item--next" aria-label="Next: Hello World Special Chars">
+      <div class="site-nav__info site-nav__info--right">
+        <span class="site-nav__label">Next</span>
+        <span class="site-nav__title">Hello World Special Chars</span>
       </div>
-      <div class="md-footer__button md-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+      <div class="site-nav__arrow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
       </div>
     </a>
   </div>
@@ -508,41 +531,29 @@ iw<span class="w"> </span>build
       </main>
 
 
-
-<div class="md-footer__inner md-grid">
-  <a href="/hello-world/" class="md-footer__link md-footer__link--next" aria-label="Next: Hello World Special Chars">
-    <div class="md-footer__title">
-      <span class="md-footer__direction">Next</span>
-      <div class="md-ellipsis">Hello World Special Chars</div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__left">
+      <div class="site-footer__copyright">
+          Copyright &copy; <span class="site-footer__year"></span> <a href="https://interset-wq.github.io/doc">iw-generator</a>
+      </div>
+      <div class="site-footer__powered">
+        Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
+      </div>
     </div>
-    <div class="md-footer__button md-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-    </div>
-  </a>
-</div>
-
-<div class="md-footer-meta md-typeset">
-  <div class="md-footer-meta__inner md-grid">
-    <div class="md-footer-copyright">
-        Copyright &copy; <span id="copyrightYear"></span> <a href="https://interset-wq.github.io/doc">iw-generator</a>
-      <br>
-      Powered by <a href="https://github.com/interset-wq/iw-generator" target="_blank" rel="noopener">iw-generator</a>
-    </div>
-    <div class="md-footer-social">
-        <a href="https://github.com/interset-wq/iw-generator" target="_blank" title="github" class="md-footer-social__link">
+    <div class="site-footer__right">
+        <a href="https://github.com/interset-wq/iw-generator" target="_blank" title="github" class="site-footer__social">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         </a>
     </div>
   </div>
-</div>
+</footer>
 
 <script>
 var now = new Date();
-var el = document.getElementById("copyrightYear");
-if (el) el.innerHTML = now.getFullYear();
+var els = document.querySelectorAll('.site-footer__year');
+els.forEach(function(el) { el.textContent = now.getFullYear(); });
 </script>
-
-
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
